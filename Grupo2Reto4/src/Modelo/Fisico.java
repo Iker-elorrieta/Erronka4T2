@@ -5,6 +5,7 @@ public class Fisico extends Movimiento{
 	
 	private int potencia;
 	
+	
 	public Fisico(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia) {
 		super(id, nombre, puntosPoder, precision, tipo);
 		// TODO Auto-generated constructor stub
