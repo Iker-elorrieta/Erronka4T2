@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.ArrayList;
+
 public class Pokemon {
 	
 	private int id;
@@ -11,6 +13,7 @@ public class Pokemon {
 	private int satt;
 	private int sdef;
 	private int vel;
+	private ArrayList<Movimiento> movimientos;
 	
 	public int getId() {
 		return id;
@@ -48,7 +51,7 @@ public class Pokemon {
 		return vel;
 	}
 
-	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel) {
+	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset) {
 		super();
 		this.id = id;
 		this.nombre_pokemon = nombre_pokemon;
@@ -59,6 +62,11 @@ public class Pokemon {
 		this.satt = satt;
 		this.sdef = sdef;
 		this.vel = vel;
+		this.movimientos = moveset;
+	}
+
+	public ArrayList<Movimiento> getMovimientos() {
+		return movimientos;
 	}
 	
 	

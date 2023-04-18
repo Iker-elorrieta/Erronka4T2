@@ -1,21 +1,23 @@
 package Modelo;
 
 
-public abstract class Movimiento {
+public class Movimiento {
 	
 	protected int id;
 	protected String nombre;
 	protected int puntosPoder;
 	protected double precision;
 	protected Tipo tipo;
+	protected int potencia;
 	
-	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo) {
+	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.puntosPoder = puntosPoder;
 		this.precision = precision;
 		this.tipo = tipo;
+		this.potencia = potencia;
 	}
 
 	public int getId() {
@@ -48,12 +50,6 @@ public abstract class Movimiento {
 
 	public void setPrecision(double precision) {
 		this.precision = precision;
-	}
-
-	@Override
-	public String toString() {
-		return "Ataque [id=" + id + ", nombre=" + nombre + ", puntosPoder=" + puntosPoder + ", precision=" + precision
-				+ "]";
 	}
 
 	public Tipo getTipo() {
