@@ -1,16 +1,16 @@
 package Modelo;
 
-
 public class Movimiento {
-	
-	protected int id;
-	protected String nombre;
-	protected int puntosPoder;
-	protected double precision;
-	protected Tipo tipo;
-	protected int potencia;
-	
-	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia) {
+
+	private int id;
+	private String nombre;
+	private int puntosPoder;
+	private int precision;
+	private Tipo tipo;
+	private int potencia;
+	private Estilos estilo;
+
+	public Movimiento(int id, String nombre, int puntosPoder, int precision, Tipo tipo, int potencia, Estilos estilo) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -18,50 +18,35 @@ public class Movimiento {
 		this.precision = precision;
 		this.tipo = tipo;
 		this.potencia = potencia;
+		this.estilo=estilo;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public int getPuntosPoder() {
 		return puntosPoder;
 	}
 
-	public void setPuntosPoder(int puntosPoder) {
-		this.puntosPoder = puntosPoder;
-	}
-
 	public double getPrecision() {
 		return precision;
-	}
-
-	public void setPrecision(double precision) {
-		this.precision = precision;
 	}
 
 	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Tipo tipo) {
-		this.tipo = tipo;
+	public int getPotencia() {
+		return potencia;
 	}
-	
-	
-	
-	
+
+	public Estilos getEstilo() {
+		return estilo;
+	}
 
 }

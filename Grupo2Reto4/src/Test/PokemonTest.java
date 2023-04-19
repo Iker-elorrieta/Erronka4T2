@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import Modelo.Estilos;
 import Modelo.Generacion;
 import Modelo.Movimiento;
 import Modelo.Pokemon;
@@ -17,13 +18,13 @@ class PokemonTest {
 	void testPokemon() {
 		Tipo[] tipos = {Tipo.planta, Tipo.veneno};
 		ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
-		Movimiento move1 = new Movimiento(1,"Latigo cepa",15,100,Tipo.planta, 50);
+		Movimiento move1 = new Movimiento(1,"Latigo cepa",15,100,Tipo.planta, 50, Estilos.Phys);
 		moveset.add(move1);
-		Movimiento move2 = new Movimiento(2,"Placaje",40,100,Tipo.normal, 40);
+		Movimiento move2 = new Movimiento(2,"Placaje",40,100,Tipo.normal, 40,Estilos.Phys);
 		moveset.add(move2);
-		Movimiento move3 = new Movimiento(3,"Absorber",20,100,Tipo.planta, 20);
+		Movimiento move3 = new Movimiento(3,"Absorber",20,100,Tipo.planta, 20,Estilos.Special);
 		moveset.add(move3);
-		Movimiento move4 = new Movimiento(4,"Bomba Lodo",15,100,Tipo.veneno, 90);
+		Movimiento move4 = new Movimiento(4,"Bomba Lodo",15,100,Tipo.veneno, 90, Estilos.Special);
 		moveset.add(move4);
 		Pokemon pokemon = new Pokemon(1, "bulbasaur", tipos, Generacion.Kanto, 20, 5, 11, 11, 9, 6, moveset);
 
