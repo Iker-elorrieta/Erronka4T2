@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import Modelo.Generacion;
 import Modelo.Movimiento;
 import Modelo.Pokemon;
 import Modelo.Tipo;
@@ -24,11 +25,12 @@ class PokemonTest {
 		moveset.add(move3);
 		Movimiento move4 = new Movimiento(4,"Bomba Lodo",15,100,Tipo.veneno, 90);
 		moveset.add(move4);
-		Pokemon pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset);
+		Pokemon pokemon = new Pokemon(1, "bulbasaur", tipos, Generacion.Kanto, 20, 5, 11, 11, 9, 6, moveset);
 
 		assertEquals(pokemon.getId(), 1);
 		assertEquals(pokemon.getNombre_pokemon(), "bulbasaur");
 		assertEquals(pokemon.getTipo()[0], Tipo.planta);
+		assertEquals(pokemon.getGen(), Generacion.Kanto);
 		assertEquals(pokemon.getAtt(), 5);
 		assertEquals(pokemon.getDef(), 11);
 		assertEquals(pokemon.getSatt(), 11);

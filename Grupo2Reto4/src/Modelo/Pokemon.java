@@ -7,6 +7,7 @@ public class Pokemon {
 	private int id;
 	private String nombre_pokemon;
 	private Tipo[] tipo;
+	private Generacion gen;
 	private int hp;
 	private int att;
 	private int def;
@@ -51,11 +52,12 @@ public class Pokemon {
 		return vel;
 	}
 
-	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset) {
+	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, Generacion gen, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset) {
 		super();
 		this.id = id;
 		this.nombre_pokemon = nombre_pokemon;
 		this.tipo = tipo;
+		this.gen = gen;
 		this.hp = hp;
 		this.att = att;
 		this.def = def;
@@ -67,6 +69,14 @@ public class Pokemon {
 
 	public ArrayList<Movimiento> getMovimientos() {
 		return movimientos;
+	}
+
+	public Generacion getGen() {
+		return gen;
+	}
+
+	public void setGen(Generacion gen) {
+		this.gen = gen;
 	}
 	
 	

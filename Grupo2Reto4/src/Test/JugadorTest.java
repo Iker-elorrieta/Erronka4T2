@@ -20,7 +20,7 @@ class JugadorTest {
 		assertEquals(player.getPokemon(),null);
 		assertEquals(player.getUsuario(),"Unai");
 		
-		Jugador player2 = new Jugador("Unai","Akos","12345",null);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", null);
 		assertEquals(player2.getLogin(),"Akos");
 	}
 
