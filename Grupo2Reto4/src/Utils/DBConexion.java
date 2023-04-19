@@ -1,4 +1,4 @@
-package DBUtils;
+package Utils;
 
 public class DBConexion {
 	
