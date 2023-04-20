@@ -1,4 +1,4 @@
-package Vista;
+package vista;
 
 import java.awt.EventQueue;
 
@@ -7,9 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Utils.RutasImg;
+import utils.RutasImg;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaLogin extends JFrame{
 
@@ -64,17 +68,17 @@ public class VistaLogin extends JFrame{
 		pkmnIMG_1.setIcon(pkmnImg1);
 		
 		ImageIcon pkmnImg2 = new ImageIcon(rutas.randomPNGFrontal());
-		pkmnIMG_2.setBounds(545, 142, 90, 90);
+		pkmnIMG_2.setBounds(539, 160, 90, 90);
 		contentPane.add(pkmnIMG_2);
 		pkmnIMG_2.setIcon(pkmnImg2);
 		
 		ImageIcon pkmnImg3 = new ImageIcon(rutas.randomPNGFrontal());
-		pkmnIMG_3.setBounds(394, 28, 90, 90);
+		pkmnIMG_3.setBounds(392, 26, 90, 90);
 		contentPane.add(pkmnIMG_3);
 		pkmnIMG_3.setIcon(pkmnImg3);
 		
 		ImageIcon pkmnImg4 = new ImageIcon(rutas.randomPNGFrontal());
-		pkmnIMG_4.setBounds(129, 28, 90, 90);
+		pkmnIMG_4.setBounds(92, 26, 90, 90);
 		contentPane.add(pkmnIMG_4);
 		pkmnIMG_4.setIcon(pkmnImg4);
 
@@ -82,6 +86,29 @@ public class VistaLogin extends JFrame{
 		pkmnIMG_5.setBounds(29, 142, 190, 308);
 		contentPane.add(pkmnIMG_5);
 		pkmnIMG_5.setIcon(pkmnImg5);
+		
+		JButton aInicio = new JButton("Iniciar sesion");
+		aInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
+			}
+		});
+		aInicio.setBounds(257, 159, 156, 23);
+		contentPane.add(aInicio);
+		
+		JButton aRegistro = new JButton("Registrarse");
+		aRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
+			}
+		});
+		aRegistro.setBounds(257, 277, 156, 23);
+		contentPane.add(aRegistro);
 	}
-
 }

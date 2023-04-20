@@ -1,11 +1,11 @@
-package Test;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Modelo.Movimiento;
-import Modelo.Tipo;
+import modelo.Movimiento;
+import modelo.Tipo;
 
 class TestMovimiento {
 

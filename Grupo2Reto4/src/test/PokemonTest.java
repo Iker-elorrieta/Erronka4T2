@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import Modelo.Movimiento;
-import Modelo.Pokemon;
-import Modelo.Tipo;
+import modelo.Movimiento;
+import modelo.Pokemon;
+import modelo.Tipo;
 
 class PokemonTest {
 

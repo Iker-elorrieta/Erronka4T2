@@ -1,10 +1,10 @@
-package Test;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import Modelo.Jugador;
+import modelo.Jugador;
 
 class JugadorTest {
 
