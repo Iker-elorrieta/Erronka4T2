@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VistaLogin extends JFrame{
+public class VistaInicio extends JFrame{
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class VistaLogin extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VistaLogin frame = new VistaLogin();
+					VistaInicio frame = new VistaInicio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class VistaLogin extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public VistaLogin() {
+	public VistaInicio() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
