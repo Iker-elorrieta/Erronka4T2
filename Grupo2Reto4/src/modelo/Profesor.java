@@ -6,7 +6,7 @@ public class Profesor extends Usuario{
 	
 	public Profesor(String usuario, String login, String pass, Generacion gen) {
 		super(usuario,login,pass);
-		this.gen=gen;
+		this.setGen(gen);
 	}
 	
 	public Generacion getGen() {
