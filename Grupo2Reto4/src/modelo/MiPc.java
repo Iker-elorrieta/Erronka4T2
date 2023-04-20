@@ -9,6 +9,10 @@ public class MiPc {
 	public MiPc() {
 		
 	}
+
+	public ArrayList<Caja> getCajas() {
+		return cajas;
+	}
 	
 //	public void InsertarCaja() {
 //		Caja caja = new Caja();

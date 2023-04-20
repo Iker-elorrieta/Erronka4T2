@@ -18,5 +18,9 @@ public class Caja {
 	public void setPokemon(ArrayList<Pokemon> pokemon) {
 		this.pokemon = pokemon;
 	}
+
+	public int getId_caja() {
+		return id_caja;
+	}
 	
 }
