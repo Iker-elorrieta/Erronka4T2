@@ -2,7 +2,7 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Pokemon implements Atacable{
+public class Pokemon{
 	
 	private int id;
 	private String nombre_pokemon;
@@ -79,15 +79,6 @@ public class Pokemon implements Atacable{
 		this.gen = gen;
 	}
 
-	@Override
-	public int Atacar(Movimiento mov) {
-		int dmg=0;
-		if (mov.getEstilo() == Estilos.Phys) 
-			dmg=att*mov.getPotencia();
-		else if(mov.getEstilo() == Estilos.Special)
-			dmg=satt*mov.getPotencia();
-		return dmg;
-	}
 	
 	
 	

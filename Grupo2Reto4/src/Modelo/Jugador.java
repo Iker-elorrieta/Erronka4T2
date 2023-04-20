@@ -2,23 +2,32 @@ package Modelo;
 
 public class Jugador extends Usuario{
 
-	private Pokemon pokemon;
+	private Pokemon[] equipo;
 	
-	public Jugador(String usuario, String login, String pass, Pokemon pokemon) {
+	public void setEquipo(Pokemon[] equipo) {
+		this.equipo = equipo;
+	}
+
+	private MiPc pc;
+	
+	public Jugador(String usuario, String login, String pass, Pokemon[] equipo) {
 		super(usuario, login, pass);
-		this.pokemon=pokemon;
+		this.equipo=equipo;
 	}
 	
 	public Jugador() {
 		
 	}
 
-	public Pokemon getPokemon() {
-		return pokemon;
+	public Pokemon[] getEquipo() {
+		return equipo;
 	}
 
-	public void setPokemon(Pokemon pokemon) {
-		this.pokemon = pokemon;
+	@Override
+	public boolean Verificar() {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
 	
 }

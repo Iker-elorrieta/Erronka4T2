@@ -1,7 +1,7 @@
 package Modelo;
 
 
-public abstract class Usuario {
+public abstract class Usuario implements Verificable{
 
 	protected String usuario;
 	protected String login;

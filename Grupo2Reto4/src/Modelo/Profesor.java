@@ -19,4 +19,10 @@ public class Profesor extends Usuario{
 	public void setGen(Generacion gen) {
 		this.gen = gen;
 	}
+
+	@Override
+	public boolean Verificar() {
+		
+		return false;
+	}
 }

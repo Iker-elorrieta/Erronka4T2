@@ -1,7 +1,9 @@
 package Modelo;
 
-
 public enum Tipo {
-	
-	fuego, agua, planta, electrico, roca, normal, tierra, bicho, fantasma, dragon, lucha, volador, veneno, psiquico, hada;
+
+	fuego, agua, tierra, planta, volador,
+	electrico, roca, hielo, acero, lucha,
+	fantasma, siniestro, hada, psiquico,
+	dragon, bicho, veneno, normal;
 }

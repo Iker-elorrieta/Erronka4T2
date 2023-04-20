@@ -13,7 +13,6 @@ public class RutasImg {
 	else
 		nPkDx=String.valueOf(rnum);
 	
-	
 	return "img/gifs/"+nPkDx+".gif";
 	}
 }
