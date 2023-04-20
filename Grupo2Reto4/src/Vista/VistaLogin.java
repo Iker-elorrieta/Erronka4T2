@@ -8,19 +8,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Utils.RutasImg;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 
-public class VistaLogin extends JFrame {
+public class VistaLogin extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel oakIMG;
 	private RutasImg rutas = new RutasImg();
+	private JLabel pkmnIMG_1 = new JLabel();
+	private JLabel pkmnIMG_2 = new JLabel();
+	private JLabel pkmnIMG_3 = new JLabel();
+	private JLabel pkmnIMG_4 = new JLabel();
+	private JLabel pkmnIMG_5 = new JLabel();
+
 	/**
 	 * Launch the application.
 	 */
@@ -33,6 +37,7 @@ public class VistaLogin extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
 			}
 		});
 	}
@@ -41,45 +46,42 @@ public class VistaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaLogin() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 710, 506);
+		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setForeground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		
-		
+
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		String url = rutas.randomGifFrontal();
-		ImageIcon oak = new ImageIcon(url);
 		
 		
-		oakIMG = new JLabel();
-		oakIMG.setBounds(50, 28, 75, 70);
-		contentPane.add(oakIMG);
-		oakIMG.setIcon(oak);
+		ImageIcon pkmnImg1 = new ImageIcon(rutas.randomPNGFrontal());
+		pkmnIMG_1.setBounds(501, 322, 90, 90);
+		contentPane.add(pkmnIMG_1);
+		pkmnIMG_1.setIcon(pkmnImg1);
 		
-		JLabel oakIMG_1 = new JLabel();
-		oakIMG_1.setBounds(526, 49, 75, 70);
-		contentPane.add(oakIMG_1);
-		oakIMG.setIcon(oak);
+		ImageIcon pkmnImg2 = new ImageIcon(rutas.randomPNGFrontal());
+		pkmnIMG_2.setBounds(545, 142, 90, 90);
+		contentPane.add(pkmnIMG_2);
+		pkmnIMG_2.setIcon(pkmnImg2);
 		
-		JLabel oakIMG_2 = new JLabel();
-		oakIMG_2.setBounds(161, 326, 75, 70);
-		contentPane.add(oakIMG_2);
-		oakIMG.setIcon(oak);
+		ImageIcon pkmnImg3 = new ImageIcon(rutas.randomPNGFrontal());
+		pkmnIMG_3.setBounds(394, 28, 90, 90);
+		contentPane.add(pkmnIMG_3);
+		pkmnIMG_3.setIcon(pkmnImg3);
 		
-		JLabel oakIMG_3 = new JLabel();
-		oakIMG_3.setBounds(497, 171, 75, 70);
-		contentPane.add(oakIMG_3);
-		oakIMG.setIcon(oak);
-		
-		JLabel oakIMG_4 = new JLabel();
-		oakIMG_4.setBounds(179, 142, 75, 70);
-		contentPane.add(oakIMG_4);
-		oakIMG.setIcon(oak);
-		
+		ImageIcon pkmnImg4 = new ImageIcon(rutas.randomPNGFrontal());
+		pkmnIMG_4.setBounds(129, 28, 90, 90);
+		contentPane.add(pkmnIMG_4);
+		pkmnIMG_4.setIcon(pkmnImg4);
+
+		ImageIcon pkmnImg5 = new ImageIcon(rutas.rutaImgProfOak());
+		pkmnIMG_5.setBounds(29, 142, 190, 308);
+		contentPane.add(pkmnIMG_5);
+		pkmnIMG_5.setIcon(pkmnImg5);
 	}
+
 }
