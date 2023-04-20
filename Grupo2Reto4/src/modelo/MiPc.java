@@ -19,4 +19,8 @@ public class MiPc {
 //		if(cajas.size()<8)
 //			cajas.add(caja);
 //	}
+	
+	
+	
+	
 }
