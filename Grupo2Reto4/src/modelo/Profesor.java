@@ -1,5 +1,6 @@
 package modelo;
 
+
 public class Profesor extends Usuario{
 	
 	private Generacion gen;
@@ -18,9 +19,8 @@ public class Profesor extends Usuario{
 	}
 
 	@Override
-	public void Verificar() {
-		// TODO Auto-generated method stub
-		
+	public boolean Validar() {
+		return (gen!=null);
 	}
-	
+
 }

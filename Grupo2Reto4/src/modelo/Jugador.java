@@ -1,5 +1,6 @@
 package modelo;
 
+
 public class Jugador extends Usuario{
 
 	private Pokemon[] equipo;
@@ -21,9 +22,15 @@ public class Jugador extends Usuario{
 	}
 
 	@Override
-	public void Verificar() {
-		// TODO Auto-generated method stub
-		
+	public boolean Validar() {
+		int contador = 0;
+		boolean encontrado =false;
+		while(contador<equipo.length && encontrado == false ) {
+			if(equipo[contador]!=null)
+				encontrado = true;
+			contador++;
+		}
+		return encontrado;
 	}
 
 	
