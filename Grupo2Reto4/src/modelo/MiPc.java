@@ -6,8 +6,8 @@ public class MiPc {
 
 	private ArrayList<Caja> cajas;
 	
-	public MiPc() {
-		Caja caja1 = new Caja(0, null);
+	public MiPc(ArrayList<Caja> cajas) {
+		this.cajas=cajas;
 	}
 
 	public ArrayList<Caja> getCajas() {
