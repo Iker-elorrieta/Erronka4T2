@@ -12,4 +12,14 @@ public class RutasImg {
 	public String rutaImgProfOak() {
 		return "img/grande/oak.jpg";
 	}
+	
+	public String PNGfrontalPKMN(int num) {
+		String nPkDx = String.valueOf(num);
+		return "img/grande/" + nPkDx + ".png";
+	}
+	
+	public String PNGpequenyo(int num) {
+		String nPkDx = String.valueOf(num);
+		return "img/mini/" + nPkDx + ".png";
+	}
 }
