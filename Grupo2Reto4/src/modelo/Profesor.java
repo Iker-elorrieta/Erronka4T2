@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Objects;
 
 public class Profesor extends Usuario{
 	
@@ -23,4 +24,26 @@ public class Profesor extends Usuario{
 		return (gen!=null);
 	}
 
+	@Override
+	public String toString() {
+		return "Profesor [gen=" + gen + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(gen);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Profesor other = (Profesor) obj;
+		return gen == other.gen;
+	}
+	
 }

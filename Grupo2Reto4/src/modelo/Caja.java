@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Caja {
 
@@ -26,6 +27,28 @@ public class Caja {
 	
 	public void setId_caja(int id_caja) {
 		this.id_caja = id_caja;
+	}
+
+	@Override
+	public String toString() {
+		return "Caja [id_caja=" + id_caja + ", pokemon=" + pokemon + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id_caja, pokemon);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Caja other = (Caja) obj;
+		return id_caja == other.id_caja && Objects.equals(pokemon, other.pokemon);
 	}
 	
 }
