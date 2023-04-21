@@ -3,7 +3,6 @@ package vista;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,7 +28,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JButton btnLogin;
 	private JLabel errLogin;
 	private JLabel errPassw;
-
+	//private ArrayList<Usuario> users = new ArrayList<Usuario>();
 	/**
 	 * Launch the application.
 	 */
