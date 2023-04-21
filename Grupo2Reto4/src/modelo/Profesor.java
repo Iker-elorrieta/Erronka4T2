@@ -18,8 +18,9 @@ public class Profesor extends Usuario{
 	}
 
 	@Override
-	public boolean Verificar() {
+	public void Verificar() {
+		// TODO Auto-generated method stub
 		
-		return false;
 	}
+	
 }

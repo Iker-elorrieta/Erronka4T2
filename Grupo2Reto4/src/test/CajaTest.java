@@ -16,17 +16,22 @@ class CajaTest {
 	@Test
 	void testCaja() {
 		
-		Tipo[] tipos = {Tipo.planta, Tipo.veneno};
-		ArrayList<Movimiento> moveset1 = new ArrayList<Movimiento>();
-		Movimiento move1 = new Movimiento(1,"Latigo cepa",15,100,Tipo.planta, 50);
-		moveset1.add(move1);
-		Movimiento move2 = new Movimiento(2,"Placaje",40,100,Tipo.normal, 40);
-		moveset1.add(move2);
-		Movimiento move3 = new Movimiento(3,"Absorber",20,100,Tipo.planta, 20);
-		moveset1.add(move3);
-		Movimiento move4 = new Movimiento(4,"Bomba Lodo",15,100,Tipo.veneno, 90);
-		moveset1.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset1);
+		Tipo[] tipos = new Tipo[2];
+		Tipo planta = new Tipo(3,"Planta");
+		Tipo veneno = new Tipo(12,"Veneno");
+		Tipo normal = new Tipo(1,"Normal");
+		tipos[0] = planta;
+		tipos[1] = veneno;
+		ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
+		Movimiento move1 = new Movimiento(1,"Latigo cepa",15,100,planta, 50);
+		moveset.add(move1);
+		Movimiento move2 = new Movimiento(2,"Placaje",40,100,normal, 40);
+		moveset.add(move2);
+		Movimiento move3 = new Movimiento(3,"Absorber",20,100,planta, 20);
+		moveset.add(move3);
+		Movimiento move4 = new Movimiento(4,"Bomba Lodo",15,100,veneno, 90);
+		moveset.add(move4);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset);
 		
 		ArrayList<Movimiento> moveset2 = new ArrayList<Movimiento>();
 		moveset2.add(move1);

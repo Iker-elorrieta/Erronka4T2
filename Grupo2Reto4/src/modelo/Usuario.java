@@ -36,4 +36,6 @@ abstract class Usuario implements Verificable{
 	public String getNombre() {
 		return nombre;
 	}
+
+	
 }

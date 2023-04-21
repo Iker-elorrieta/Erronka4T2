@@ -15,14 +15,15 @@ public class Jugador extends Usuario{
 		return equipo;
 	}
 
-	@Override
-	public boolean Verificar() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public MiPc getPc() {
 		return pc;
+	}
+
+	@Override
+	public void Verificar() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
