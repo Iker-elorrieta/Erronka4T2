@@ -1,5 +1,5 @@
 package modelo;
 
-public enum Estilos {
+public enum Estilo {
 	Phys, Special, Status;
 }

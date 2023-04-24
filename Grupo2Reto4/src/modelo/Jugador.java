@@ -3,7 +3,38 @@ package modelo;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Jugador extends Usuario{
+public class Jugador extends Usuario {
+
+	private Pokemon[] equipo;
+	private MiPc pc;
+
+	public Jugador(String usuario, String login, String pass, Pokemon[] equipo, MiPc pc) {
+		super(usuario, login, pass);
+		this.equipo = equipo;
+		this.pc = pc;
+	}
+
+	public Pokemon[] getEquipo() {
+		return equipo;
+	}
+
+	public MiPc getPc() {
+		return pc;
+	}
+
+	@Override
+	public boolean Validar() {
+		boolean encontrado = false;
+		if (equipo != null) {
+			int contador = 0;
+			while (contador < equipo.length && encontrado == false) {
+				if (equipo[contador] != null)
+					encontrado = true;
+				contador++;
+			}
+		}
+		return encontrado;
+	}
 
 	@Override
 	public int hashCode() {
@@ -26,40 +57,10 @@ public class Jugador extends Usuario{
 		return Arrays.equals(equipo, other.equipo) && Objects.equals(pc, other.pc);
 	}
 
+	// Tiene que pillar de usuario
 	@Override
 	public String toString() {
 		return "Jugador [equipo=" + Arrays.toString(equipo) + ", pc=" + pc + "]";
 	}
 
-	private Pokemon[] equipo;
-	private MiPc pc;
-	
-	public Jugador(String usuario, String login, String pass, Pokemon[] equipo, MiPc pc) {
-		super(usuario, login, pass);
-		this.equipo=equipo;
-		this.pc=pc;
-	}
-	
-	public Pokemon[] getEquipo() {
-		return equipo;
-	}
-
-
-	public MiPc getPc() {
-		return pc;
-	}
-
-	@Override
-	public boolean Validar() {
-		int contador = 0;
-		boolean encontrado =false;
-		while(contador<equipo.length && encontrado == false ) {
-			if(equipo[contador]!=null)
-				encontrado = true;
-			contador++;
-		}
-		return encontrado;
-	}
-
-	
 }

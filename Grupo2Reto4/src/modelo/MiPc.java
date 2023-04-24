@@ -6,10 +6,20 @@ import java.util.Objects;
 public class MiPc {
 
 	private ArrayList<Caja> cajas;
-	
+
 	public MiPc(ArrayList<Caja> cajas) {
-		this.cajas=cajas;
+		this.cajas = cajas;
 	}
+
+	public ArrayList<Caja> getCajas() {
+		return cajas;
+	}
+
+//	public void InsertarCaja() {
+//		Caja caja = new Caja();
+//		if(cajas.size()<8)
+//			cajas.add(caja);
+//	}
 
 	@Override
 	public int hashCode() {
@@ -33,17 +43,4 @@ public class MiPc {
 		return "MiPc [cajas=" + cajas + "]";
 	}
 
-	public ArrayList<Caja> getCajas() {
-		return cajas;
-	}
-	
-//	public void InsertarCaja() {
-//		Caja caja = new Caja();
-//		if(cajas.size()<8)
-//			cajas.add(caja);
-//	}
-	
-	
-	
-	
 }

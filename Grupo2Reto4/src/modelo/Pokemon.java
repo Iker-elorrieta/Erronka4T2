@@ -9,36 +9,7 @@ public class Pokemon {
 	private int id;
 	private String nombre_pokemon;
 	private Tipo[] tipo;
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(tipo);
-		result = prime * result + Objects.hash(att, def, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pokemon other = (Pokemon) obj;
-		return att == other.att && def == other.def && hp == other.hp && id == other.id
-				&& Objects.equals(movimientos, other.movimientos)
-				&& Objects.equals(nombre_pokemon, other.nombre_pokemon) && satt == other.satt && sdef == other.sdef
-				&& Arrays.equals(tipo, other.tipo) && vel == other.vel;
-	}
-
-	@Override
-	public String toString() {
-		return "Pokemon [id=" + id + ", nombre_pokemon=" + nombre_pokemon + ", tipo=" + Arrays.toString(tipo) + ", hp="
-				+ hp + ", att=" + att + ", def=" + def + ", satt=" + satt + ", sdef=" + sdef + ", vel=" + vel
-				+ ", movimientos=" + movimientos + "]";
-	}
+	
 
 	private int hp;
 	private int att;
@@ -102,6 +73,32 @@ public class Pokemon {
 		return movimientos;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(tipo);
+		result = prime * result + Objects.hash(att, def, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pokemon other = (Pokemon) obj;
+		return id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Pokemon [id=" + id + ", nombre_pokemon=" + nombre_pokemon + ", tipo=" + Arrays.toString(tipo) + ", hp="
+				+ hp + ", att=" + att + ", def=" + def + ", satt=" + satt + ", sdef=" + sdef + ", vel=" + vel
+				+ ", movimientos=" + movimientos + "]";
+	}
 	
 }

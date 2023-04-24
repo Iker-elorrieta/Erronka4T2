@@ -23,7 +23,8 @@ public class Profesor extends Usuario{
 	public boolean Validar() {
 		return (gen!=null);
 	}
-
+	
+	//Tiene que pillar de usuario
 	@Override
 	public String toString() {
 		return "Profesor [gen=" + gen + "]";

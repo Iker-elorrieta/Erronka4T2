@@ -32,8 +32,8 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private JLabel err2Nick;
 	private JLabel err3Passw;
 	private JButton atras;
-	Metodos metodos = new Metodos();
-
+	private Metodos metodos = new Metodos();
+	//private Usuario[] usuarios;
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +46,9 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		setBounds(100, 100, 704, 503);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
+		//usuarios = metodos.arrayUsuarios();
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -142,7 +144,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				err2Nick.setText("El nick no puede ser vacio.");
 			}
 			/*
-			 * else if() { err2Nick.setVisible(true);
+			 * else if(loginTF.getText().equals(usuarios)) { err2Nick.setVisible(true);
 			 * err2Nick.setText("Este nick ya le pertenece a otro usuario."); }
 			 */
 			else {
