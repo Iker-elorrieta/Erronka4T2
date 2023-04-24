@@ -4,13 +4,13 @@ import java.util.Objects;
 
 public class Movimiento {
 
-	protected int id;
-	protected String nombre;
-	protected int puntosPoder;
-	protected double precision;
-	protected Tipo tipo;
-	protected int potencia;
-	protected Estilo estilo;
+	private int id;
+	private String nombre;
+	private int puntosPoder;
+	private double precision;
+	private Tipo tipo;
+	private int potencia;
+	private Estilo estilo;
 
 	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia,
 			Estilo estilo) {
@@ -94,9 +94,7 @@ public class Movimiento {
 		if (getClass() != obj.getClass())
 			return false;
 		Movimiento other = (Movimiento) obj;
-		return id == other.id && Objects.equals(nombre, other.nombre) && potencia == other.potencia
-				&& Double.doubleToLongBits(precision) == Double.doubleToLongBits(other.precision)
-				&& puntosPoder == other.puntosPoder && Objects.equals(tipo, other.tipo);
+		return id == other.id;
 	}
 
 	@Override

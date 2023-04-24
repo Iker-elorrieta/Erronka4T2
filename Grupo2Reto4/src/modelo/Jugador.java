@@ -42,7 +42,7 @@ public class Jugador extends Usuario {
 		int result = 1;
 		result = prime * result + Arrays.hashCode(equipo);
 		result = prime * result + Objects.hash(pc);
-		return result;
+		return result + super.hashCode();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class Jugador extends Usuario {
 	// Tiene que pillar de usuario
 	@Override
 	public String toString() {
-		return "Jugador [equipo=" + Arrays.toString(equipo) + ", pc=" + pc + "]";
+		return "Jugador ["+super.toString()+" equipo=" + Arrays.toString(equipo) + ", pc=" + pc + "]";
 	}
 
 }

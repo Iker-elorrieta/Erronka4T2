@@ -27,12 +27,12 @@ public class Profesor extends Usuario{
 	//Tiene que pillar de usuario
 	@Override
 	public String toString() {
-		return "Profesor [gen=" + gen + "]";
+		return "Profesor ["+super.toString()+" gen=" + gen + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(gen);
+		return Objects.hash(gen)+super.hashCode();
 	}
 
 	@Override

@@ -80,6 +80,7 @@ class JugadorTest {
 		assertFalse(player2.Validar());
 		player2 = new Jugador("Unai", "Akos", "12345", equipo2, null);
 		assertFalse(player2.Validar());
+
 	}
 
 }
