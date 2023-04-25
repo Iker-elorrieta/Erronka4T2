@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Objects;
 
-abstract class Usuario implements Verificable {
+public abstract class Usuario implements Verificable {
 
 	protected String nombre;
 	protected String login;

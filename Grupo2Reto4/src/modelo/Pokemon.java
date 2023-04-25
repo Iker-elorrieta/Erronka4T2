@@ -9,8 +9,6 @@ public class Pokemon {
 	private int id;
 	private String nombre_pokemon;
 	private Tipo[] tipo;
-	
-
 	private int hp;
 	private int att;
 	private int def;
