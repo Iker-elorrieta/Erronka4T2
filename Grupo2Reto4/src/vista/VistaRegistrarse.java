@@ -136,7 +136,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		
 		panel = new JPanel();
 		scrollPane.setViewportView(panel);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		panel.setLayout(new GridLayout(0, 3, 10, 10));
 		elegirPokemon();
 		contentPane.updateUI();
 
@@ -195,23 +195,23 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 
 	public void elegirPokemon() {
 		
-		int x = 0;
-		int y = 0;
+		//int x = 0;
+		//int y = 0;
 		int i = 1;
 		
 		while (i < 650) {
 			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(i));
 			JLabel pkmnIMG1 = new JLabel();
-			pkmnIMG1.setBounds(x, y, 96, 96);
+			//pkmnIMG1.setBounds(x, y, 96, 96);
 			pkmnIMG1.setToolTipText(String.valueOf(i));
 			panel.add(pkmnIMG1);
 			pkmnIMG1.setIcon(pkmnImg1);
-			x+=100;
+			//	x+=100;
 			
-			if (x > 101) {
-				y+=100;
-				x=0;
-			}
+			//if (x > 101) {
+			//	y+=100;
+			//	x=0;
+			//}
 			i++;
 		}
 		contentPane.add(scrollPane);
