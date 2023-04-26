@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import modelo.Estilo;
 import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Profesor;
@@ -35,14 +34,13 @@ class TestProfesor {
 		profesor3 = new Profesor("Profesor Elm", "Elm", "Jhoto", Generacion.Jhoto);
 		profesor1.equals(profesor3);
 		
-		Movimiento mov1 = new Movimiento(0, "Placaje", 0, 0, null, 0, Estilo.Phys);
+		Movimiento mov1 = new Movimiento(0, "Placaje", 0, 0, null, 0);
 		Tipo planta = new Tipo(3,"Planta");
 		mov1.setId(1);
 		mov1.setNombre("Latigo cepa");
 		mov1.setPrecision(100);
 		mov1.setPuntosPoder(40);
 		mov1.setTipo(planta);
-		mov1.setEstilo(Estilo.Phys);
 		
 		profesor1.equals(mov1);
 	}

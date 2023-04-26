@@ -10,18 +10,14 @@ public class Movimiento {
 	private double precision;
 	private Tipo tipo;
 	private int potencia;
-	private Estilo estilo;
 
-	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia,
-			Estilo estilo) {
-		super();
+	public Movimiento(int id, String nombre, int puntosPoder, double precision, Tipo tipo, int potencia) {
 		this.id = id;
 		this.nombre = nombre;
 		this.puntosPoder = puntosPoder;
 		this.precision = precision;
 		this.tipo = tipo;
 		this.potencia = potencia;
-		this.estilo = estilo;
 	}
 
 	public int getPotencia() {
@@ -30,14 +26,6 @@ public class Movimiento {
 
 	public void setPotencia(int potencia) {
 		this.potencia = potencia;
-	}
-
-	public Estilo getEstilo() {
-		return estilo;
-	}
-
-	public void setEstilo(Estilo estilo) {
-		this.estilo = estilo;
 	}
 
 	public int getId() {

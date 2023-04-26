@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Caja {
 
 	private int id_caja;
+	
 	private ArrayList<Pokemon> pokemon;
 	
 	public Caja(int id_caja, ArrayList<Pokemon> pokemon) {
