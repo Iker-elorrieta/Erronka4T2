@@ -28,6 +28,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JButton btnLogin;
 	private JLabel errLogin;
 	private JLabel errPassw;
+	
 	//private ArrayList<Usuario> users = new ArrayList<Usuario>();
 	/**
 	 * Launch the application.
@@ -91,6 +92,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		if (e.getSource() == atras) {
 			this.dispose();
 		} else {
@@ -100,6 +102,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 			}
 			else {
 				errLogin.setVisible(false);
+				
 			}
 
 			if (metodos.esVacio(String.valueOf(passw1TF.getPassword()))) {
@@ -108,7 +111,11 @@ public class VistaLogin extends JFrame implements ActionListener {
 			}
 			else {
 				errPassw.setVisible(false);
+				
 			}
+			
+			
+			
 		}
 	}
 

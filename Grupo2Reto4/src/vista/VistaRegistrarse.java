@@ -3,19 +3,20 @@ package vista;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import controlador.Metodos;
-
+import utils.RutasImg;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import java.awt.GridLayout;
 
 public class VistaRegistrarse extends JFrame implements ActionListener {
 
@@ -33,7 +34,11 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private JLabel err3Passw;
 	private JButton atras;
 	private Metodos metodos = new Metodos();
-	//private Usuario[] usuarios;
+	// private ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+	private RutasImg rutas = new RutasImg();
+	private JScrollPane scrollPane;
+	private JPanel panel;
+
 	/**
 	 * Launch the application.
 	 */
@@ -43,12 +48,14 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	 */
 	public VistaRegistrarse() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 704, 503);
+		setBounds(100, 100, 1037, 503);
 		contentPane = new JPanel();
+		contentPane.setOpaque(false);
+		contentPane.setInheritsPopupMenu(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		//usuarios = metodos.arrayUsuarios();
-		
+
+		// usuarios = metodos.arrayUsuarios();
+
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -68,28 +75,28 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.add(atras);
 
 		JLabel jlabelNombre = new JLabel("Nombre del ususario:");
-		jlabelNombre.setHorizontalAlignment(SwingConstants.TRAILING);
 		jlabelNombre.setBounds(223, 115, 148, 14);
+		jlabelNombre.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelNombre);
 
 		JLabel jlabelNick = new JLabel("Nickname del usuario:");
-		jlabelNick.setHorizontalAlignment(SwingConstants.TRAILING);
 		jlabelNick.setBounds(218, 171, 153, 14);
+		jlabelNick.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelNick);
 
 		JLabel jlabelpassw1 = new JLabel("Contraseña:");
-		jlabelpassw1.setHorizontalAlignment(SwingConstants.TRAILING);
 		jlabelpassw1.setBounds(263, 238, 108, 14);
+		jlabelpassw1.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelpassw1);
 
 		JLabel jlabelpassw2 = new JLabel("Confirmar contraseña:");
-		jlabelpassw2.setHorizontalAlignment(SwingConstants.TRAILING);
 		jlabelpassw2.setBounds(218, 284, 153, 14);
+		jlabelpassw2.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelpassw2);
 
 		JLabel jlabelTip = new JLabel("Aviso: Al hacer sesion, se pide el nick y la contraseña.");
-		jlabelTip.setForeground(Color.RED);
 		jlabelTip.setBounds(205, 45, 331, 14);
+		jlabelTip.setForeground(Color.RED);
 		contentPane.add(jlabelTip);
 
 		passw1TF = new JPasswordField();
@@ -101,27 +108,37 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.add(passw2TF);
 
 		errNombreV = new JLabel("El nombre no puede estar vacio");
-		errNombreV.setForeground(Color.RED);
 		errNombreV.setBounds(10, 115, 213, 20);
+		errNombreV.setForeground(Color.RED);
 		contentPane.add(errNombreV);
 		errNombreV.setVisible(false);
 
 		err2Nick = new JLabel("");
-		err2Nick.setForeground(Color.RED);
 		err2Nick.setBounds(10, 171, 213, 14);
+		err2Nick.setForeground(Color.RED);
 		contentPane.add(err2Nick);
 		err2Nick.setVisible(false);
 
 		err3Passw = new JLabel("");
-		err3Passw.setForeground(Color.RED);
 		err3Passw.setBounds(10, 257, 237, 14);
+		err3Passw.setForeground(Color.RED);
 		contentPane.add(err3Passw);
 		err3Passw.setVisible(false);
 
 		JButton btnValidar = new JButton("Registrarse");
+		btnValidar.setBounds(381, 371, 114, 23);
 		btnValidar.addActionListener(this);
-		btnValidar.setBounds(406, 371, 89, 23);
 		contentPane.add(btnValidar);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(600, 25, 400, 400);
+		contentPane.add(scrollPane);
+		
+		panel = new JPanel();
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		elegirPokemon();
+		contentPane.updateUI();
 
 	}
 
@@ -175,4 +192,33 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		}
 
 	}
+
+	public void elegirPokemon() {
+		
+		int x = 0;
+		int y = 0;
+		int i = 1;
+		
+		while (i < 650) {
+			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(i));
+			JLabel pkmnIMG1 = new JLabel();
+			pkmnIMG1.setBounds(x, y, 96, 96);
+			pkmnIMG1.setToolTipText(String.valueOf(i));
+			panel.add(pkmnIMG1);
+			pkmnIMG1.setIcon(pkmnImg1);
+			x+=100;
+			
+			if (x > 101) {
+				y+=100;
+				x=0;
+			}
+			i++;
+		}
+		contentPane.add(scrollPane);
+
+	}
+	
+
+	
+	
 }
