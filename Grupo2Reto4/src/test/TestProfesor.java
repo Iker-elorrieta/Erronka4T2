@@ -10,11 +10,11 @@ import modelo.Profesor;
 import modelo.Tipo;
 
 class TestProfesor {
-
+	Profesor profesor1 = new Profesor("Profesor Oak", "Oak", "Kanto", null);
+	Profesor profesor2 = new Profesor("Profesor Oak", "Oak", "Kanto", Generacion.Kanto);
 	@Test
-	void testProfesor() {
-		Profesor profesor1 = new Profesor("Profesor Oak", "Oak", "Kanto", null);
-		Profesor profesor2 = new Profesor("Profesor Oak", "Oak", "Kanto", Generacion.Kanto);
+	void testProfesorConstructor() {
+		
 		assertFalse(profesor1.Validar());
 		profesor1 = new Profesor("Profesor Oak", "Oak", "Kanto", Generacion.Kanto);
 		assertTrue(profesor1.Validar());
@@ -22,10 +22,16 @@ class TestProfesor {
 		assertEquals(profesor1.getPass(), "Kanto");
 		assertEquals(profesor1.getNombre(),"Profesor Oak");
 		assertEquals(profesor1.getGen(),Generacion.Kanto);
+		
+	}
+	
+	@Test
+	void testProfesorToString() {
 		assertEquals(profesor1.toString(), profesor2.toString());
-		assertEquals(profesor1.hashCode(), profesor2.hashCode());
-		
-		
+	}
+	
+	@Test
+	void testProfesorEquals() {
 		profesor1.equals(profesor2);
 		profesor2=profesor1;
 		profesor1.equals(profesor2);
@@ -43,6 +49,11 @@ class TestProfesor {
 		mov1.setTipo(planta);
 		
 		profesor1.equals(mov1);
+	}
+	
+	@Test
+	void testProfesorHashCode() {
+		assertEquals(profesor1.hashCode(), profesor2.hashCode());
 	}
 	
 }
