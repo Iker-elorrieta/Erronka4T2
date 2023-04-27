@@ -22,8 +22,8 @@ class TestPC {
 	Movimiento move4;
 	ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
 	ArrayList<Caja> cajas = new ArrayList<Caja>();
-	MiPc pc1 = new MiPc(cajas);
-	MiPc pc2 = new MiPc(cajas);
+	MiPc pc1 = new MiPc(cajas, 1);
+	MiPc pc2 = new MiPc(cajas, 1);
 	MiPc pc3 = null;
 	
 
@@ -59,7 +59,7 @@ class TestPC {
 		cajas.add(caja);
 
 		assertEquals(pc1.getCajas().get(0).getPokemon().get(1).getNombre_pokemon(), "Ivysaur");
-
+		assertEquals(pc1.getId_pc(), 1);
 	}
 
 	@Test
@@ -74,6 +74,10 @@ class TestPC {
 		pc3 = pc1;
 		pc1.equals(planta);
 		pc1.equals(pc3);
+		pc2 = new MiPc(cajas, 2);
+		pc1.equals(pc2);
+		pc2 = new MiPc(null, 2);
+		pc1.equals(pc2);
 	}
 
 	@Test

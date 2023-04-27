@@ -97,7 +97,7 @@ public class Metodos {
 			conexion.close();
 		}
 
-		MiPc mipc = new MiPc(cajas);
+		MiPc mipc = new MiPc(cajas, );
 
 		return mipc;
 	}

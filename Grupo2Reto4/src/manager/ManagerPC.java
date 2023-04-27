@@ -49,7 +49,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 					cajas.add(c);
 				}
 				
-				MiPc pc = new MiPc(cajas);
+				MiPc pc = new MiPc(cajas, );
 				pcs.add(pc);
 			}
 

@@ -6,26 +6,23 @@ import java.util.Objects;
 public class MiPc {
 
 	private ArrayList<Caja> cajas;
+	private int id_pc;
 
-	public MiPc(ArrayList<Caja> cajas) {
+	public MiPc(ArrayList<Caja> cajas, int id_pc) {
 		this.cajas = cajas;
+		this.id_pc=id_pc;
 	}
 
 	public ArrayList<Caja> getCajas() {
 		return cajas;
 	}
 
-//	public void InsertarCaja() {
-//		Caja caja = new Caja();
-//		if(cajas.size()<8)
-//			cajas.add(caja);
-//	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(cajas);
+		return Objects.hash(cajas, id_pc);
 	}
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -35,12 +32,16 @@ public class MiPc {
 		if (getClass() != obj.getClass())
 			return false;
 		MiPc other = (MiPc) obj;
-		return Objects.equals(cajas, other.cajas);
+		return id_pc == other.id_pc;
 	}
 
 	@Override
 	public String toString() {
-		return "MiPc [cajas=" + cajas + "]";
+		return "MiPc [cajas=" + cajas + ", id_pc=" + id_pc + "]";
+	}
+
+	public int getId_pc() {
+		return id_pc;
 	}
 
 }

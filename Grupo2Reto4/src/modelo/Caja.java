@@ -49,7 +49,7 @@ public class Caja {
 		if (getClass() != obj.getClass())
 			return false;
 		Caja other = (Caja) obj;
-		return id_caja == other.id_caja && Objects.equals(pokemon, other.pokemon);
+		return id_caja == other.id_caja;
 	}
 	
 }

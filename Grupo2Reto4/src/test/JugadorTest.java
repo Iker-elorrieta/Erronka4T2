@@ -54,49 +54,22 @@ class JugadorTest {
 
 		cajas.add(caja);
 
-		MiPc pc1 = new MiPc(cajas);
-
-
+		MiPc pc1 = new MiPc(cajas, 1);
+		
 		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		assertEquals(player.getLogin(), "Unai");
-	}
-
-	@Test
-	void TestGetSetJugador() {
-		tipos[0] = planta;
-		tipos[1] = veneno;
-		moveset.add(move1);
-		moveset.add(move2);
-		moveset.add(move3);
-		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset);
-		moveset2.add(move1);
-		moveset2.add(move2);
-		moveset2.add(move3);
-		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2);
-		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
-		pokemon.add(pokemon1);
-		pokemon.add(pokemon2);
-		Pokemon[] equipo = { null, pokemon1, pokemon2, null, null, null };
-	
-		Caja caja = new Caja(1, pokemon);
-		cajas.add(caja);
-		MiPc pc1 = new MiPc(cajas);
-
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-
+		assertEquals(player.getNombre(), "Unai");
 		assertEquals(player.getLogin(), "Akos");
 		assertEquals(player.getPass(), "12345");
 		assertEquals(player.getEquipo().toString(), equipo.toString());
+		assertEquals(player.getPc().toString(), pc1.toString());
 		assertEquals(player.getNombre(), "Unai");
-
 	}
 
 	@Test
 	void testEqualsJugador() {
 		tipos[0] = planta;
 		tipos[1] = veneno;
+		
 		moveset.add(move1);
 		moveset.add(move2);
 		moveset.add(move3);
@@ -107,14 +80,17 @@ class JugadorTest {
 		moveset2.add(move3);
 		moveset2.add(move4);
 		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2);
+		
 		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+		
 		pokemon.add(pokemon1);
 		pokemon.add(pokemon2);
+		
 		Pokemon[] equipo = { null, pokemon1, pokemon2, null, null, null };
 		Pokemon[] equipo2 = { null, null, null, null, null, null };
 		Caja caja = new Caja(1, pokemon);
 		cajas.add(caja);
-		MiPc pc1 = new MiPc(cajas);
+		MiPc pc1 = new MiPc(cajas, 1);
 
 		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
 		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc1);
@@ -157,12 +133,11 @@ class JugadorTest {
 		
 		Caja caja = new Caja(1, pokemon);
 		cajas.add(caja);
-		MiPc pc1 = new MiPc(cajas);
-		MiPc pc2 = new MiPc(cajas);
+		MiPc pc1 = new MiPc(cajas, 1);
+		MiPc pc2 = new MiPc(cajas, 1);
 		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc1);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2);
 		
-		assertEquals(player.getPc().toString(), pc2.toString());
 		assertEquals(player.toString(), player2.toString());
 	}
 
@@ -187,10 +162,10 @@ class JugadorTest {
 		
 		Caja caja = new Caja(1, pokemon);
 		cajas.add(caja);
-		MiPc pc1 = new MiPc(cajas);
-		
+		MiPc pc1 = new MiPc(cajas, 1);
+		MiPc pc2 = new MiPc(cajas, 1);
 		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc1);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2);
 
 		assertEquals(player.hashCode(), player2.hashCode());
 	}
@@ -215,7 +190,7 @@ class JugadorTest {
 		Pokemon[] equipo = { null, pokemon1, pokemon2, null, null, null };
 		Caja caja = new Caja(1, pokemon);
 		cajas.add(caja);
-		MiPc pc1 = new MiPc(cajas);
+		MiPc pc1 = new MiPc(cajas, 1);
 		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
 		assertTrue(player.Validar());
 	}

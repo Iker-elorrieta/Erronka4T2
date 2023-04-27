@@ -49,22 +49,12 @@ class CajaTest {
 		
 		pokemon.add(pokemon1);
 		pokemon.add(pokemon2);
+		Caja caja = new Caja(1, pokemon);
+		assertEquals(caja.getPokemon().get(0), pokemon2);
+		assertEquals(caja.getId_caja(), 1);
 		
-
-		assertEquals(caja.getId_caja(),1);
 	}
 	
-	@Test
-	void testCajaSetGet() {
-		
-		moveset2.add(move1);
-		moveset2.add(move2);
-		moveset2.add(move3);
-		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset2);
-		assertEquals(caja.getPokemon().get(1), pokemon2);
-		assertEquals(caja.getId_caja(), 1);
-	}
 	
 	@Test
 	void testCajaEquals() {
@@ -76,7 +66,8 @@ class CajaTest {
 		caja.equals(caja2);
 		caja2 = new Caja(1, null);
 		caja.equals(caja2);
-		
+		caja2=caja;
+		caja.equals(caja2);
 	}
 	
 	@Test
