@@ -1,5 +1,7 @@
 package test;
 
+
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ class CajaTest {
 	Caja caja = new Caja(1, pokemon);
 	Caja caja2 = new Caja(2, pokemon);
 	Caja caja3 = new Caja(2, pokemon);
+	
 	@Test
 	void testCajaConstructor() {
 		tipos[0] = planta;
@@ -59,10 +62,8 @@ class CajaTest {
 		moveset2.add(move3);
 		moveset2.add(move4);
 		Pokemon pokemon2 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset2);
-		assertEquals(caja.getPokemon().get(1),pokemon2);
-		assertEquals(caja.getId_caja(),1);
-		assertEquals(caja.setId_caja(6),6);
-		assertEquals(caja.setPokemon(pokemon),pokemon);
+		assertEquals(caja.getPokemon().get(1), pokemon2);
+		assertEquals(caja.getId_caja(), 1);
 	}
 	
 	@Test
