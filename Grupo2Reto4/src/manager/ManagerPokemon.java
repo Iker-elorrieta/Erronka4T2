@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import controlador.Metodos;
 import excepciones.NotFoundException;
+import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Tipo;
@@ -51,19 +52,21 @@ public class ManagerPokemon implements ManagerInterface<Pokemon>{
 				int spAtk = registro.getInt(9);
 				int spDef = registro.getInt(10);
 				
+				Generacion g = Generacion.valueOf(registro.getString(11));
+				
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 				
-				Movimiento m1 = m.conseguirMovimiento(registro.getInt(11));
-				Movimiento m2 = m.conseguirMovimiento(registro.getInt(12));
-				Movimiento m3 = m.conseguirMovimiento(registro.getInt(13));
-				Movimiento m4 = m.conseguirMovimiento(registro.getInt(1));
+				Movimiento m1 = m.conseguirMovimiento(registro.getInt(12));
+				Movimiento m2 = m.conseguirMovimiento(registro.getInt(13));
+				Movimiento m3 = m.conseguirMovimiento(registro.getInt(14));
+				Movimiento m4 = m.conseguirMovimiento(registro.getInt(15));
 				
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);
 				movimientos_pokemon.add(m3);
 				movimientos_pokemon.add(m4);
 				
-				Pokemon p = new Pokemon(id, name, tipos, hp, atk, def, spAtk, spDef, vel, movimientos_pokemon);
+				Pokemon p = new Pokemon(id, name, tipos, hp, atk, def, spAtk, spDef, vel, movimientos_pokemon, g);
 				
 				pokemons.add(p);
 			}
@@ -81,8 +84,21 @@ public class ManagerPokemon implements ManagerInterface<Pokemon>{
 	}
 
 	@Override
-	public void insert(Pokemon t) throws SQLException, Exception {
+	public void insert(Pokemon p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("Insert into "+DBConexion.T_POKEMON+" values (" +p.getId() + ", '"+p.getNombre_pokemon()+"',)");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 		
 	}
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import modelo.Caja;
+import modelo.Generacion;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
@@ -42,14 +43,14 @@ class TestPC {
 		moveset.add(move3);
 		move4 = new Movimiento(4, "Bomba Lodo", 15, 100, veneno, 90);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
 
 		ArrayList<Movimiento> moveset2 = new ArrayList<Movimiento>();
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
 
 		pokemon.add(pokemon1);
 		pokemon.add(pokemon2);

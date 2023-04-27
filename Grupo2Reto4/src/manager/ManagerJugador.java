@@ -12,10 +12,9 @@ import excepciones.NotFoundException;
 import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Pokemon;
-import modelo.Usuario;
 import utils.DBConexion;
 
-public class ManagerJugador implements ManagerInterface<Usuario> {
+public class ManagerJugador implements ManagerInterface<Jugador> {
 
 	Connection conexion;
 	Statement comando;
@@ -25,10 +24,10 @@ public class ManagerJugador implements ManagerInterface<Usuario> {
 	Metodos m = new Metodos();
 
 	@Override
-	public ArrayList<Usuario> selectAll() throws SQLException, NotFoundException, Exception {
+	public ArrayList<Jugador> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		// Selecciona todos los jugadores de la base de datos
-		ArrayList<Usuario> jugadores = new ArrayList<Usuario>();
+		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
@@ -73,7 +72,7 @@ public class ManagerJugador implements ManagerInterface<Usuario> {
 				
 				
 				
-				Usuario user = new Jugador(nombre, login, passw, equipo, pc);
+				Jugador user = new Jugador(nombre, login, passw, equipo, pc);
 				jugadores.add(user);
 			}
 
@@ -90,24 +89,55 @@ public class ManagerJugador implements ManagerInterface<Usuario> {
 	}
 
 	@Override
-	public void insert(Usuario user) throws SQLException, Exception {
+	public void insert(Jugador user) throws SQLException, Exception {
 		// TODO Auto-generated method stub	
 		
-		conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-		comando = conexion.createStatement();
-		registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("Insert into "+DBConexion.T_USERS+" values ('" + user.getLogin() + "', '" + user.getNombre() + "', '" + user.getPass() + "', "+user.getEquipo().length+");");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override
-	public void update(Usuario user) throws SQLException, Exception {
+	public void update(Jugador user) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
 
+			comando.executeUpdate("update Usuario set ");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override
-	public void delete(Usuario user) throws SQLException, Exception {
+	public void delete(Jugador user) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
 
+			comando.executeUpdate("delete from "+DBConexion.T_USERS+" where user_login ='"+user.getLogin()+"'");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 }

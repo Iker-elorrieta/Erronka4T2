@@ -51,6 +51,18 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 	public void insert(Tipo t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("Insert into "+DBConexion.T_TIPOS+" values (" +t.getId() + ", "+t.getNombre_tipo()+")");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override
@@ -63,6 +75,19 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 	public void delete(Tipo t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("delete from "+DBConexion.T_TIPOS+" where type_id ="+t.getId()+"");
+			
+			
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 }

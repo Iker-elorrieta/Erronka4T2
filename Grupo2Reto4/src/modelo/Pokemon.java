@@ -16,6 +16,7 @@ public class Pokemon {
 	private int sdef;
 	private int vel;
 	private ArrayList<Movimiento> movimientos;
+	private Generacion generacion;
 	
 	public int getId() {
 		return id;
@@ -52,8 +53,14 @@ public class Pokemon {
 	public int getVel() {
 		return vel;
 	}
+	
+	public Generacion getGeneracion() {
+		return generacion;
+	}
 
-	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset) {
+	
+
+	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset, Generacion generacion) {
 		super();
 		this.id = id;
 		this.nombre_pokemon = nombre_pokemon;
@@ -65,18 +72,20 @@ public class Pokemon {
 		this.sdef = sdef;
 		this.vel = vel;
 		this.movimientos = moveset;
+		this.generacion = generacion;
 	}
 
 	public ArrayList<Movimiento> getMovimientos() {
 		return movimientos;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(tipo);
-		result = prime * result + Objects.hash(att, def, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
+		result = prime * result
+				+ Objects.hash(att, def, generacion, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
 		return result;
 	}
 
@@ -89,14 +98,18 @@ public class Pokemon {
 		if (getClass() != obj.getClass())
 			return false;
 		Pokemon other = (Pokemon) obj;
-		return id == other.id;
+		return  id == other.id ;
 	}
 
 	@Override
 	public String toString() {
 		return "Pokemon [id=" + id + ", nombre_pokemon=" + nombre_pokemon + ", tipo=" + Arrays.toString(tipo) + ", hp="
 				+ hp + ", att=" + att + ", def=" + def + ", satt=" + satt + ", sdef=" + sdef + ", vel=" + vel
-				+ ", movimientos=" + movimientos + "]";
+				+ ", movimientos=" + movimientos + ", generacion=" + generacion + "]";
 	}
+	
+	
+
+	
 	
 }
