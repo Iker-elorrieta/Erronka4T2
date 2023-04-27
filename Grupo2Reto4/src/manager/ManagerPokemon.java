@@ -91,7 +91,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon>{
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_POKEMON+" values (" +p.getId() + ", '"+p.getNombre_pokemon()+"',)");
+			comando.executeUpdate("Insert into "+DBConexion.T_POKEMON+" values (" +p.getId() + ", '"+p.getNombre_pokemon()+"',"+p.getTipo()[0].getId()+","+p.getTipo()[1].getId()+",'Poner descripción',"+p.getHp()+","+p.getAtt()+","+p.getDef()+","+p.getVel()+","+p.getSatt()+","+p.getSdef()+",'"+p.getGeneracion()+"',"+p.getMovimientos().get(0).getId()+","+p.getMovimientos().get(1).getId()+","+p.getMovimientos().get(2).getId()+","+p.getMovimientos().get(3).getId()+");");                                                                                                                       
 
 
 		} finally {
@@ -103,14 +103,29 @@ public class ManagerPokemon implements ManagerInterface<Pokemon>{
 	}
 
 	@Override
-	public void update(Pokemon t) throws SQLException, Exception {
+	public void update(Pokemon p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Pokemon t) throws SQLException, Exception {
+	public void delete(Pokemon p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		
+
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("delete from "+DBConexion.T_POKEMON+" where poke_id ="+p.getId()+";");
+			
+			
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 		
 	}
 	

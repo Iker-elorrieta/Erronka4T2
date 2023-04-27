@@ -57,20 +57,45 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento>{
 	}
 
 	@Override
-	public void insert(Movimiento t) throws SQLException, Exception {
+	public void insert(Movimiento m) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("Insert into "+DBConexion.T_MOVS+" values (" + m.getId() + ",'"+m.getNombre()+"',"+m.getTipo().getId()+","+m.getPotencia()+","+m.getPuntosPoder()+","+m.getPrecision()+");");                                                                                          
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
+	}
+
+	@Override
+	public void update(Movimiento m) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Movimiento t) throws SQLException, Exception {
+	public void delete(Movimiento m) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
-	}
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
 
-	@Override
-	public void delete(Movimiento t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+			comando.executeUpdate("delete from "+DBConexion.T_MOVS+" where mov_id ="+m.getId()+";");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 		
 	}
 

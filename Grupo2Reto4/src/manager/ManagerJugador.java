@@ -130,7 +130,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("delete from "+DBConexion.T_USERS+" where user_login ='"+user.getLogin()+"'");
+			comando.executeUpdate("delete from "+DBConexion.T_USERS+" where user_login ='"+user.getLogin()+"';");
 
 
 		} finally {

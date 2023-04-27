@@ -8,31 +8,37 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import excepciones.NotFoundException;
-import modelo.Tipo;
+import modelo.Generacion;
+import modelo.Profesor;
 import utils.DBConexion;
 
-public class ManagerTipos implements ManagerInterface<Tipo> {
+public class ManagerProfesor implements ManagerInterface<Profesor>{
 	
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
 	
 	@Override
-	public ArrayList<Tipo> selectAll() throws SQLException, NotFoundException, Exception {
+	public ArrayList<Profesor> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+		
+		ArrayList<Profesor> profesores = new ArrayList<Profesor>();
 
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_PROFS + ";");
 
 			while (registro.next() == true) {
-				int id = registro.getInt(0);
-				String nombre = registro.getString(1);
 				
-				Tipo t = new Tipo(id, nombre);
-				tipos.add(t);
+				String login = registro.getString(0);
+				String nombre = registro.getString(1);
+				String pass = registro.getString(2);
+				Generacion g = Generacion.valueOf(registro.getString(3));
+				
+				Profesor p = new Profesor(login, nombre, pass, g);
+				
+				profesores.add(p);
 			}
 
 		} finally {
@@ -41,21 +47,22 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			conexion.close();
 		}
 
-		if (tipos.size() == 0)
-			throw new NotFoundException("No hay tipos.");
+		if (profesores.size() == 0)
+			throw new NotFoundException("No hay profesores.");
 
-		return tipos;
+		return profesores;
+		
 	}
 
 	@Override
-	public void insert(Tipo t) throws SQLException, Exception {
+	public void insert(Profesor p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_TIPOS+" values (" +t.getId() + ", "+t.getNombre_tipo()+");");
+			comando.executeUpdate("Insert into "+DBConexion.T_PROFS+" values ('" +p.getLogin()+ "', '"+p.getNombre()+"','"+p.getPass()+"','"+p.getGen()+"');");
 
 
 		} finally {
@@ -63,31 +70,30 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			comando.close();
 			conexion.close();
 		}
+		
+		
 	}
 
 	@Override
-	public void update(Tipo t) throws SQLException, Exception {
+	public void update(Profesor p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Tipo t) throws SQLException, Exception {
+	public void delete(Profesor p) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("delete from "+DBConexion.T_TIPOS+" where type_id ="+t.getId()+";");
-			
-			
-
+			comando.executeUpdate("delete from "+DBConexion.T_PROFS+" where prof_login ='"+p.getLogin()+"';");
 		} finally {
 			registro.close();
 			comando.close();
 			conexion.close();
 		}
 	}
+	
 
 }

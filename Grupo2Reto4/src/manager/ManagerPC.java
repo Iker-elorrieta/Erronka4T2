@@ -82,7 +82,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_MIPC+"(user_login) values ('" + j.getLogin() + "')");
+			comando.executeUpdate("Insert into "+DBConexion.T_MIPC+"(user_login) values ('" + j.getLogin() + "');");
 
 
 		} finally {
@@ -107,7 +107,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("delete from "+DBConexion.T_MIPC+" where pc_id ='"+pc.getId_pc()+"'");
+			comando.executeUpdate("delete from "+DBConexion.T_MIPC+" where pc_id ='"+pc.getId_pc()+"';");
 
 
 		} finally {
