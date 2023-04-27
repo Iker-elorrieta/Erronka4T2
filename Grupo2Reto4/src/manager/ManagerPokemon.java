@@ -103,7 +103,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon>{
 	}
 
 	@Override
-	public void update(Pokemon p) throws SQLException, Exception {
+	public void update(Pokemon p_old, Pokemon p_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}

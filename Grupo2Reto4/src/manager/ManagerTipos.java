@@ -66,9 +66,19 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 	}
 
 	@Override
-	public void update(Tipo t) throws SQLException, Exception {
+	public void update(Tipo t_old, Tipo t_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+			comando.executeUpdate("Update "+DBConexion.T_TIPOS+" where ;");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override

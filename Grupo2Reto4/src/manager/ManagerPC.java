@@ -94,7 +94,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 	}
 
 	@Override
-	public void update(MiPc t) throws SQLException, Exception {
+	public void update(MiPc t_old, MiPc t_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}

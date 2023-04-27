@@ -75,7 +75,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 	}
 
 	@Override
-	public void update(Profesor p) throws SQLException, Exception {
+	public void update(Profesor p_old, Profesor p_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}

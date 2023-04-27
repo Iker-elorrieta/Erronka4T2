@@ -75,7 +75,7 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento>{
 	}
 
 	@Override
-	public void update(Movimiento m) throws SQLException, Exception {
+	public void update(Movimiento m_old, Movimiento m_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		
 	}

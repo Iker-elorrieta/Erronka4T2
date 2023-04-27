@@ -4,7 +4,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import controlador.Metodos;
+import modelo.Generacion;
+import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Tipo;
 import utils.RutasImg;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -20,6 +23,7 @@ import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class VistaRegistrarse extends JFrame implements ActionListener {
 
@@ -45,7 +49,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private Pokemon[] EquipoPKMN;
 	private JButton verDatos;
 	private JLabel jlabelpkmn;
-	//private Pokemon pokemon;
+	private Pokemon pokemon;
 	/**
 	 * Launch the application.
 	 */
@@ -160,6 +164,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		verDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VistaDatos vd = new VistaDatos(pokemon);
+				vd.setVisible(true);
 			}
 		});
 		verDatos.setBounds(895, 11, 105, 23);
@@ -243,6 +248,21 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					//pokemon= pokemonALL.get(Integer.valueOf(pkmnIMG1.getToolTipText()-1));
+					ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
+					Tipo planta = new Tipo(3, "Planta");
+					Tipo veneno = new Tipo(12, "Veneno");
+					Tipo normal = new Tipo(1, "Normal");
+					Tipo[] tipos = { planta, veneno };
+					Movimiento move1 = new Movimiento(1, "Latigo cepa", 15, 100, planta, 50);
+					moveset.add(move1);
+					Movimiento move2 = new Movimiento(2, "Placaje", 40, 100, normal, 40);
+					moveset.add(move2);
+					Movimiento move3 = new Movimiento(3, "Absorber", 20, 100, planta, 20);
+					moveset.add(move3);
+					Movimiento move4 = new Movimiento(4, "Bomba Lodo", 15, 100, veneno, 90);
+					moveset.add(move4);
+					
+					pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
 				}
 			});
 			i++;

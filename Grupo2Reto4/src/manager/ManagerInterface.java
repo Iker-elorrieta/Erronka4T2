@@ -22,8 +22,9 @@ public ArrayList<T> selectAll () throws SQLException, NotFoundException, Excepti
 	 * Updates a T on Data Base 
 	 * 
 	 * @param t
+	 * @param t2
 	 */
-	public void update (T t) throws SQLException, Exception;
+	public void update (T t, T t2) throws SQLException, Exception;
 	
 	/**
 	 * Delete a T on Data Base 

@@ -108,7 +108,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	}
 
 	@Override
-	public void update(Caja c) throws SQLException, Exception {
+	public void update(Caja c_old, Caja c_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 
 	}

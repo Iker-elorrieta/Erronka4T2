@@ -107,7 +107,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 	}
 
 	@Override
-	public void update(Jugador user) throws SQLException, Exception {
+	public void update(Jugador user_old, Jugador user_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
