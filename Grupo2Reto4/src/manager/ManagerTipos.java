@@ -12,11 +12,11 @@ import modelo.Tipo;
 import utils.DBConexion;
 
 public class ManagerTipos implements ManagerInterface<Tipo> {
-	
+
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
-	
+
 	@Override
 	public ArrayList<Tipo> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
@@ -30,7 +30,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			while (registro.next() == true) {
 				int id = registro.getInt(0);
 				String nombre = registro.getString(1);
-				
+
 				Tipo t = new Tipo(id, nombre);
 				tipos.add(t);
 			}
@@ -50,13 +50,13 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 	@Override
 	public void insert(Tipo t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_TIPOS+" values (" +t.getId() + ", "+t.getNombre_tipo()+");");
-
+			comando.executeUpdate(
+					"Insert into " + DBConexion.T_TIPOS + " values (" + t.getId() + ", " + t.getNombre_tipo() + ");");
 
 		} finally {
 			registro.close();
@@ -71,8 +71,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			comando.executeUpdate("Update "+DBConexion.T_TIPOS+" where ;");
-
+			comando.executeUpdate("Update " + DBConexion.T_TIPOS + " where ;");
 
 		} finally {
 			registro.close();
@@ -84,20 +83,17 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 	@Override
 	public void delete(Tipo t) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-
-			comando.executeUpdate("delete from "+DBConexion.T_TIPOS+" where type_id ="+t.getId()+";");
-			
-			
-
+			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_id =" + t.getId() + ";");
 		} finally {
 			registro.close();
 			comando.close();
 			conexion.close();
 		}
+		
 	}
 
 }

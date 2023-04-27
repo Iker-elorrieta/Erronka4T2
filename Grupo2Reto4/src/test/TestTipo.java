@@ -12,7 +12,6 @@ import modelo.Pokemon;
 import modelo.Tipo;
 
 class TestTipo {
-	
 	Tipo planta1 = new Tipo(3, "Planta");
 	Tipo planta2 = new Tipo(3, "Planta");
 	
