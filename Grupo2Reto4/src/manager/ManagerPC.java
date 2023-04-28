@@ -106,7 +106,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 				}
 			}
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -123,7 +122,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			comando.executeUpdate("delete from " + DBConexion.T_MIPC + " where pc_id ='" + pc.getId_pc() + "';");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}

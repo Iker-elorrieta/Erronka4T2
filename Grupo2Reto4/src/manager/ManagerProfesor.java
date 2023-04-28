@@ -66,7 +66,6 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -85,7 +84,6 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -100,7 +98,6 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 
 			comando.executeUpdate("delete from "+DBConexion.T_PROFS+" where prof_login ='"+p.getLogin()+"';");
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
