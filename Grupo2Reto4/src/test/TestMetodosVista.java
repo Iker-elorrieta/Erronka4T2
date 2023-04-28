@@ -43,6 +43,7 @@ class TestMetodosVista {
 	ArrayList<MiPc> listadoPC = null;
 	ManagerJugador playerMN = new ManagerJugador();
 	ManagerCajas cajaMN = new ManagerCajas();
+	
 	@Test
 	void testAnyadirPokemon() throws NotFoundException, ArrayListLlenoException, SQLException, Exception {
 		listadoPC= 	pc.selectAll();
@@ -64,8 +65,8 @@ class TestMetodosVista {
 	@Test
 	void testIntercambiarEquipoToCaja() throws NotFoundException, SQLException, Exception {
 		
-		int posEquipo = 5;
-		int posCaja = 20;
+		int posEquipo = 0;
+		int posCaja = 0;
 		cajas.add(caja);
 		Jugador player = playerMN.selectAll().get(0);
 		ArrayList<Pokemon> equipoOld = player.getEquipo();
@@ -80,10 +81,10 @@ class TestMetodosVista {
 		ArrayList<Pokemon> equipoNew = player.getEquipo();
 		ArrayList<Caja> cajasNew = playerMN.selectAll().get(0).getPc().getCajas();
 		caja = cajasNew.get(0);
-		Arraycaja.getPokemon()
+		
 		assertEquals(pokeOldCaja.getNombre_pokemon(),"bulbasaur");
 		assertEquals(equipoNew.get(equipoNew.size()-1),"bulbasaur");
-		assertEquals()
+		//WIP
 	}
 
 }
