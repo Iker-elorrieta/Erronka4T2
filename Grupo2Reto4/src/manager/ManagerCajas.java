@@ -110,7 +110,21 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	@Override
 	public void update(Caja c_old, Caja c_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
 
+			for (int i = 0;i < c_new.getPokemon().size();i++) {
+				Integer poke_id=null;
+				if(c_new.getPokemon().get(i) != null)
+					poke_id=c_new.getPokemon().get(i).getId();
+				comando.executeUpdate("update from "+DBConexion.T_CAJAS_POKEMON+" set poke_id="+poke_id+" where pc_box_id="+c_old.getId_caja()+";");
+			}
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override
