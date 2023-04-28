@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,8 +39,17 @@ class ManagerTiposTest {
 	}
 
 	@Test
-	void testDelete() {
+	void testDelete() throws NotFoundException, SQLException, Exception {
 		
+		Tipo tipo1 = new Tipo(30, "Pistola");
+		mt.insert(tipo1);
+		ArrayList<Tipo> tipos=mt.selectAll();
+		mt.delete(tipos.get(tipos.size()-1));
+		tipos=mt.selectAll();
+		for (Tipo tipo : tipos) {
+			assertFalse(tipo.getNombre_tipo().equals("Pistola"));
+		}
+				
 	}
 
 }
