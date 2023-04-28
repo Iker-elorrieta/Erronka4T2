@@ -1,6 +1,5 @@
 package vista;
 
-import controlador.Metodos;
 import controlador.MetodosVista;
 import modelo.Jugador;
 
