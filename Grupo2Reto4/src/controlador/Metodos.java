@@ -200,8 +200,17 @@ public class Metodos {
 	public void intercambiarFromEquipoToCaja(int pokeEquipo, int pokeCaja, Jugador player, Caja caja) {
 		ArrayList<Pokemon> cajaElegida = caja.getPokemon();
 		ArrayList<Pokemon> equipo = player.getEquipo();
-		cajaElegida.get(pokeCaja);
-
+		//sacamos el pokemon y su posicion de los 2 arrayList
+		Pokemon poke1 =cajaElegida.get(pokeCaja);
+		int posicion1= cajaElegida.indexOf(poke1);
+		Pokemon poke2 =equipo.get(pokeEquipo);
+		int posicion2= equipo.indexOf(poke2);
+		//borramos los pokemon de dichas posiciones
+		cajaElegida.remove(posicion1);
+		equipo.remove(posicion2);
+		//añadimos los pokemons
+		equipo.add(poke1);
+		cajaElegida.add(poke2);
 	}
 	
 
