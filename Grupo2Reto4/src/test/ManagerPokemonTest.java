@@ -1,10 +1,11 @@
-package manager;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import excepciones.NotFoundException;
+import manager.ManagerPokemon;
 import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
