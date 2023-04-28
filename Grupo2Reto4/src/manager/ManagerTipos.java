@@ -71,7 +71,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			comando.executeUpdate("Update " + DBConexion.T_TIPOS + " where ;");
+			comando.executeUpdate("Update " + DBConexion.T_TIPOS + " set type_id="+t_new.getId()+", type_name='"+t_new.getNombre_tipo()+"' where type_id="+t_old.getId()+";");
 
 		} finally {
 			registro.close();
@@ -87,7 +87,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_id =" + t.getId() + ";");
+			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_name='" + t.getNombre_tipo() + "';");
 		} finally {
 			registro.close();
 			comando.close();

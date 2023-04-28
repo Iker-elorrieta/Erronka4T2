@@ -77,7 +77,18 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 	@Override
 	public void update(Profesor p_old, Profesor p_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+
+			comando.executeUpdate("update "+DBConexion.T_PROFS+" set prof_login='"+p_new.getLogin()+"', prof_name='"+p_new.getNombre()+"', prof_pass='"+p_new.getPass()+"', prof_gen='"+p_new.getGen()+"' where prof_login='"+p_old.getLogin()+"';");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override

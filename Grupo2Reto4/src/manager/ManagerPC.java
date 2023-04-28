@@ -96,7 +96,20 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 	@Override
 	public void update(MiPc t_old, MiPc t_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+		ManagerCajas mc = new ManagerCajas();
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+			for (int nMipc = 0;nMipc < t_old.getCajas().size();nMipc++)
+				for (int posCaja=0;posCaja < t_old.getCajas().get(nMipc).getPokemon().size();posCaja++)
+				comando.executeUpdate("update "+DBConexion.T_MIPC+" set pc_id="+t_new.getId_pc()+", ");
+
+
+		} finally {
+			registro.close();
+			comando.close();
+			conexion.close();
+		}
 	}
 
 	@Override
@@ -106,7 +119,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-
+			
 			comando.executeUpdate("delete from "+DBConexion.T_MIPC+" where pc_id ='"+pc.getId_pc()+"';");
 
 
