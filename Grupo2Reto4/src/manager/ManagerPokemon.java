@@ -99,7 +99,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					+ p.getMovimientos().get(2).getId() + "," + p.getMovimientos().get(3).getId() + ");");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -124,10 +123,9 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					+ ", spDef=" + p_new.getSdef() + ", poke_gen='" + p_new.getGeneracion() + "', poke_mov1="
 					+ p_new.getMovimientos().get(0).getId() + "', poke_mov2=" + p_new.getMovimientos().get(1).getId()
 					+ "', poke_mov3=" + p_new.getMovimientos().get(2).getId() + "', poke_mov4="
-					+ p_new.getMovimientos().get(3).getId() + " where poke_id=" + p_old.getId());
+					+ p_new.getMovimientos().get(3).getId() + " where poke_id=" + p_old.getId()+";");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -144,7 +142,6 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			comando.executeUpdate("delete from " + DBConexion.T_POKEMON + " where poke_id =" + p.getId() + ";");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
