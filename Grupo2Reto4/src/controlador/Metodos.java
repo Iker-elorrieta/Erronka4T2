@@ -1,5 +1,8 @@
 package controlador;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -101,11 +104,27 @@ public class Metodos {
 		
 		String horaS = horas+":"+mins;
 		
+		String cadena = "";
+		try {
+			FileReader fic = new FileReader("LoginHistorial/historial.txt");
+			BufferedReader buf = new BufferedReader(fic);
+			String linea;
+			while ((linea = buf.readLine()) != null)
+				cadena += linea+"\r\n";
+			
+			buf.close();
+			fic.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		
 		try {
 			FileWriter fic = new FileWriter("LoginHistorial/historial.txt");
 			
-			fic.write("El usuario "+user.getNombre()+" con usuario "+user.getLogin()+" ha iniciado sesion el "+fechaS+" a la(s) "+horaS);
+			fic.write(cadena+"El usuario "+user.getNombre()+" con usuario "+user.getLogin()+" ha iniciado sesion el "+fechaS+" a la(s) "+horaS);
 			
 			fic.close();
 		} catch (IOException e1) {
