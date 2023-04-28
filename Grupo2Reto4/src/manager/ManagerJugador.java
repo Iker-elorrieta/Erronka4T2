@@ -96,10 +96,16 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 			comando.executeUpdate("Insert into " + DBConexion.T_USERS + " values ('" + user.getLogin() + "', '"
 					+ user.getNombre() + "', '" + user.getPass() + "', " + user.getEquipo().size() + ");");
-			comando.executeUpdate("Insert into " + DBConexion.T_EQUIPOS + " values ('" + user.getLogin() + "', '"
-					+ user.getEquipo().get(0) + "', '" + user.getEquipo().get(1) + "', '" + user.getEquipo().get(2)
-					+ "', '" + user.getEquipo().get(3) + "', '" + user.getEquipo().get(4) + "', '"
-					+ user.getEquipo().get(5) + "');");
+			comando.executeUpdate("Insert into " + DBConexion.T_EQUIPOS + "(user_login) values ('" + user.getLogin() + "');");
+			
+			
+				
+			for(int i = 0;i<user.getEquipo().size();i++) {
+				
+				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id"+(i+1)+" = "+user.getEquipo().get(i).getId()+" where user_login = '" +user.getLogin()+ "';");	
+			}
+				
+			
 
 		} finally {
 			
@@ -118,27 +124,13 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			comando.executeUpdate("update " + DBConexion.T_USERS + " set user_login='" + user_new.getLogin()
 					+ "', user_name='" + user_new.getNombre() + "', user_pass='" + user_new.getPass()
 					+ " where user_login='" + user_old.getLogin() + "';");
-
-			Integer p2 = null;
-			Integer p3 = null;
-			Integer p4 = null;
-			Integer p5 = null;
-			Integer p6 = null;
-			if (user_new.getEquipo().get(1) != null)
-				p2 = user_new.getEquipo().get(1).getId();
-			if (user_new.getEquipo().get(2) != null)
-				p3 = user_new.getEquipo().get(2).getId();
-			if (user_new.getEquipo().get(3) != null)
-				p4 = user_new.getEquipo().get(3).getId();
-			if (user_new.getEquipo().get(4) != null)
-				p5 = user_new.getEquipo().get(4).getId();
-			if (user_new.getEquipo().get(5) != null)
-				p6 = user_new.getEquipo().get(5).getId();
-
-			comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set user_login='" + user_new.getLogin()
-					+ "', poke_id1=" + user_new.getEquipo().get(0).getId() + ", poke_id2=" + p2 + ", poke_id3=" + p3
-					+ ", poke_id4=" + p4 + ", poke_id5=" + p5 + ", poke_id6=" + p6 + " where user_login='"
-					+ user_old.getLogin() + "';");
+			
+			comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set user_login = '"+user_new.getLogin()+"' where user_login='"+user_old.getLogin()+"';");
+			
+			for(int i = 0;i<user_new.getEquipo().size();i++) {
+				
+				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id"+(i+1)+" = "+user_new.getEquipo().get(i).getId()+" where user_login = '" +user_new.getLogin()+ "';");	
+			}
 
 		} finally {
 			

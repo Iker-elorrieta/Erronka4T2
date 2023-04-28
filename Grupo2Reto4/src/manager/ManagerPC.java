@@ -86,6 +86,7 @@ public class ManagerPC implements ManagerInterface<MiPc>{
 
 
 		} finally {
+			registro.close();
 			comando.close();
 			conexion.close();
 		}
