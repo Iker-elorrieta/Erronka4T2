@@ -13,11 +13,13 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import controlador.Metodos;
+
+import controlador.MetodosVista;
 import excepciones.ArrayListLlenoException;
 import manager.ManagerCajas;
 import manager.ManagerJugador;
 import manager.ManagerPC;
+import manager.ManagerPokemon;
 import modelo.Caja;
 import modelo.Generacion;
 import modelo.Jugador;
@@ -32,10 +34,13 @@ class MoverPokemonCajaEquipoTest {
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
-	Metodos m = new Metodos();
+	MetodosVista m = new MetodosVista();
 	ManagerJugador mj = new ManagerJugador();
 	ManagerPC mpc = new ManagerPC();
 	ManagerCajas mc = new ManagerCajas();
+	
+	ManagerPokemon mp = new ManagerPokemon();
+	
 	@Test
 	void test() throws Exception {
 		
@@ -65,6 +70,8 @@ class MoverPokemonCajaEquipoTest {
 		Jugador j = new Jugador("prueba1", "prueba", "123", equipo, pc);
 		
 		mj.insert(j);
+		
+		mp.insert(p);
 		
 		mpc.insert(pc);
 		

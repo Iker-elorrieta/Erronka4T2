@@ -1,21 +1,16 @@
 package controlador;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
-import excepciones.ArrayListLlenoException;
+import java.util.ArrayList;
+
+
+
 import excepciones.NotFoundException;
 import manager.ManagerCajas;
 import manager.ManagerMovimientos;
@@ -23,13 +18,12 @@ import manager.ManagerPC;
 import manager.ManagerPokemon;
 import manager.ManagerTipos;
 import modelo.Caja;
-import modelo.Jugador;
+
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Tipo;
-import modelo.Usuario;
-import utils.DBConexion;
+
 
 public class Metodos {
 	

@@ -13,12 +13,13 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import controlador.Metodos;
+
+import controlador.MetodosVista;
 import modelo.Jugador;
 
 class GuardarLoginTest {
 	
-	Metodos m = new Metodos();
+	MetodosVista m = new MetodosVista();
 	
 	@Test
 	void test() {

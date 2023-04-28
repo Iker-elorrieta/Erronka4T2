@@ -58,7 +58,7 @@ class TestMetodosVista {
 		mv.anyadirPokemon(pokemon1.getId(), pcGet);
 		
 		ArrayList<MiPc>listadoPC2 = pc.selectAll();
-		MiPc pcGet2 = listadoPC.get(0);
+		MiPc pcGet2 = listadoPC2.get(0);
 		assertEquals(pcGet2.getCajas().get(0).getPokemon().get(0).getNombre_pokemon(),nombre);
 	}
 	
@@ -69,8 +69,8 @@ class TestMetodosVista {
 		int posCaja = 0;
 		cajas.add(caja);
 		Jugador player = playerMN.selectAll().get(0);
-		ArrayList<Pokemon> equipoOld = player.getEquipo();
-		Pokemon pokeOld = equipoOld.get(posEquipo);
+		//ArrayList<Pokemon> equipoOld = player.getEquipo();
+		//Pokemon pokeOld = equipoOld.get(posEquipo);
 		Caja caja = playerMN.selectAll().get(0).getPc().getCajas().get(0);
 		ArrayList<Pokemon> cajaOld = caja.getPokemon();
 		Pokemon pokeOldCaja = cajaOld.get(posCaja);

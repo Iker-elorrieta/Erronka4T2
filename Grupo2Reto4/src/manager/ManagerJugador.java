@@ -34,7 +34,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
-			while (registro.next() == true) {
+			while (registro.next()) {
 
 				String nombre = registro.getString("user_name");
 				String login = registro.getString("user_login");
@@ -42,9 +42,9 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				registro2 = comando
-						.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login =" + login + ";");
+						.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login ='" + login + "';");
 
-				while (registro2.next() == true) {
+				while (registro2.next()) {
 					Pokemon p1 = m.conseguirPokemon(registro2.getInt("poke_id1"));
 					Pokemon p2 = m.conseguirPokemon(registro2.getInt("poke_id2"));
 					Pokemon p3 = m.conseguirPokemon(registro2.getInt("poke_id3"));

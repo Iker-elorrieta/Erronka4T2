@@ -17,7 +17,7 @@ import java.util.Date;
 
 import excepciones.ArrayListLlenoException;
 import excepciones.NotFoundException;
-import manager.ManagerCajas;
+
 import manager.ManagerPokemon;
 import modelo.Caja;
 import modelo.Jugador;
@@ -113,7 +113,7 @@ public class MetodosVista {
 			throws NotFoundException, SQLException, Exception, ArrayListLlenoException {
 		// Se manda la caja seleccionada
 		ManagerPokemon man = new ManagerPokemon();
-		ManagerCajas cajas = new ManagerCajas();
+
 		ArrayList<Caja> listaCajas = pc.getCajas();
 		ArrayList<Pokemon> lista = new ArrayList<Pokemon>();
 		lista = man.selectAll();
