@@ -69,7 +69,6 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 					+ m.getPrecision() + ");");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -94,7 +93,6 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 			comando.executeUpdate("delete from " + DBConexion.T_MOVS + " where mov_id =" + m.getId() + ";");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}

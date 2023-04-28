@@ -102,7 +102,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					+ user.getEquipo().get(5) + "');");
 
 		} finally {
-			registro.close();
+			
 			comando.close();
 			conexion.close();
 		}
@@ -141,7 +141,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					+ user_old.getLogin() + "';");
 
 		} finally {
-			registro.close();
+			
 			comando.close();
 			conexion.close();
 		}
@@ -158,7 +158,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					"delete from " + DBConexion.T_USERS + " where user_login ='" + user.getLogin() + "';");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}

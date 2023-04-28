@@ -100,7 +100,6 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			}
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -121,7 +120,6 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 				comando.executeUpdate("update from "+DBConexion.T_CAJAS_POKEMON+" set poke_id="+poke_id+" where pc_box_id="+c_old.getId_caja()+";");
 			}
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
@@ -140,7 +138,6 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			comando.executeUpdate("delete from "+DBConexion.T_CAJAS_POKEMON+" where pc_box_id ="+c.getId_caja()+";");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
