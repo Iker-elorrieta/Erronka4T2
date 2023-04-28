@@ -39,7 +39,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				String nombre = registro.getString("user_name");
 				String login = registro.getString("user_login");
 				String passw = registro.getString("user_pass");
-				Pokemon[] equipo = new Pokemon[6];
+				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 				
 				registro2 = comando.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login ="+login+";");
 				
@@ -51,12 +51,12 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					Pokemon p5 = m.conseguirPokemon(registro2.getInt("poke_id5"));
 					Pokemon p6 = m.conseguirPokemon(registro2.getInt("poke_id6"));
 					
-					equipo[0] = p1;
-					equipo[1] = p2;
-					equipo[2] = p3;
-					equipo[3] = p4;
-					equipo[4] = p5;
-					equipo[5] = p6;
+					equipo.add(p1);
+					equipo.add(p2);
+					equipo.add(p3);
+					equipo.add(p4);
+					equipo.add(p5);
+					equipo.add(p6);
 				
 				}
 				
@@ -96,7 +96,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_USERS+" values ('" + user.getLogin() + "', '" + user.getNombre() + "', '" + user.getPass() + "', "+user.getEquipo().length+");");
+			comando.executeUpdate("Insert into "+DBConexion.T_USERS+" values ('" + user.getLogin() + "', '" + user.getNombre() + "', '" + user.getPass() + "', "+user.getEquipo().size()+");");
 
 
 		} finally {
