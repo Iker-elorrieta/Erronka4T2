@@ -84,7 +84,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			comando.executeUpdate("Insert into " + DBConexion.T_MIPC + "(user_login) values ('" + j.getLogin() + "');");
 
 		} finally {
-			registro.close();
 			comando.close();
 			conexion.close();
 		}
