@@ -141,7 +141,49 @@ public class Metodos {
 		
 	}
 	
-	
+	public void anyadirPokemon(int opcion, MiPc pc)
+			throws NotFoundException, SQLException, Exception, ArrayListLlenoException {
+		// Se manda la caja seleccionada
+		ManagerPokemon man = new ManagerPokemon();
+		ManagerCajas cajas = new ManagerCajas();
+		ArrayList<Caja> listaCajas = pc.getCajas();
+		ArrayList<Pokemon> lista = new ArrayList<Pokemon>();
+		lista = man.selectAll();
+		Pokemon pokeSeleccionado = lista.get(opcion - 1);
+		Caja caja = null;
+
+		for (int i = 0; i < listaCajas.size(); i++) {
+			if (listaCajas.get(i).getPokemon().size() < 30) {
+				caja = listaCajas.get(i);
+			}
+		}
+		if (caja != null) {
+			caja.getPokemon().add(pokeSeleccionado);
+			int pc_id = pc.getId_pc();
+			int pc_box_id = caja.getId_caja();
+			int poke_id = pokeSeleccionado.getId();
+			try {
+				conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+				comando = conexion.createStatement();
+				comando.executeUpdate("Insert into" + DBConexion.T_CAJAS_POKEMON + "(pc_id,pc_box_id,poke_id) values ("
+						+ pc_id + "," + pc_box_id + "," + poke_id + ");");
+			} finally {
+				registro.close();
+				comando.close();
+				conexion.close();
+			}
+		} else {
+			throw new ArrayListLlenoException("PC LLENO");
+		}
+	}
+
+
+	public void intercambiarFromEquipoToCaja(int pokeEquipo, int pokeCaja, Jugador player, Caja caja) {
+		ArrayList<Pokemon> cajaElegida = caja.getPokemon();
+		ArrayList<Pokemon> equipo = player.getEquipo();
+		cajaElegida.get(pokeCaja);
+
+	}
 	
 
 }
