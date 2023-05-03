@@ -57,13 +57,14 @@ class JugadorTest {
 
 		MiPc pc1 = new MiPc(cajas, 1);
 		
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
+		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
 		assertEquals(player.getNombre(), "Unai");
 		assertEquals(player.getLogin(), "Akos");
 		assertEquals(player.getPass(), "12345");
 		assertEquals(player.getEquipo().toString(), equipo.toString());
 		assertEquals(player.getPc().toString(), pc1.toString());
 		assertEquals(player.getNombre(), "Unai");
+		assertEquals(player.isBan(), false);
 	}
 
 	@Test
@@ -96,22 +97,22 @@ class JugadorTest {
 		cajas.add(caja);
 		MiPc pc1 = new MiPc(cajas, 1);
 
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc1);
+		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
 		Jugador player3 = player;
 
 		player.equals(null);
 		player.equals(player3);
 		player.equals(player2);
 		player.equals(planta);
-		player2 = new Jugador("Unai", "Akos", "12345", equipo, null);
+		player2 = new Jugador("Unai", "Akos", "12345", equipo, null, false);
 		player.equals(player2);
-		player2 = new Jugador("Unai", "Akos", "12345", null, pc1);
+		player2 = new Jugador("Unai", "Akos", "12345", null, pc1, false);
 		player.equals(player2);
 
-		player2 = new Jugador("Unai", "Akos", "12345", null, null);
+		player2 = new Jugador("Unai", "Akos", "12345", null, null, false);
 		assertFalse(player2.Validar());
-		player2 = new Jugador("Unai", "Akos", "12345", null, null);
+		player2 = new Jugador("Unai", "Akos", "12345", null, null, false);
 		assertFalse(player2.Validar());
 
 	}
@@ -139,8 +140,8 @@ class JugadorTest {
 		cajas.add(caja);
 		MiPc pc1 = new MiPc(cajas, 1);
 		MiPc pc2 = new MiPc(cajas, 1);
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2);
+		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2, false);
 		
 		assertEquals(player.toString(), player2.toString());
 	}
@@ -168,8 +169,8 @@ class JugadorTest {
 		cajas.add(caja);
 		MiPc pc1 = new MiPc(cajas, 1);
 		MiPc pc2 = new MiPc(cajas, 1);
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
-		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2);
+		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
+		Jugador player2 = new Jugador("Unai", "Akos", "12345", equipo, pc2, false);
 
 		assertEquals(player.hashCode(), player2.hashCode());
 	}
@@ -194,7 +195,7 @@ class JugadorTest {
 		Caja caja = new Caja(1, equipo);
 		cajas.add(caja);
 		MiPc pc1 = new MiPc(cajas, 1);
-		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1);
+		Jugador player = new Jugador("Unai", "Akos", "12345", equipo, pc1, false);
 		assertTrue(player.Validar());
 	}
 }

@@ -7,11 +7,13 @@ public class Jugador extends Usuario {
 
 	private ArrayList<Pokemon> equipo;
 	private MiPc pc;
+	private boolean ban;
 
-	public Jugador(String usuario, String login, String pass, ArrayList<Pokemon> equipo, MiPc pc) {
+	public Jugador(String usuario, String login, String pass, ArrayList<Pokemon> equipo, MiPc pc, boolean ban) {
 		super(usuario, login, pass);
 		this.equipo = equipo;
 		this.pc = pc;
+		this.ban = ban;
 	}
 
 	public ArrayList<Pokemon> getEquipo() {
@@ -20,6 +22,10 @@ public class Jugador extends Usuario {
 
 	public MiPc getPc() {
 		return pc;
+	}
+
+	public boolean isBan() {
+		return ban;
 	}
 
 	@Override
@@ -40,7 +46,7 @@ public class Jugador extends Usuario {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(equipo, pc);
+		result = prime * result + Objects.hash(ban, equipo, pc);
 		return result;
 	}
 
@@ -53,14 +59,15 @@ public class Jugador extends Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Jugador other = (Jugador) obj;
-		return Objects.equals(equipo, other.equipo) && Objects.equals(pc, other.pc);
+		return ban == other.ban && Objects.equals(equipo, other.equipo) && Objects.equals(pc, other.pc);
 	}
 
 	@Override
 	public String toString() {
-		return "Jugador [equipo=" + equipo + ", pc=" + pc + "]";
+		return "Jugador [equipo=" + equipo + ", pc=" + pc + ", ban=" + ban + "]";
 	}
 
+	
 	
 
 }

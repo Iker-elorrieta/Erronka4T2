@@ -19,9 +19,6 @@ public class Profesor extends Usuario{
 
 
 
-	public void setReg(Region reg) {
-		this.reg = reg;
-	}
 
 
 
