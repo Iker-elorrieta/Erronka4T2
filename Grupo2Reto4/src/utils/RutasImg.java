@@ -13,6 +13,10 @@ public class RutasImg {
 		return "img/grande/oak.jpg";
 	}
 	
+	public String rutaPC() {
+		return "img/pc.jpg";
+	}
+	
 	public String PNGfrontalPKMN(int num) {
 		String nPkDx = String.valueOf(num);
 		return "img/grande/" + nPkDx + ".png";

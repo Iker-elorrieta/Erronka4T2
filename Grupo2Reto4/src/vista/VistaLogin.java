@@ -3,6 +3,8 @@ package vista;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Metodos;
+import utils.RutasImg;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 
@@ -22,13 +26,13 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton atras;
-	Metodos metodos = new Metodos();
+	private Metodos metodos = new Metodos();
 	private JTextField loginTF;
 	private JPasswordField passw1TF;
 	private JButton btnLogin;
 	private JLabel errLogin;
 	private JLabel errPassw;
-	
+	private RutasImg rutas = new RutasImg();
 	//private ArrayList<Usuario> users = new ArrayList<Usuario>();
 	/**
 	 * Launch the application.
@@ -51,7 +55,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	 */
 	public VistaLogin() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 610, 279);
+		setBounds(100, 100, 512, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -87,6 +91,17 @@ public class VistaLogin extends JFrame implements ActionListener {
 		errPassw.setBounds(321, 137, 228, 14);
 		contentPane.add(errPassw);
 		errPassw.setVisible(false);
+		
+		rutas.rutaPC();
+		ImageIcon pkmnImg1 = new ImageIcon("img/pc.jpg");
+		JLabel imgFondo = new JLabel();
+		imgFondo.setBounds(0, 0, 512, 430);
+		contentPane.add(imgFondo);
+		imgFondo.setIcon(pkmnImg1);
+		
+		
+		
+
 	}
 
 	@Override
