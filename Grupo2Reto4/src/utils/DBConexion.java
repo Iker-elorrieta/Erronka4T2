@@ -14,5 +14,6 @@ public class DBConexion {
 	public static final String T_TIPOS = "Tipos";
 	public static final String T_MIPC = "PC";
 	public static final String T_CAJAS = "Caja";
+	public static final String T_REGION = "Region";
 	public static final String T_CAJAS_POKEMON = "CajaPokemon";
 }
