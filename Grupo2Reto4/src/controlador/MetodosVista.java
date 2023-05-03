@@ -109,23 +109,16 @@ public class MetodosVista {
 		
 	}
 	
-	public void anyadirPokemon(int opcion, MiPc pc)
+	public void anyadirPokemon(int opcion, MiPc pc, Caja caja)
 			throws NotFoundException, SQLException, Exception, ArrayListLlenoException {
 		// Se manda la caja seleccionada
 		ManagerPokemon man = new ManagerPokemon();
 
-		ArrayList<Caja> listaCajas = pc.getCajas();
 		ArrayList<Pokemon> lista = new ArrayList<Pokemon>();
 		lista = man.selectAll();
 		Pokemon pokeSeleccionado = lista.get(opcion - 1);
-		Caja caja = null;
 
-		for (int i = 0; i < listaCajas.size(); i++) {
-			if (listaCajas.get(i).getPokemon().size() < 30) {
-				caja = listaCajas.get(i);
-			}
-		}
-		if (caja != null) {
+		if (caja.getPokemon().size() < 30) {
 			caja.getPokemon().add(pokeSeleccionado);
 			int pc_id = pc.getId_pc();
 			int pc_box_id = caja.getId_caja();
@@ -141,11 +134,38 @@ public class MetodosVista {
 				conexion.close();
 			}
 		} else {
-			throw new ArrayListLlenoException("PC LLENO");
+			throw new ArrayListLlenoException("CAJA LLENA.");
 		}
 	}
 
+	public void liberarPokemon(int opcion, MiPc pc, Caja caja)
+			throws NotFoundException, SQLException, Exception {
+		// Se manda la caja seleccionada
+		ManagerPokemon man = new ManagerPokemon();
+		
+		ArrayList<Pokemon> lista = man.selectAll();
 
+		Pokemon pokeSeleccionado = lista.get(opcion - 1);
+		
+		
+		
+
+		if (pokeSeleccionado != null) {
+			
+			try {
+				conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+				comando = conexion.createStatement();
+				comando.executeUpdate("update "+DBConexion.T_CAJAS_POKEMON+" set "+""+" where pc_id="+pc.getId_pc()+" and box_id="+caja.getId_caja()+";");
+			} finally {
+				registro.close();
+				comando.close();
+				conexion.close();
+			}
+		} else {
+			throw new NotFoundException("No hay pokemon en esa celda.");
+		}
+	}
+	
 	public void intercambiarFromEquipoToCaja(int pokeEquipo, int pokeCaja, Jugador player, Caja caja) {
 		ArrayList<Pokemon> cajaElegida = caja.getPokemon();
 		ArrayList<Pokemon> equipo = player.getEquipo();

@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import controlador.Metodos;
+import excepciones.NotFoundException;
 import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
@@ -24,6 +25,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.border.BevelBorder;
 
 public class VistaRegistrarse extends JFrame implements ActionListener {
 
@@ -50,6 +52,8 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private JButton verDatos;
 	private JLabel jlabelpkmn;
 	private Pokemon pokemon;
+	private JButton btnValidar;
+
 	/**
 	 * Launch the application.
 	 */
@@ -136,42 +140,43 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.add(err3Passw);
 		err3Passw.setVisible(false);
 
-		JButton btnValidar = new JButton("Registrarse");
-		btnValidar.setBounds(381, 371, 114, 23);
+		btnValidar = new JButton("Registrarse");
 		btnValidar.addActionListener(this);
+		btnValidar.setBounds(381, 371, 114, 23);
 		contentPane.add(btnValidar);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(600, 50, 400, 400);
+		scrollPane.setBounds(634, 142, 350, 110);
 		contentPane.add(scrollPane);
-		
+
 		panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		panel.setLayout(new GridLayout(0, 3, 10, 10));
-		
+
 		jlabelpkmn = new JLabel("Elije un pokemon inicial:");
-		jlabelpkmn.setBounds(600, 15, 213, 14);
+		jlabelpkmn.setBounds(634, 115, 213, 14);
 		contentPane.add(jlabelpkmn);
-		
-		
+
 		errpkmn = new JLabel("Elije un pokemon inicial");
 		errpkmn.setForeground(new Color(255, 0, 0));
 		errpkmn.setBounds(181, 375, 179, 14);
 		contentPane.add(errpkmn);
 		errpkmn.setVisible(false);
-		
+
 		verDatos = new JButton("Ver datos");
 		verDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VistaDatos vd = new VistaDatos(pokemon);
-				vd.setVisible(true);
+				try {
+					verDatosEnVentana();
+				} catch (NotFoundException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		});
 		verDatos.setBounds(895, 11, 105, 23);
 		contentPane.add(verDatos);
-		
-		
-		
+
 		elegirPokemon();
 		contentPane.updateUI();
 
@@ -182,7 +187,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource() == atras) {
 			this.dispose();
-		} else {
+		} else if (e.getSource() == btnValidar) {
 			int ok = 0;
 			if (metodos.esVacio(nombreTF.getText()))
 				errNombreV.setVisible(true);
@@ -217,13 +222,13 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				err3Passw.setVisible(false);
 				ok++;
 			}
-			if(EquipoPKMN == null) {
+			if (EquipoPKMN == null) {
 				errpkmn.setVisible(false);
-			}else {
+			} else {
 				errpkmn.setVisible(false);
 				ok++;
 			}
-			
+
 			if (ok == 4) {
 				JOptionPane.showMessageDialog(null, "Prueba a hacer login.", "Registrado correctamente",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -234,20 +239,33 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 
 	}
 
+	public void verDatosEnVentana() throws NotFoundException {
+
+		if (pokemon != null) {
+			VistaDatos vd = new VistaDatos(pokemon);
+			vd.setVisible(true);
+		} else
+			throw new NotFoundException("No has seleccionadon ningun pokemon.");
+
+	}
+
 	public void elegirPokemon() {
+
+		int i = 0;
+		JLabel[] jlabelspkmn = new JLabel[3];
 		
-		int i = 1;
-		
-		while (i < 650) {
-			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(i));
+		while (i < 3) {
+			int rnum = (int) ((Math.random() * 648) + 1);
+			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(rnum));
 			JLabel pkmnIMG1 = new JLabel();
-			pkmnIMG1.setToolTipText(String.valueOf(i));
+			pkmnIMG1.setToolTipText(String.valueOf(rnum));
 			panel.add(pkmnIMG1);
 			pkmnIMG1.setIcon(pkmnImg1);
 			pkmnIMG1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					//pokemon= pokemonALL.get(Integer.valueOf(pkmnIMG1.getToolTipText()-1));
+					
+					// pokemon = pokemonALL.get(Integer.valueOf(pkmnIMG1.getToolTipText()-1));
 					ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 					Tipo planta = new Tipo(3, "Planta");
 					Tipo veneno = new Tipo(12, "Veneno");
@@ -261,10 +279,25 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 					moveset.add(move3);
 					Movimiento move4 = new Movimiento(4, "Bomba Lodo", 15, 100, veneno, 90);
 					moveset.add(move4);
-					
+
 					pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+					
+					if (pkmnIMG1.getBorder() == null) {
+						for (JLabel pklabel : jlabelspkmn)
+							pklabel.setBorder(null);
+						pkmnIMG1.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), null, null, null));
+						
+						
+					}
+					else {
+						pkmnIMG1.setBorder(null);
+						pokemon=null;
+					}
+						
+					
 				}
 			});
+			jlabelspkmn[i]=pkmnIMG1;
 			i++;
 		}
 		contentPane.add(scrollPane);

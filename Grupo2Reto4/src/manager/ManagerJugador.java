@@ -96,19 +96,17 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 			comando.executeUpdate("Insert into " + DBConexion.T_USERS + " values ('" + user.getLogin() + "', '"
 					+ user.getNombre() + "', '" + user.getPass() + "', " + user.getEquipo().size() + ");");
-			comando.executeUpdate("Insert into " + DBConexion.T_EQUIPOS + "(user_login) values ('" + user.getLogin() + "');");
-			
-			
-				
-			for(int i = 0;i<user.getEquipo().size();i++) {
-				
-				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id"+(i+1)+" = "+user.getEquipo().get(i).getId()+" where user_login = '" +user.getLogin()+ "';");	
+			comando.executeUpdate(
+					"Insert into " + DBConexion.T_EQUIPOS + "(user_login) values ('" + user.getLogin() + "');");
+
+			for (int i = 0; i < user.getEquipo().size(); i++) {
+
+				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
+						+ user.getEquipo().get(i).getId() + " where user_login = '" + user.getLogin() + "';");
 			}
-				
-			
 
 		} finally {
-			
+
 			comando.close();
 			conexion.close();
 		}
@@ -124,35 +122,44 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			comando.executeUpdate("update " + DBConexion.T_USERS + " set user_login='" + user_new.getLogin()
 					+ "', user_name='" + user_new.getNombre() + "', user_pass='" + user_new.getPass()
 					+ " where user_login='" + user_old.getLogin() + "';");
-			
-			comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set user_login = '"+user_new.getLogin()+"' where user_login='"+user_old.getLogin()+"';");
-			
-			for(int i = 0;i<user_new.getEquipo().size();i++) {
-				
-				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id"+(i+1)+" = "+user_new.getEquipo().get(i).getId()+" where user_login = '" +user_new.getLogin()+ "';");	
+
+			comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set user_login = '" + user_new.getLogin()
+					+ "' where user_login='" + user_old.getLogin() + "';");
+
+			for (int i = 0; i < user_new.getEquipo().size(); i++) {
+
+				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
+						+ user_new.getEquipo().get(i).getId() + " where user_login = '" + user_new.getLogin() + "';");
 			}
 
 		} finally {
-			
+
 			comando.close();
 			conexion.close();
 		}
 	}
 
 	@Override
-	public void delete(Jugador user) throws SQLException, Exception {
+	public void delete(Jugador user) throws SQLException, Exception, NotFoundException {
 		// TODO Auto-generated method stub
+		if (user == null)
+			throw new NotFoundException("El contenedor jugador esta vacio.");
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			
 			comando = conexion.createStatement();
+			
 
 			comando.executeUpdate(
 					"delete from " + DBConexion.T_USERS + " where user_login ='" + user.getLogin() + "';");
 
 		} finally {
-			comando.close();
+			if (comando == null)
+				throw new SQLException("No se ha podido establecer conexion con la base de datos.");
 			conexion.close();
 		}
+		
 	}
 
 }

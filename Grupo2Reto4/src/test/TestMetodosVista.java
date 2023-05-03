@@ -48,6 +48,7 @@ class TestMetodosVista {
 	void testAnyadirPokemon() throws NotFoundException, ArrayListLlenoException, SQLException, Exception {
 		listadoPC= 	pc.selectAll();
 		MiPc pcGet = listadoPC.get(0);
+		
 		//--> 
 		moveset.add(move1);
 		moveset.add(move2);
@@ -55,7 +56,7 @@ class TestMetodosVista {
 		moveset.add(move4);
 		listaPokemon.add(pokemon1);
 		//-->	
-		mv.anyadirPokemon(pokemon1.getId(), pcGet);
+		mv.anyadirPokemon(pokemon1.getId(), pcGet, pcGet.getCajas().get(0));
 		
 		ArrayList<MiPc>listadoPC2 = pc.selectAll();
 		MiPc pcGet2 = listadoPC2.get(0);

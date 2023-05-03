@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.border.BevelBorder;
 
 public class VistaDatos extends JFrame implements ActionListener {
 
@@ -32,7 +34,7 @@ public class VistaDatos extends JFrame implements ActionListener {
 	 */
 	public VistaDatos(Pokemon pokemon) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 485, 438);
+		setBounds(100, 100, 485, 451);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -91,7 +93,7 @@ public class VistaDatos extends JFrame implements ActionListener {
 		
 		JButton atras = new JButton("Atras");
 		atras.addActionListener(this);
-		atras.setBounds(377, 365, 89, 23);
+		atras.setBounds(380, 389, 89, 23);
 		contentPane.add(atras);
 		
 		JLabel jName = new JLabel(pokemon.getNombre_pokemon());
@@ -100,6 +102,7 @@ public class VistaDatos extends JFrame implements ActionListener {
 		contentPane.add(jName);
 		
 		JLabel jgen = new JLabel("Generación: "+pokemon.getGeneracion());
+		jgen.setToolTipText(tabla());
 		jgen.setHorizontalAlignment(SwingConstants.CENTER);
 		jgen.setBounds(30, 11, 109, 14);
 		contentPane.add(jgen);
@@ -142,6 +145,62 @@ public class VistaDatos extends JFrame implements ActionListener {
 		tipo2.setBounds(97, 185, 62, 14);
 		contentPane.add(tipo2);
 		
+		JLabel lblMov1 = new JLabel(pokemon.getMovimientos().get(0).getNombre());
+		lblMov1.setToolTipText("<html>"+
+				"Tipo: "+pokemon.getMovimientos().get(0).getTipo().getNombre_tipo()+"<br>"+
+				"Potencia: "+pokemon.getMovimientos().get(0).getPotencia()+"<br>"+
+				"Precision: "+pokemon.getMovimientos().get(0).getPrecision()+"<br>"+
+				"PP: "+pokemon.getMovimientos().get(0).getPuntosPoder()+"</html>"
+				);
+		lblMov1.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblMov1.setForeground(new Color(0, 0, 0));
+		lblMov1.setBackground(Color.WHITE);
+		lblMov1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMov1.setBounds(34, 256, 154, 43);
+		contentPane.add(lblMov1);
+		
+		JLabel lblMov2 = new JLabel(pokemon.getMovimientos().get(1).getNombre());
+		lblMov2.setToolTipText("<html>"+
+				"Tipo: "+pokemon.getMovimientos().get(1).getTipo().getNombre_tipo()+"<br>"+
+				"Potencia: "+pokemon.getMovimientos().get(1).getPotencia()+"<br>"+
+				"Precision: "+pokemon.getMovimientos().get(1).getPrecision()+"<br>"+
+				"PP: "+pokemon.getMovimientos().get(1).getPuntosPoder()+"</html>"
+				);
+		lblMov2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMov2.setForeground(Color.BLACK);
+		lblMov2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblMov2.setBackground(Color.WHITE);
+		lblMov2.setBounds(265, 256, 154, 43);
+		contentPane.add(lblMov2);
+		
+		JLabel lblMov3 = new JLabel(pokemon.getMovimientos().get(2).getNombre());
+		lblMov3.setToolTipText("<html>"+
+				"Tipo: "+pokemon.getMovimientos().get(2).getTipo().getNombre_tipo()+"<br>"+
+				"Potencia: "+pokemon.getMovimientos().get(2).getPotencia()+"<br>"+
+				"Precision: "+pokemon.getMovimientos().get(2).getPrecision()+"<br>"+
+				"PP: "+pokemon.getMovimientos().get(2).getPuntosPoder()+"</html>"
+				);
+		lblMov3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMov3.setForeground(Color.BLACK);
+		lblMov3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblMov3.setBackground(Color.WHITE);
+		lblMov3.setBounds(34, 326, 154, 43);
+		contentPane.add(lblMov3);
+		
+		JLabel lblMov4 = new JLabel(pokemon.getMovimientos().get(3).getNombre());
+		lblMov4.setToolTipText("<html>"+
+				"Tipo: "+pokemon.getMovimientos().get(3).getTipo().getNombre_tipo()+"<br>"+
+				"Potencia: "+pokemon.getMovimientos().get(3).getPotencia()+"<br>"+
+				"Precision: "+pokemon.getMovimientos().get(3).getPrecision()+"<br>"+
+				"PP: "+pokemon.getMovimientos().get(3).getPuntosPoder()+"</html>"
+				);
+		lblMov4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMov4.setForeground(Color.BLACK);
+		lblMov4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		lblMov4.setBackground(Color.WHITE);
+		lblMov4.setBounds(265, 326, 154, 43);
+		contentPane.add(lblMov4);
+		
 		
 	}
 
@@ -150,5 +209,51 @@ public class VistaDatos extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		this.dispose();
+	}
+	
+	public String tabla() {
+		String tabla="<html>"+
+				"<style>\r\n"
+				+ "table, th, td {\r\n"
+				+ "\r\n"
+				+ "border: 1px solid black;\r\n"
+				+ "text-align:center;\r\n"
+				+ "border-collapse: collapse;\r\n"
+				+ "}\r\n"
+				+ "td{\r\n"
+				+ "height: 20px;\r\n"
+				+ "width: 120px;\r\n"
+				+ "}\r\n"
+				+ "</style>"+
+				"<body>"+
+				"<table>"+
+				"<tr>"+
+					"<th>Region</th>"+
+					"<th>Cantidad de pokemon</th>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>Kanto</td>"+
+					"<td>1-151</td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>Johto</td>"+
+					"<td>152-242</td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>Hoenn</td>"+
+					"<td>243-341</td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>Shinnoh</td>"+
+					"<td>342-493</td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>Tesselia</td>"+
+					"<td>494-649</td>"+
+				"</tr>"+
+			"</table>"+
+			"</body>"+
+		"</html>";
+		return tabla;
 	}
 }
