@@ -23,7 +23,7 @@ class GuardarLoginTest {
 	
 	@Test
 	void test() {
-		Jugador j = new Jugador("igor333", "Igor", null, null, null);
+		Jugador j = new Jugador("igor333", "Igor", null, null, null, false); 
 		m.guardarLogin(j);
 		m.guardarLogin(j);
 		Date fecha = new Date();
