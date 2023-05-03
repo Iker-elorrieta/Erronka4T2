@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
-
+import org.hamcrest.core.IsInstanceOf;
 
 import excepciones.NotFoundException;
 import manager.ManagerCajas;
@@ -18,11 +18,12 @@ import manager.ManagerPC;
 import manager.ManagerPokemon;
 import manager.ManagerTipos;
 import modelo.Caja;
-
+import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Tipo;
+import modelo.Usuario;
 
 
 public class Metodos {
@@ -74,6 +75,20 @@ public class Metodos {
 		ManagerPC mpc = new ManagerPC();
 		ArrayList<MiPc> pcs = mpc.selectAll();
 		return pcs.get(id-1);
+	}
+
+	public String estaBaneado(ArrayList<Usuario> users, String text, char[] password) {
+		// TODO Auto-generated method stub
+		String estado="";
+		for (Usuario user : users) {
+			if (user instanceof Jugador) {
+				
+				
+			}
+		}
+		
+		
+		return estado;
 	}
 	
 	

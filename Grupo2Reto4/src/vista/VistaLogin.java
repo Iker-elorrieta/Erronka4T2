@@ -3,6 +3,7 @@ package vista;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Metodos;
+import modelo.Usuario;
 import utils.RutasImg;
 
 import javax.swing.JLabel;
@@ -33,7 +35,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JLabel errLogin;
 	private JLabel errPassw;
 	private RutasImg rutas = new RutasImg();
-	//private ArrayList<Usuario> users = new ArrayList<Usuario>();
+	private ArrayList<Usuario> users = new ArrayList<Usuario>();
 	/**
 	 * Launch the application.
 	 */
@@ -55,47 +57,47 @@ public class VistaLogin extends JFrame implements ActionListener {
 	 */
 	public VistaLogin() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 512, 430);
+		setBounds(100, 100, 518, 468);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		loginTF = new JTextField();
-		loginTF.setBounds(144, 62, 139, 20);
+		loginTF.setBounds(72, 103, 139, 20);
 		contentPane.add(loginTF);
 		loginTF.setColumns(10);
 
 		atras = new JButton("Atras");
-		atras.setBounds(10, 10, 86, 23);
+		atras.setBounds(90, 314, 86, 23);
 		atras.addActionListener(this);
 		contentPane.add(atras);
 
 		passw1TF = new JPasswordField();
-		passw1TF.setBounds(144, 134, 139, 20);
+		passw1TF.setBounds(72, 175, 139, 20);
 		contentPane.add(passw1TF);
 
 		btnLogin = new JButton("Iniciar sesion");
 		btnLogin.addActionListener(this);
-		btnLogin.setBounds(10, 98, 122, 23);
+		btnLogin.setBounds(313, 314, 122, 23);
 		contentPane.add(btnLogin);
 
 		errLogin = new JLabel("");
 		errLogin.setForeground(Color.RED);
-		errLogin.setBounds(321, 65, 228, 14);
+		errLogin.setBounds(235, 109, 228, 14);
 		contentPane.add(errLogin);
 		errLogin.setVisible(false);
 
 		errPassw = new JLabel("");
 		errPassw.setForeground(Color.RED);
-		errPassw.setBounds(321, 137, 228, 14);
+		errPassw.setBounds(235, 181, 228, 14);
 		contentPane.add(errPassw);
 		errPassw.setVisible(false);
 		
 		rutas.rutaPC();
 		ImageIcon pkmnImg1 = new ImageIcon("img/pc.jpg");
 		JLabel imgFondo = new JLabel();
-		imgFondo.setBounds(0, 0, 512, 430);
+		imgFondo.setBounds(0, 0, 502, 429);
 		contentPane.add(imgFondo);
 		imgFondo.setIcon(pkmnImg1);
 		
@@ -107,17 +109,19 @@ public class VistaLogin extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		int i=0;
 		if (e.getSource() == atras) {
 			this.dispose();
 		} else {
+			
+			
 			if (metodos.esVacio(loginTF.getText())) {
 				errLogin.setVisible(true);
 				errLogin.setText("Este campo no puede esar vacio.");
 			}
 			else {
 				errLogin.setVisible(false);
-				
+				i++;
 			}
 
 			if (metodos.esVacio(String.valueOf(passw1TF.getPassword()))) {
@@ -126,10 +130,12 @@ public class VistaLogin extends JFrame implements ActionListener {
 			}
 			else {
 				errPassw.setVisible(false);
-				
+				i++;
 			}
 			
-			
+			if (i == 2) {
+				metodos.estaBaneado(users, loginTF.getText(), passw1TF.getPassword());
+			}
 			
 		}
 	}
