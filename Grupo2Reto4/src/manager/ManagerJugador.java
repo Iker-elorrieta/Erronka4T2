@@ -39,6 +39,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				String nombre = registro.getString("user_name");
 				String login = registro.getString("user_login");
 				String passw = registro.getString("user_pass");
+				boolean ban = registro.getBoolean("ban");
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				registro2 = comando
@@ -70,7 +71,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					pc = m.conseguirPc(registro3.getInt("pc_id"));
 				}
 
-				Jugador user = new Jugador(nombre, login, passw, equipo, pc);
+				Jugador user = new Jugador(nombre, login, passw, equipo, pc, ban);
 				jugadores.add(user);
 			}
 

@@ -63,7 +63,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VistaPerfil(Jugador jugador) {
-		jugador= new Jugador("clemen", "TheToastGod", "aaa", null, null);
+		jugador= new Jugador("clemen", "TheToastGod", "aaa", null, null, false);
 		jugadorActual=jugador;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(50, 50, 661, 699);

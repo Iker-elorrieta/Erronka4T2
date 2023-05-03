@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Profesor;
+
 public class VistaProfesor extends JFrame {
 
 	/**
@@ -21,7 +23,7 @@ public class VistaProfesor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VistaProfesor frame = new VistaProfesor();
+					VistaProfesor frame = new VistaProfesor(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,8 +34,9 @@ public class VistaProfesor extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user 
 	 */
-	public VistaProfesor() {
+	public VistaProfesor(Profesor user) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

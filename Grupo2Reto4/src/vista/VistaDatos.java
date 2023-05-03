@@ -101,7 +101,7 @@ public class VistaDatos extends JFrame implements ActionListener {
 		jName.setBounds(25, 211, 119, 14);
 		contentPane.add(jName);
 		
-		JLabel jgen = new JLabel("Generación: "+pokemon.getGeneracion());
+		JLabel jgen = new JLabel("Generación: "+pokemon.getReg().getNombre());
 		jgen.setToolTipText(tabla());
 		jgen.setHorizontalAlignment(SwingConstants.CENTER);
 		jgen.setBounds(30, 11, 109, 14);

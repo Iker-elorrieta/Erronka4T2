@@ -1,16 +1,10 @@
 package controlador;
 
-
 import java.sql.Connection;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
-
-import org.hamcrest.core.IsInstanceOf;
-
 import excepciones.NotFoundException;
 import manager.ManagerCajas;
 import manager.ManagerMovimientos;
@@ -18,20 +12,18 @@ import manager.ManagerPC;
 import manager.ManagerPokemon;
 import manager.ManagerTipos;
 import modelo.Caja;
-import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Tipo;
 import modelo.Usuario;
 
-
 public class Metodos {
-	
+
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
-	
+
 	// Comprueba que el string enviado es vacio
 	public boolean esVacio(String contenido) {
 		return contenido.equals("");
@@ -53,45 +45,43 @@ public class Metodos {
 		// TODO Auto-generated method stub
 		ManagerMovimientos mm = new ManagerMovimientos();
 		ArrayList<Movimiento> m = mm.selectAll();
-		return m.get(idM-2);
+		return m.get(idM - 2);
 	}
 
 	public Pokemon conseguirPokemon(int idpokemon) throws NotFoundException, SQLException, Exception {
 		// TODO Auto-generated method stub
 		ManagerPokemon mp = new ManagerPokemon();
 		ArrayList<Pokemon> pokemons = mp.selectAll();
-		return pokemons.get(idpokemon-1);
+		return pokemons.get(idpokemon - 1);
 	}
 
 	public Caja conseguirCajas(int idbox) throws NotFoundException, SQLException, Exception {
 		// TODO Auto-generated method stub
 		ManagerCajas mc = new ManagerCajas();
 		ArrayList<Caja> cajas = mc.selectAll();
-		return cajas.get(idbox-1);
+		return cajas.get(idbox - 1);
 	}
 
 	public MiPc conseguirPc(int id) throws NotFoundException, SQLException, Exception {
 		// TODO Auto-generated method stub
 		ManagerPC mpc = new ManagerPC();
 		ArrayList<MiPc> pcs = mpc.selectAll();
-		return pcs.get(id-1);
+		return pcs.get(id - 1);
 	}
 
-	public String estaBaneado(ArrayList<Usuario> users, String text, char[] password) {
+	public Usuario encontrarUsuario(ArrayList<Usuario> users, String login, String passw) {
 		// TODO Auto-generated method stub
-		String estado="";
+		Usuario usuario = null;
+
 		for (Usuario user : users) {
-			if (user instanceof Jugador) {
-				
-				
+			if (user.getLogin().equals(login)) {
+				if (user.getPass().equals(passw)) {
+					usuario = user;
+				}
 			}
 		}
-		
-		
-		return estado;
-	}
-	
-	
 
+		return usuario;
+	}
 
 }

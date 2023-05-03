@@ -1,6 +1,5 @@
 package vista;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,10 +13,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Metodos;
+import modelo.Jugador;
+import modelo.Profesor;
 import modelo.Usuario;
 import utils.RutasImg;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 
 public class VistaLogin extends JFrame implements ActionListener {
@@ -36,21 +39,10 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JLabel errPassw;
 	private RutasImg rutas = new RutasImg();
 	private ArrayList<Usuario> users = new ArrayList<Usuario>();
+
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaLogin frame = new VistaLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -93,33 +85,28 @@ public class VistaLogin extends JFrame implements ActionListener {
 		errPassw.setBounds(235, 181, 228, 14);
 		contentPane.add(errPassw);
 		errPassw.setVisible(false);
-		
+
 		rutas.rutaPC();
 		ImageIcon pkmnImg1 = new ImageIcon("img/pc.jpg");
 		JLabel imgFondo = new JLabel();
 		imgFondo.setBounds(0, 0, 502, 429);
 		contentPane.add(imgFondo);
 		imgFondo.setIcon(pkmnImg1);
-		
-		
-		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		int i=0;
+		int i = 0;
 		if (e.getSource() == atras) {
 			this.dispose();
 		} else {
-			
-			
+
 			if (metodos.esVacio(loginTF.getText())) {
 				errLogin.setVisible(true);
 				errLogin.setText("Este campo no puede esar vacio.");
-			}
-			else {
+			} else {
 				errLogin.setVisible(false);
 				i++;
 			}
@@ -127,16 +114,32 @@ public class VistaLogin extends JFrame implements ActionListener {
 			if (metodos.esVacio(String.valueOf(passw1TF.getPassword()))) {
 				errPassw.setVisible(true);
 				errPassw.setText("La contraseña no puede estar vacia.");
-			}
-			else {
+			} else {
 				errPassw.setVisible(false);
 				i++;
 			}
-			
+
 			if (i == 2) {
-				metodos.estaBaneado(users, loginTF.getText(), passw1TF.getPassword());
+				Usuario user = metodos.encontrarUsuario(users, loginTF.getText(),
+						String.valueOf(passw1TF.getPassword()));
+				if (user instanceof Jugador) {
+					if (((Jugador) user).isBan()) {
+						JOptionPane.showMessageDialog(null, "ESTE USUARIO A SIDO BANEADO POR INFRINGIR LAS NORMAS.",
+								"ALERTA!!!!", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						VistaPerfil vp = new VistaPerfil(((Jugador) user));
+						vp.setVisible(true);
+						this.dispose();
+					}
+
+				} else {
+					VistaProfesor vp = new VistaProfesor(((Profesor) user));
+					vp.setVisible(true);
+					this.dispose();
+				}
+
 			}
-			
+
 		}
 	}
 

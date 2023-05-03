@@ -5,9 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import controlador.Metodos;
 import excepciones.NotFoundException;
-import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 import utils.RutasImg;
 import javax.swing.JTextField;
@@ -279,8 +279,8 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 					moveset.add(move3);
 					Movimiento move4 = new Movimiento(4, "Bomba Lodo", 15, 100, veneno, 90);
 					moveset.add(move4);
-
-					pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+					Region region = new Region(1, "Kanto");
+					pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, region);
 					
 					if (pkmnIMG1.getBorder() == null) {
 						for (JLabel pklabel : jlabelspkmn)
