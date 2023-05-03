@@ -14,15 +14,16 @@ import manager.ManagerCajas;
 import manager.ManagerJugador;
 import manager.ManagerPC;
 import modelo.Caja;
-import modelo.Generacion;
 import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 
 class TestMetodosVista {
 	MetodosVista mv = new MetodosVista();
+	Region reg = new Region(1,"Kanto");
 	Tipo planta = new Tipo(3, "Planta");
 	Tipo veneno = new Tipo(12, "Veneno");
 	Tipo normal = new Tipo(1, "Normal");
@@ -35,7 +36,7 @@ class TestMetodosVista {
 	ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 	ArrayList<Pokemon> listaPokemon = new ArrayList<Pokemon>();
 	String nombre = "bulbasaur";
-	Pokemon pokemon1 = new Pokemon(1, nombre, tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+	Pokemon pokemon1 = new Pokemon(1, nombre, tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 	Caja caja = new Caja(1, listaPokemon);
 	ArrayList<Caja> cajas = new ArrayList<Caja>();
 	MiPc pcTest = new MiPc(cajas, 1);

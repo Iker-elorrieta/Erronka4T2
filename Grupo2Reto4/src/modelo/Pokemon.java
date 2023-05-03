@@ -16,7 +16,7 @@ public class Pokemon {
 	private int sdef;
 	private int vel;
 	private ArrayList<Movimiento> movimientos;
-	private Generacion generacion;
+	private Region reg;
 	
 	public int getId() {
 		return id;
@@ -53,14 +53,12 @@ public class Pokemon {
 	public int getVel() {
 		return vel;
 	}
-	
-	public Generacion getGeneracion() {
-		return generacion;
+
+	public Region getReg() {
+		return reg;
 	}
 
-	
-
-	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset, Generacion generacion) {
+	public Pokemon(int id, String nombre_pokemon, Tipo[] tipo, int hp, int att, int def, int satt, int sdef, int vel, ArrayList<Movimiento> moveset, Region reg) {
 		super();
 		this.id = id;
 		this.nombre_pokemon = nombre_pokemon;
@@ -72,7 +70,7 @@ public class Pokemon {
 		this.sdef = sdef;
 		this.vel = vel;
 		this.movimientos = moveset;
-		this.generacion = generacion;
+		this.reg = reg;
 	}
 
 	public ArrayList<Movimiento> getMovimientos() {
@@ -85,7 +83,7 @@ public class Pokemon {
 		int result = 1;
 		result = prime * result + Arrays.hashCode(tipo);
 		result = prime * result
-				+ Objects.hash(att, def, generacion, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
+				+ Objects.hash(att, def, reg, hp, id, movimientos, nombre_pokemon, satt, sdef, vel);
 		return result;
 	}
 
@@ -105,7 +103,7 @@ public class Pokemon {
 	public String toString() {
 		return "Pokemon [id=" + id + ", nombre_pokemon=" + nombre_pokemon + ", tipo=" + Arrays.toString(tipo) + ", hp="
 				+ hp + ", att=" + att + ", def=" + def + ", satt=" + satt + ", sdef=" + sdef + ", vel=" + vel
-				+ ", movimientos=" + movimientos + ", generacion=" + generacion + "]";
+				+ ", movimientos=" + movimientos + ", generacion=" + reg + "]";
 	}
 	
 	

@@ -21,11 +21,11 @@ import manager.ManagerJugador;
 import manager.ManagerPC;
 import manager.ManagerPokemon;
 import modelo.Caja;
-import modelo.Generacion;
 import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 
 
@@ -34,6 +34,7 @@ class MoverPokemonCajaEquipoTest {
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
+	Region reg = new Region(1,"Kanto");
 	MetodosVista m = new MetodosVista();
 	ManagerJugador mj = new ManagerJugador();
 	ManagerPC mpc = new ManagerPC();
@@ -52,7 +53,7 @@ class MoverPokemonCajaEquipoTest {
 		
 		
 		
-		Pokemon p = new Pokemon(1111, "bulbasaur", tipos,45,49,49,45,65,65,moveset, Generacion.Kanto);
+		Pokemon p = new Pokemon(1111, "bulbasaur", tipos,45,49,49,45,65,65,moveset, reg);
 		
 		ArrayList<Pokemon> plista = new ArrayList<Pokemon>();
 		

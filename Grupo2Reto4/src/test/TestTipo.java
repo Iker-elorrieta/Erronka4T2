@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 
 class TestTipo {
@@ -23,6 +23,8 @@ class TestTipo {
 	Tipo planta = new Tipo(3, "Planta");
 	Tipo veneno = new Tipo(12, "Veneno");
 	Tipo normal = new Tipo(1, "Normal");
+	
+	Region reg = new Region(1, "Kanto");
 	
 	
 	@Test
@@ -47,7 +49,7 @@ class TestTipo {
 		moveset.add(move3);
 		move4 = new Movimiento(4, "Bomba Lodo", 15, 100, veneno, 90);
 		moveset.add(move4);
-		Pokemon pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 
 		planta1.equals(pokemon);
 

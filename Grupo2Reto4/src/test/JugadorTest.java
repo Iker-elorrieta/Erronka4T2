@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import modelo.Caja;
-import modelo.Generacion;
 import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 
 class JugadorTest {
@@ -26,6 +26,7 @@ class JugadorTest {
 	ArrayList<Movimiento> moveset2 = new ArrayList<Movimiento>();
 	ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 	ArrayList<Caja> cajas = new ArrayList<Caja>();
+	Region reg = new Region(1,"Kanto");
 
 	@Test
 	void testJugadorConstructor() {
@@ -38,13 +39,13 @@ class JugadorTest {
 		moveset.add(move3);
 		moveset.add(move4);
 
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 		equipo.add(pokemon1);
@@ -74,12 +75,12 @@ class JugadorTest {
 		moveset.add(move2);
 		moveset.add(move3);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 		
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 		
@@ -123,12 +124,12 @@ class JugadorTest {
 		moveset.add(move2);
 		moveset.add(move3);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 		equipo.add(pokemon1);
 		equipo.add(pokemon2);
@@ -152,12 +153,12 @@ class JugadorTest {
 		moveset.add(move2);
 		moveset.add(move3);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 		equipo.add(pokemon1);
 		equipo.add(pokemon2);
@@ -181,12 +182,12 @@ class JugadorTest {
 		moveset.add(move2);
 		moveset.add(move3);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "Ivysaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 		equipo.add(pokemon1);
 		equipo.add(pokemon2);
