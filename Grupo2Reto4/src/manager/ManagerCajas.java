@@ -27,7 +27,10 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	public ArrayList<Caja> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		ArrayList<Caja> cajas = new ArrayList<Caja>();
-
+		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+		
+		ManagerPokemon mp = new ManagerPokemon();
+		pokemon = mp.selectAll();
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -37,7 +40,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 				int id = registro.getInt(1);
 
-				ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+				ArrayList<Pokemon> pokemonCAJA = new ArrayList<Pokemon>();
 
 				registro2 = comando.executeQuery(
 						"SELECT poke_id FROM " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id = " + id + ";");
@@ -46,12 +49,12 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 					int idpokemon = registro.getInt(3);
 
-					Pokemon p = m.conseguirPokemon(idpokemon);
+					Pokemon p = pokemon.get(idpokemon-1);
 
-					pokemons.add(p);
+					pokemonCAJA.add(p);
 				}
 
-				Caja c = new Caja(id, pokemons);
+				Caja c = new Caja(id, pokemonCAJA);
 
 				cajas.add(c);
 

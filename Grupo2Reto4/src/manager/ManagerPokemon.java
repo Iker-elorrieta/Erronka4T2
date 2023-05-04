@@ -46,8 +46,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				Tipo t1 = tiposA.get(tipo1-1);
 				Tipo t2 = null;
 
-				if(tipo2 != null)
-					t2 = m.conseguirTipo(tipo2);
+				if(tipo2 != 0)
+					t2 = tiposA.get(tipo2-1);
 
 				tipos[0] = t1;
 				tipos[1] = t2;

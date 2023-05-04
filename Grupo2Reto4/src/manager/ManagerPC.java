@@ -28,7 +28,9 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 	public ArrayList<MiPc> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		ArrayList<MiPc> pcs = new ArrayList<MiPc>();
-
+		ManagerCajas mc = new ManagerCajas();
+		ArrayList<Caja> cajasPC = mc.selectAll();
+		
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -47,7 +49,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 
 					int idbox = registro.getInt(2);
 
-					Caja c = m.conseguirCajas(idbox);
+					Caja c = cajasPC.get(idbox-1);
 					cajas.add(c);
 				}
 
@@ -56,6 +58,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			}
 
 		} finally {
+			registro2.close();
 			registro.close();
 			comando.close();
 			conexion.close();

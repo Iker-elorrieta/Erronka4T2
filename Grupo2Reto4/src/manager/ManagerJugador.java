@@ -30,6 +30,9 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
 		ManagerPokemon mp = new ManagerPokemon();
+		pokemon = mp.selectAll();
+		ManagerPC mpc = new ManagerPC();
+		ArrayList<MiPc> pcs = mpc.selectAll();
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -47,12 +50,27 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 						.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login ='" + login + "';");
 
 				while (registro2.next()) {
-					Pokemon p1 = m.conseguirPokemon(registro2.getInt("poke_id1"));
-					Pokemon p2 = m.conseguirPokemon(registro2.getInt("poke_id2"));
-					Pokemon p3 = m.conseguirPokemon(registro2.getInt("poke_id3"));
-					Pokemon p4 = m.conseguirPokemon(registro2.getInt("poke_id4"));
-					Pokemon p5 = m.conseguirPokemon(registro2.getInt("poke_id5"));
-					Pokemon p6 = m.conseguirPokemon(registro2.getInt("poke_id6"));
+					Pokemon p1 = pokemon.get(registro2.getInt("poke_id1")-1);
+					
+					Pokemon p2 =null;
+					if((Integer)registro2.getInt("poke_id2") != 0)
+						p2 = pokemon.get(registro2.getInt("poke_id2")-1);
+					
+					Pokemon p3 =null;
+					if((Integer)registro2.getInt("poke_id3") != 0)
+						p3 = pokemon.get(registro2.getInt("poke_id3")-1);
+					
+					Pokemon p4 =null;
+					if((Integer)registro2.getInt("poke_id4") != 0)
+						p4 = pokemon.get(registro2.getInt("poke_id4")-1);
+					
+					Pokemon p5 =null;
+					if((Integer)registro2.getInt("poke_id5") != 0)
+						p5 = pokemon.get(registro2.getInt("poke_id5")-1);
+					
+					Pokemon p6 =null;
+					if((Integer)registro2.getInt("poke_id6") != 0)
+						p6 = pokemon.get(registro2.getInt("poke_id6")-1);
 
 					equipo.add(p1);
 					equipo.add(p2);
@@ -64,12 +82,11 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				}
 
 				registro3 = comando
-						.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + " where user_login =" + login + ";");
+						.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + " where user_login ='" + login + "';");
 
 				MiPc pc = null;
 				while (registro3.next() == true) {
-
-					pc = m.conseguirPc(registro3.getInt("pc_id"));
+					pc = pcs.get(registro3.getInt("pc_id")-1);
 				}
 
 				Jugador user = new Jugador(nombre, login, passw, equipo, pc, ban);
@@ -77,7 +94,10 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			}
 
 		} finally {
+			registro3.close();
+			registro2.close();
 			registro.close();
+		
 			comando.close();
 			conexion.close();
 		}
