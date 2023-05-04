@@ -28,8 +28,8 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
 			while (registro.next() == true) {
-				int id = registro.getInt(0);
-				String nombre = registro.getString(1);
+				int id = registro.getInt(1);
+				String nombre = registro.getString(2);
 
 				Tipo t = new Tipo(id, nombre);
 				tipos.add(t);

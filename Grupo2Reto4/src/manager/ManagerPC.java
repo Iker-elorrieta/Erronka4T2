@@ -36,7 +36,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 
 			while (registro.next() == true) {
 
-				int id = registro.getInt(0);
+				int id = registro.getInt(1);
 
 				ArrayList<Caja> cajas = new ArrayList<Caja>();
 
@@ -45,7 +45,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 
 				while (registro2.next() == true) {
 
-					int idbox = registro.getInt(1);
+					int idbox = registro.getInt(2);
 
 					Caja c = m.conseguirCajas(idbox);
 					cajas.add(c);
@@ -99,21 +99,19 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			comando = conexion.createStatement();
 
 			ArrayList<Caja> cajasO = t_old.getCajas();
-			ArrayList<Caja> cajasN = t_old.getCajas();
+			ArrayList<Caja> cajasN = t_new.getCajas();
 
 			for (int i = 0; i < cajasO.size(); i++) {
 
-				ArrayList<Pokemon> pO = cajasO.get(i).getPokemon();
 				ArrayList<Pokemon> pN = cajasN.get(i).getPokemon();
 
-				for (int j = 0; j < pO.size(); j++) {
+				for (int j = 0; j < pN.size(); j++) {
 
-					if (pO.get(j) != null) {
+					if (pN.get(j) != null) {
 
 						comando.executeUpdate("update " + DBConexion.T_CAJAS_POKEMON + " set poke_id" + j + " ="
-								+ t_new.getCajas().get(nMipc).getPokemon().get(posCaja).getId() + " where pc_id="
-								+ t_old.getId_pc() + " and pc_box_id=" + t_new.getCajas().get(nMipc).getId_caja()
-								+ ";");
+								+ pN.get(j).getId() + " where pc_id=" + t_old.getId_pc() + " and pc_box_id="
+								+ cajasO.get(i).getId_caja() + ";");
 
 					}
 

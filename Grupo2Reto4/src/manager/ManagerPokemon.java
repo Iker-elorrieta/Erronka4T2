@@ -33,10 +33,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
 			while (registro.next() == true) {
-				int id = registro.getInt(0);
-				String name = registro.getString(1);
-				Integer tipo1 = registro.getInt(2);
-				Integer tipo2 = registro.getInt(3);
+				int id = registro.getInt(1);
+				String name = registro.getString(2);
+				Integer tipo1 = registro.getInt(3);
+				Integer tipo2 = registro.getInt(4);
 
 				Tipo tipos[] = new Tipo[2];
 				Tipo t1 = m.conseguirTipo(tipo1);
@@ -45,21 +45,21 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				tipos[0] = t1;
 				tipos[1] = t2;
 
-				int hp = registro.getInt(5);
-				int atk = registro.getInt(6);
-				int def = registro.getInt(7);
-				int vel = registro.getInt(8);
-				int spAtk = registro.getInt(9);
-				int spDef = registro.getInt(10);
+				int hp = registro.getInt(6);
+				int atk = registro.getInt(7);
+				int def = registro.getInt(8);
+				int vel = registro.getInt(9);
+				int spAtk = registro.getInt(10);
+				int spDef = registro.getInt(11);
 
-				Region r = m.conseguirRegion(registro.getInt(11));
+				Region r = m.conseguirRegion(registro.getInt(12));
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = m.conseguirMovimiento(registro.getInt(12));
-				Movimiento m2 = m.conseguirMovimiento(registro.getInt(13));
-				Movimiento m3 = m.conseguirMovimiento(registro.getInt(14));
-				Movimiento m4 = m.conseguirMovimiento(registro.getInt(15));
+				Movimiento m1 = m.conseguirMovimiento(registro.getInt(13));
+				Movimiento m2 = m.conseguirMovimiento(registro.getInt(14));
+				Movimiento m3 = m.conseguirMovimiento(registro.getInt(15));
+				Movimiento m4 = m.conseguirMovimiento(registro.getInt(16));
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);

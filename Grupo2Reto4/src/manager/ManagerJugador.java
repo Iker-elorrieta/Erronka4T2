@@ -36,10 +36,10 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 			while (registro.next()) {
 
-				String nombre = registro.getString("user_name");
-				String login = registro.getString("user_login");
-				String passw = registro.getString("user_pass");
-				boolean ban = registro.getBoolean("ban");
+				String nombre = registro.getString(2);
+				String login = registro.getString(1);
+				String passw = registro.getString(3);
+				boolean ban = registro.getBoolean(5);
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				registro2 = comando

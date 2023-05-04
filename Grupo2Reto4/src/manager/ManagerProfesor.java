@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import controlador.Metodos;
 import excepciones.NotFoundException;
-import modelo.Generacion;
 import modelo.Profesor;
+import modelo.Region;
 import utils.DBConexion;
 
 public class ManagerProfesor implements ManagerInterface<Profesor>{
@@ -17,6 +18,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
+	Metodos m = new Metodos();
 	
 	@Override
 	public ArrayList<Profesor> selectAll() throws SQLException, NotFoundException, Exception {
@@ -31,12 +33,12 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 
 			while (registro.next() == true) {
 				
-				String login = registro.getString(0);
-				String nombre = registro.getString(1);
-				String pass = registro.getString(2);
-				Generacion g = Generacion.valueOf(registro.getString(3));
+				String login = registro.getString(1);
+				String nombre = registro.getString(2);
+				String pass = registro.getString(3);
+				Region r = m.conseguirRegion(registro.getInt(4));
 				
-				Profesor p = new Profesor(login, nombre, pass, g);
+				Profesor p = new Profesor(login, nombre, pass, r);
 				
 				profesores.add(p);
 			}
@@ -62,7 +64,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into "+DBConexion.T_PROFS+" values ('" +p.getLogin()+ "', '"+p.getNombre()+"','"+p.getPass()+"','"+p.getGen()+"');");
+			comando.executeUpdate("Insert into "+DBConexion.T_PROFS+" values ('" +p.getLogin()+ "', '"+p.getNombre()+"','"+p.getPass()+"','"+p.getReg().getId()+"');");
 
 
 		} finally {
@@ -80,7 +82,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor>{
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("update "+DBConexion.T_PROFS+" set prof_login='"+p_new.getLogin()+"', prof_name='"+p_new.getNombre()+"', prof_pass='"+p_new.getPass()+"', prof_gen='"+p_new.getGen()+"' where prof_login='"+p_old.getLogin()+"';");
+			comando.executeUpdate("update "+DBConexion.T_PROFS+" set prof_login='"+p_new.getLogin()+"', prof_name='"+p_new.getNombre()+"', prof_pass='"+p_new.getPass()+"', prof_gen='"+p_new.getReg().getId()+"' where prof_login='"+p_old.getLogin()+"';");
 
 
 		} finally {

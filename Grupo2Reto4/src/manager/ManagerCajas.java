@@ -35,7 +35,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 			while (registro.next() == true) {
 
-				int id = registro.getInt(0);
+				int id = registro.getInt(1);
 
 				ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
@@ -44,7 +44,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 				while (registro2.next() == true) {
 
-					int idpokemon = registro.getInt(2);
+					int idpokemon = registro.getInt(3);
 
 					Pokemon p = m.conseguirPokemon(idpokemon);
 

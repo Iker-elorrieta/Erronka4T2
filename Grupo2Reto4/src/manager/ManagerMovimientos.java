@@ -31,13 +31,13 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
-				int id = registro.getInt(0);
-				String nombre = registro.getString(1);
-				int tipo = registro.getInt(2);
+				int id = registro.getInt(1);
+				String nombre = registro.getString(2);
+				int tipo = registro.getInt(3);
 				Tipo t = m.conseguirTipo(tipo);
-				int potencia = registro.getInt(3);
-				int pp = registro.getInt(4);
-				double precision = registro.getInt(5);
+				int potencia = registro.getInt(4);
+				int pp = registro.getInt(5);
+				double precision = registro.getInt(6);
 
 				Movimiento m = new Movimiento(id, nombre, pp, precision, t, potencia);
 				movimientos.add(m);

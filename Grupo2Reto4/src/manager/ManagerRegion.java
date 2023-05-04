@@ -28,8 +28,8 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_REGION + ";");
 
 			while (registro.next() == true) {
-				int id = registro.getInt(0);
-				String nombre = registro.getString(1);
+				int id = registro.getInt(1);
+				String nombre = registro.getString(2);
 
 				Region r = new Region(id, nombre);
 				regiones.add(r);
