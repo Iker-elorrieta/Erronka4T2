@@ -2,7 +2,7 @@ package utils;
 
 public class DBConexion {
 	
-	public static final String URL="jdbc:mysql://localhost:3306/pcpokemon";
+	public static final String URL="jdbc:mysql://localhost:3306/pcPokemon";
 	public static final String USER="root";
 	public static final String PASSW="";
 
