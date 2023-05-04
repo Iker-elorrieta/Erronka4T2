@@ -46,7 +46,8 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				boolean ban = registro.getBoolean(5);
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
-				registro2 = comando
+				Statement comando2 = conexion.createStatement();
+				registro2 = comando2
 						.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login ='" + login + "';");
 
 				while (registro2.next()) {
@@ -81,7 +82,8 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 				}
 
-				registro3 = comando
+				Statement comando3 = conexion.createStatement();
+				registro3 = comando3
 						.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + " where user_login ='" + login + "';");
 
 				MiPc pc = null;
@@ -94,11 +96,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			}
 
 		} finally {
-			registro3.close();
-			registro2.close();
-			registro.close();
-		
-			comando.close();
 			conexion.close();
 		}
 
@@ -123,8 +120,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					"call cargarEquipo (" + user.getEquipo().get(0).getId() + ", '" + user.getLogin() + "');");
 
 		} finally {
-
-			comando.close();
 			conexion.close();
 		}
 	}
@@ -150,8 +145,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			}
 
 		} finally {
-
-			comando.close();
 			conexion.close();
 		}
 	}

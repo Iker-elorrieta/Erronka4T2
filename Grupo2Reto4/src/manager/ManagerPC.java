@@ -42,12 +42,13 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 
 				ArrayList<Caja> cajas = new ArrayList<Caja>();
 
-				registro2 = comando
+				Statement comando2 = conexion.createStatement();
+				registro2 = comando2
 						.executeQuery("SELECT pc_box_id FROM " + DBConexion.T_CAJAS + " where pc_id = " + id + ";");
 
 				while (registro2.next() == true) {
 
-					int idbox = registro.getInt(2);
+					int idbox = registro2.getInt(1);
 
 					Caja c = cajasPC.get(idbox-1);
 					cajas.add(c);

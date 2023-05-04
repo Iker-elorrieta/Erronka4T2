@@ -21,14 +21,13 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	ResultSet registro;
 	ResultSet registro2;
 	Metodos m = new Metodos();
-	ManagerPC mpc = new ManagerPC();
 
 	@Override
 	public ArrayList<Caja> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		ArrayList<Caja> cajas = new ArrayList<Caja>();
 		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
-		
+
 		ManagerPokemon mp = new ManagerPokemon();
 		pokemon = mp.selectAll();
 		try {
@@ -41,15 +40,15 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 				int id = registro.getInt(1);
 
 				ArrayList<Pokemon> pokemonCAJA = new ArrayList<Pokemon>();
-
-				registro2 = comando.executeQuery(
+				Statement comando2 = conexion.createStatement();
+				registro2 = comando2.executeQuery(
 						"SELECT poke_id FROM " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id = " + id + ";");
 
 				while (registro2.next() == true) {
 
 					int idpokemon = registro.getInt(3);
 
-					Pokemon p = pokemon.get(idpokemon-1);
+					Pokemon p = pokemon.get(idpokemon - 1);
 
 					pokemonCAJA.add(p);
 				}
@@ -61,8 +60,6 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			}
 
 		} finally {
-			registro.close();
-			comando.close();
 			conexion.close();
 		}
 
@@ -75,6 +72,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	@Override
 	public void insert(Caja c) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		ManagerPC mpc = new ManagerPC();
 		ArrayList<MiPc> pcs = mpc.selectAll();
 		MiPc pc = null;
 		for (int i = 0; i < pcs.size(); i++) {
@@ -116,11 +114,12 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			for (int i = 0;i < c_new.getPokemon().size();i++) {
-				Integer poke_id=null;
-				if(c_new.getPokemon().get(i) != null)
-					poke_id=c_new.getPokemon().get(i).getId();
-				comando.executeUpdate("update from "+DBConexion.T_CAJAS_POKEMON+" set poke_id="+poke_id+" where pc_box_id="+c_old.getId_caja()+";");
+			for (int i = 0; i < c_new.getPokemon().size(); i++) {
+				Integer poke_id = null;
+				if (c_new.getPokemon().get(i) != null)
+					poke_id = c_new.getPokemon().get(i).getId();
+				comando.executeUpdate("update from " + DBConexion.T_CAJAS_POKEMON + " set poke_id=" + poke_id
+						+ " where pc_box_id=" + c_old.getId_caja() + ";");
 			}
 		} finally {
 			comando.close();
@@ -131,14 +130,15 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 	@Override
 	public void delete(Caja c) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("delete from "+DBConexion.T_CAJAS+" where pc_box_id ="+c.getId_caja()+";");
-			
-			comando.executeUpdate("delete from "+DBConexion.T_CAJAS_POKEMON+" where pc_box_id ="+c.getId_caja()+";");
+			comando.executeUpdate("delete from " + DBConexion.T_CAJAS + " where pc_box_id =" + c.getId_caja() + ";");
+
+			comando.executeUpdate(
+					"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id =" + c.getId_caja() + ";");
 
 		} finally {
 			comando.close();
