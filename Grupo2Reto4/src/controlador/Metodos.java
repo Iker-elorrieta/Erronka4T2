@@ -34,7 +34,7 @@ public class Metodos {
 	public Tipo conseguirTipo(Integer id) throws NotFoundException, SQLException, Exception {
 		ManagerTipos mt = new ManagerTipos();
 		Tipo t = null;
-		if (id != null) {
+		if (id != 0) {
 			ArrayList<Tipo> tipos = mt.selectAll();
 			t = tipos.get(id - 1);
 		}

@@ -107,11 +107,11 @@ public class VistaLogin extends JFrame implements ActionListener {
 
 		rutas.rutaPC();
 		ImageIcon pkmnImg1 = new ImageIcon("img/pc.jpg");
-		
+
 		JLabel labelUser = new JLabel("Nickname:");
 		labelUser.setBounds(72, 78, 86, 14);
 		contentPane.add(labelUser);
-		
+
 		JLabel labelContra = new JLabel("Contraseña:");
 		labelContra.setBounds(72, 150, 104, 14);
 		contentPane.add(labelContra);
@@ -149,12 +149,12 @@ public class VistaLogin extends JFrame implements ActionListener {
 			if (i == 2) {
 				Usuario user = metodos.encontrarUsuario(users, loginTF.getText(),
 						String.valueOf(passw1TF.getPassword()));
-				
-				if(user == null) {
-					JOptionPane.showMessageDialog(null, "La combinacion login/contraseña introducida es incorrecta, pruebe de nuevo.",
-							"ERROR", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else if (user instanceof Jugador) {
+
+				if (user == null) {
+					JOptionPane.showMessageDialog(null,
+							"La combinacion login/contraseña introducida es incorrecta, pruebe de nuevo.", "ERROR",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else if (user instanceof Jugador) {
 					if (((Jugador) user).isBan()) {
 						JOptionPane.showMessageDialog(null, "ESTE USUARIO A SIDO BANEADO POR INFRINGIR LAS NORMAS.",
 								"ALERTA!!!!", JOptionPane.INFORMATION_MESSAGE);

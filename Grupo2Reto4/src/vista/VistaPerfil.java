@@ -43,6 +43,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	private int editable = 0;
 	private JButton botonDarseDeBaja;
 	private Jugador jugadorActual;
+
 	/**
 	 * Launch the application.
 	 */
@@ -63,8 +64,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VistaPerfil(Jugador jugador) {
-		jugador= new Jugador("clemen", "TheToastGod", "aaa", null, null, false);
-		jugadorActual=jugador;
+		jugador = new Jugador("clemen", "TheToastGod", "aaa", null, null, false);
+		jugadorActual = jugador;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(50, 50, 661, 699);
 		contentPane = new JPanel();
@@ -152,7 +153,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		});
 		botonEditar.setBounds(394, 71, 153, 23);
 		contentPane.add(botonEditar);
-		
+
 		botonDarseDeBaja = new JButton("Darse de baja");
 		botonDarseDeBaja.addActionListener(this);
 		botonDarseDeBaja.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
@@ -174,26 +175,26 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource() == atras) {
 			this.dispose();
-		}
-		else {
-			int eleccion = JOptionPane.showConfirmDialog(botonDarseDeBaja, "¿Estás REALMENTE seguro de que quieres darte de baja?");
-			
+		} else {
+			int eleccion = JOptionPane.showConfirmDialog(botonDarseDeBaja,
+					"¿Estás REALMENTE seguro de que quieres darte de baja?");
+
 			if (eleccion == 0) {
 				ManagerJugador mj = new ManagerJugador();
-				
-					try {
-						mj.delete(jugadorActual);
-					} catch (NotFoundException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, e1.getMessage());
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, e1.getMessage());
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				
+
+				try {
+					mj.delete(jugadorActual);
+				} catch (NotFoundException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 				this.dispose();
 			}
 		}

@@ -26,7 +26,11 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 	public ArrayList<Pokemon> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
-
+		ManagerMovimientos mm = new ManagerMovimientos();
+		ArrayList<Movimiento> movimientos = mm.selectAll();
+		ArrayList<Tipo> tiposA = new ArrayList<Tipo>();
+		ManagerTipos mt = new ManagerTipos();
+		tiposA=mt.selectAll();
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -37,14 +41,18 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				String name = registro.getString(2);
 				Integer tipo1 = registro.getInt(3);
 				Integer tipo2 = registro.getInt(4);
-
+				
 				Tipo tipos[] = new Tipo[2];
-				Tipo t1 = m.conseguirTipo(tipo1);
-				Tipo t2 = m.conseguirTipo(tipo2);
+				Tipo t1 = tiposA.get(tipo1-1);
+				Tipo t2 = null;
+
+				if(tipo2 != null)
+					t2 = m.conseguirTipo(tipo2);
 
 				tipos[0] = t1;
 				tipos[1] = t2;
-
+				
+				//String descripcion = registro.getString(5);
 				int hp = registro.getInt(6);
 				int atk = registro.getInt(7);
 				int def = registro.getInt(8);
@@ -56,10 +64,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = m.conseguirMovimiento(registro.getInt(13));
-				Movimiento m2 = m.conseguirMovimiento(registro.getInt(14));
-				Movimiento m3 = m.conseguirMovimiento(registro.getInt(15));
-				Movimiento m4 = m.conseguirMovimiento(registro.getInt(16));
+				Movimiento m1 = movimientos.get(registro.getInt(13)-1);
+				Movimiento m2 = movimientos.get(registro.getInt(14)-1);
+				Movimiento m3 = movimientos.get(registro.getInt(15)-1);
+				Movimiento m4 = movimientos.get(registro.getInt(16)-1);
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);

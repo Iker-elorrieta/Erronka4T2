@@ -279,7 +279,6 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 
-					
 					try {
 						pokemon = metodos.conseguirPokemon(Integer.valueOf(pkmnIMG1.getToolTipText()));
 					} catch (NumberFormatException e1) {

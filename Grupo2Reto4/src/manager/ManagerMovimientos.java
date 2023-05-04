@@ -24,7 +24,9 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 	public ArrayList<Movimiento> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
 		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
-
+		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+		ManagerTipos mt = new ManagerTipos();
+		tipos=mt.selectAll();
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -33,8 +35,7 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 			while (registro.next() == true) {
 				int id = registro.getInt(1);
 				String nombre = registro.getString(2);
-				int tipo = registro.getInt(3);
-				Tipo t = m.conseguirTipo(tipo);
+				Tipo t = tipos.get(registro.getInt(3)-1);
 				int potencia = registro.getInt(4);
 				int pp = registro.getInt(5);
 				double precision = registro.getInt(6);

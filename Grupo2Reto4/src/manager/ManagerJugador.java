@@ -28,7 +28,8 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 		// TODO Auto-generated method stub
 		// Selecciona todos los jugadores de la base de datos
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-
+		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+		ManagerPokemon mp = new ManagerPokemon();
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -95,16 +96,11 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 
-			comando.executeUpdate("Insert into " + DBConexion.T_USERS + " values ('" + user.getLogin() + "', '"
-					+ user.getNombre() + "', '" + user.getPass() + "', " + user.getEquipo().size() + ");");
+			comando.executeUpdate("Insert into " + DBConexion.T_USERS + "(user_login, user_name, user_pass) values ('"
+					+ user.getLogin() + "', '" + user.getNombre() + "', '" + user.getPass() + "');");
+
 			comando.executeUpdate(
-					"Insert into " + DBConexion.T_EQUIPOS + "(user_login) values ('" + user.getLogin() + "');");
-
-			for (int i = 0; i < user.getEquipo().size(); i++) {
-
-				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
-						+ user.getEquipo().get(i).getId() + " where user_login = '" + user.getLogin() + "';");
-			}
+					"call cargarEquipo (" + user.getEquipo().get(0).getId() + ", '" + user.getLogin() + "');");
 
 		} finally {
 
@@ -148,9 +144,8 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			
+
 			comando = conexion.createStatement();
-			
 
 			comando.executeUpdate(
 					"delete from " + DBConexion.T_USERS + " where user_login ='" + user.getLogin() + "';");
@@ -160,7 +155,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				throw new SQLException("No se ha podido establecer conexion con la base de datos.");
 			conexion.close();
 		}
-		
+
 	}
 
 }

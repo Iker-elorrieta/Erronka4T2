@@ -10,8 +10,8 @@ public class DBConexion {
 	public static final String T_EQUIPOS = "equipo";
 	public static final String T_PROFS = "Profesor";
 	public static final String T_POKEMON = "Pokemon";
-	public static final String T_MOVS = "Movimientos";
-	public static final String T_TIPOS = "Tipos";
+	public static final String T_MOVS = "Movimiento";
+	public static final String T_TIPOS = "Tipo";
 	public static final String T_MIPC = "PC";
 	public static final String T_CAJAS = "Caja";
 	public static final String T_REGION = "Region";
