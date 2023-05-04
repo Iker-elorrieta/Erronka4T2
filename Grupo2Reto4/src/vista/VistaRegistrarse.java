@@ -271,6 +271,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 			int rnum = (int) ((Math.random() * 648) + 1);
 			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(rnum));
 			JLabel pkmnIMG1 = new JLabel();
+			pkmnIMG1.setBorder(null);
 			pkmnIMG1.setToolTipText(String.valueOf(rnum));
 			panel.add(pkmnIMG1);
 			pkmnIMG1.setIcon(pkmnImg1);

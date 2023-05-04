@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -13,6 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Metodos;
+import excepciones.NotFoundException;
+import manager.ManagerJugador;
+import manager.ManagerProfesor;
 import modelo.Jugador;
 import modelo.Profesor;
 import modelo.Usuario;
@@ -39,6 +43,8 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JLabel errPassw;
 	private RutasImg rutas = new RutasImg();
 	private ArrayList<Usuario> users = new ArrayList<Usuario>();
+	private ManagerJugador mj = new ManagerJugador();
+	private ManagerProfesor mp = new ManagerProfesor();
 
 	/**
 	 * Launch the application.
@@ -48,6 +54,19 @@ public class VistaLogin extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public VistaLogin() {
+		try {
+			users.addAll(mj.selectAll());
+			users.addAll(mp.selectAll());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 518, 468);
 		contentPane = new JPanel();
