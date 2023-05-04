@@ -10,11 +10,13 @@ import manager.ManagerCajas;
 import manager.ManagerMovimientos;
 import manager.ManagerPC;
 import manager.ManagerPokemon;
+import manager.ManagerRegion;
 import manager.ManagerTipos;
 import modelo.Caja;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 import modelo.Usuario;
 
@@ -82,6 +84,12 @@ public class Metodos {
 		}
 
 		return usuario;
+	}
+	
+	public Region conseguirRegion(int id) throws NotFoundException, SQLException, Exception{
+		ManagerRegion mr = new ManagerRegion();
+		ArrayList<Region> res = mr.selectAll();
+		return res.get(id-1);
 	}
 
 }

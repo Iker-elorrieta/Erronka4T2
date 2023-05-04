@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import excepciones.NotFoundException;
 import modelo.Region;
-import modelo.Tipo;
 import utils.DBConexion;
 
 public class ManagerRegion implements ManagerInterface<Region>{

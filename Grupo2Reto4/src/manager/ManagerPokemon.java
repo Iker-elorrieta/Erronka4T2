@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 import controlador.Metodos;
 import excepciones.NotFoundException;
-import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 import utils.DBConexion;
 
@@ -52,7 +52,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				int spAtk = registro.getInt(9);
 				int spDef = registro.getInt(10);
 
-				Generacion g = Generacion.valueOf(registro.getString(11));
+				Region r = m.conseguirRegion(registro.getInt(11));
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
@@ -66,7 +66,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				movimientos_pokemon.add(m3);
 				movimientos_pokemon.add(m4);
 
-				Pokemon p = new Pokemon(id, name, tipos, hp, atk, def, spAtk, spDef, vel, movimientos_pokemon, g);
+				Pokemon p = new Pokemon(id, name, tipos, hp, atk, def, spAtk, spDef, vel, movimientos_pokemon, r);
 
 				pokemons.add(p);
 			}
@@ -94,7 +94,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			comando.executeUpdate("Insert into " + DBConexion.T_POKEMON + " values (" + p.getId() + ", '"
 					+ p.getNombre_pokemon() + "'," + p.getTipo()[0].getId() + "," + p.getTipo()[1].getId()
 					+ ",'Poner descripción'," + p.getHp() + "," + p.getAtt() + "," + p.getDef() + "," + p.getVel() + ","
-					+ p.getSatt() + "," + p.getSdef() + ",'" + p.getGeneracion() + "',"
+					+ p.getSatt() + "," + p.getSdef() + ",'" + p.getReg().getId() + "',"
 					+ p.getMovimientos().get(0).getId() + "," + p.getMovimientos().get(1).getId() + ","
 					+ p.getMovimientos().get(2).getId() + "," + p.getMovimientos().get(3).getId() + ");");
 
@@ -120,7 +120,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					+ p_new.getNombre_pokemon() + "', poke_type1=" + p_new.getTipo()[0].getId() + ", poke_type2="
 					+ tipo2 + ", descripcion='" + descripcion + "', hp=" + p_new.getHp() + ", atk=" + p_new.getAtt()
 					+ ", " + ", def=" + p_new.getDef() + ", vel=" + p_new.getVel() + ", spAtk=" + p_new.getSatt()
-					+ ", spDef=" + p_new.getSdef() + ", poke_gen='" + p_new.getGeneracion() + "', poke_mov1="
+					+ ", spDef=" + p_new.getSdef() + ", poke_gen='" + p_new.getReg().getId() + "', poke_mov1="
 					+ p_new.getMovimientos().get(0).getId() + "', poke_mov2=" + p_new.getMovimientos().get(1).getId()
 					+ "', poke_mov3=" + p_new.getMovimientos().get(2).getId() + "', poke_mov4="
 					+ p_new.getMovimientos().get(3).getId() + " where poke_id=" + p_old.getId()+";");

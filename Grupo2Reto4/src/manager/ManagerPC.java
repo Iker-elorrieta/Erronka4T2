@@ -12,6 +12,7 @@ import excepciones.NotFoundException;
 import modelo.Caja;
 import modelo.Jugador;
 import modelo.MiPc;
+import modelo.Pokemon;
 import utils.DBConexion;
 
 public class ManagerPC implements ManagerInterface<MiPc> {
@@ -39,8 +40,8 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 
 				ArrayList<Caja> cajas = new ArrayList<Caja>();
 
-				registro2 = comando.executeQuery(
-						"SELECT pc_box_id FROM " + DBConexion.T_CAJAS_POKEMON + " where pc_id = " + id + ";");
+				registro2 = comando
+						.executeQuery("SELECT pc_box_id FROM " + DBConexion.T_CAJAS + " where pc_id = " + id + ";");
 
 				while (registro2.next() == true) {
 
@@ -96,14 +97,29 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			for (int nMipc = 0;nMipc < t_old.getCajas().size();nMipc++) {
-				for (int posCaja=0;posCaja < t_old.getCajas().get(nMipc).getPokemon().size();posCaja++) {
-					
-				comando.executeUpdate("update "+DBConexion.T_CAJAS_POKEMON+" set poke_id="+t_new.getCajas().get(nMipc).getPokemon().get(posCaja).getId()+
-						" where pc_id="+t_old.getId_pc()+" and pc_box_id="+t_new.getCajas().get(nMipc).getId_caja()+";");
-				
+
+			ArrayList<Caja> cajasO = t_old.getCajas();
+			ArrayList<Caja> cajasN = t_old.getCajas();
+
+			for (int i = 0; i < cajasO.size(); i++) {
+
+				ArrayList<Pokemon> pO = cajasO.get(i).getPokemon();
+				ArrayList<Pokemon> pN = cajasN.get(i).getPokemon();
+
+				for (int j = 0; j < pO.size(); j++) {
+
+					if (pO.get(j) != null) {
+
+						comando.executeUpdate("update " + DBConexion.T_CAJAS_POKEMON + " set poke_id" + j + " ="
+								+ t_new.getCajas().get(nMipc).getPokemon().get(posCaja).getId() + " where pc_id="
+								+ t_old.getId_pc() + " and pc_box_id=" + t_new.getCajas().get(nMipc).getId_caja()
+								+ ";");
+
+					}
+
 				}
 			}
+
 		} finally {
 			comando.close();
 			conexion.close();
