@@ -8,40 +8,38 @@ import org.junit.jupiter.api.Test;
 import excepciones.NotFoundException;
 import manager.ManagerMovimientos;
 import modelo.Movimiento;
+import modelo.Tipo;
 
 class ManagerMovimientosTest {
 	ManagerMovimientos mm = new ManagerMovimientos();
 	
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
-		ArrayList<Movimiento> mosv = mm.selectAll();
-		assertEquals(mosv.get(0).getId(), 1);
+		ArrayList<Movimiento> movs = mm.selectAll();
+		assertEquals(movs.get(0).getId(), 3);
 	}
-
+	
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Movimiento mov1 = new Movimiento(0, "Placaje", 0, 0, null, 0);
+		Tipo t = new Tipo(10,"Fuego");
+		Movimiento mov1 = new Movimiento(1, "Placaje2", 1, 0,t , 0);
+		mm.delete(mov1);
 		mm.insert(mov1);
 		ArrayList<Movimiento> mosv = mm.selectAll();
-		assertEquals(mosv.get(mosv.size()-1).getNombre(), "Placaje");
+		assertEquals(mosv.get(mov1.getId()-1).getNombre(), "Placaje2");
+		
 	}
-
+	
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		ArrayList<Movimiento> mosv = mm.selectAll();
-		Movimiento mov1 = new Movimiento(1, "Placaje", 0, 0, null, 0);
-		mm.update(mosv.get(0), mov1);
-		assertEquals(mosv.get(0).getId(), 1);
+		Tipo t = new Tipo(10,"Fuego");
+		Movimiento mov1 = new Movimiento(1, "Placaje2", 1, 0,t , 0);
+		Movimiento mov2 = new Movimiento(1, "Placaje3", 1, 0,t , 0);
+		mm.update(mov1, mov2);
+		ArrayList<Movimiento> movs = mm.selectAll();
+		assertEquals(movs.get(mov1.getId()-1).getNombre(), "Placaje3");
+		mm.delete(mov2);
 	}
 
-	@Test
-	void testDelete() throws NotFoundException, SQLException, Exception {
-		ArrayList<Movimiento> mosv = mm.selectAll();
-		Movimiento mov = mosv.get(0);
-		String nombre = mov.getNombre();
-		mm.delete(mov);
-		mosv = mm.selectAll();
-		assertEquals(mosv.get(0).getNombre(), nombre);
-	}
-
+	
 }

@@ -54,7 +54,7 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			comando = conexion.createStatement();
 
 			comando.executeUpdate(
-					"Insert into " + DBConexion.T_REGION + " values (" + r.getId() + ", " + r.getNombre() + ");");
+					"Insert into " + DBConexion.T_REGION + " values (" + r.getId() + ", '" + r.getNombre() + "');");
 
 		} finally {
 			if (conexion != null)
@@ -68,7 +68,7 @@ public class ManagerRegion implements ManagerInterface<Region>{
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			comando.executeUpdate("Update " + DBConexion.T_REGION + " set type_id="+r_new.getId()+", type_name='"+r_new.getNombre()+"' where type_id="+r_old.getId()+";");
+			comando.executeUpdate("Update " + DBConexion.T_REGION + " set reg_id="+r_new.getId()+", reg_name='"+r_new.getNombre()+"' where reg_id="+r_old.getId()+";");
 
 		} finally {
 			if (conexion != null)
@@ -82,7 +82,7 @@ public class ManagerRegion implements ManagerInterface<Region>{
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			comando.executeUpdate("delete from " + DBConexion.T_REGION + " where type_id=" + r.getId() + ";");
+			comando.executeUpdate("delete from " + DBConexion.T_REGION + " where reg_id=" + r.getId() + ";");
 		} finally {
 			if (conexion != null)
 				conexion.close();

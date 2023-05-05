@@ -55,7 +55,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			comando = conexion.createStatement();
 
 			comando.executeUpdate(
-					"Insert into " + DBConexion.T_TIPOS + " values (" + t.getId() + ", " + t.getNombre_tipo() + ");");
+					"Insert into " + DBConexion.T_TIPOS + " values (" + t.getId() + ", '" + t.getNombre_tipo() + "');");
 
 		} finally {
 			if (conexion != null)

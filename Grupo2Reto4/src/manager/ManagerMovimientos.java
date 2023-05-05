@@ -78,9 +78,16 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 	@Override
 	public void update(Movimiento m_old, Movimiento m_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
 		comando.executeUpdate("update  " + DBConexion.T_MOVS + " set move_name='" + m_new.getNombre() + "', mov_type="
 				+ m_new.getTipo().getId() + ", potency=" + m_new.getPotencia() + ", pp=" + m_new.getPuntosPoder()
 				+ ", accuracy=" + m_new.getPrecision() + " where mov_id=" + m_old.getId() + ";");
+	} finally {
+		comando.close();
+		conexion.close();
+	}
 	}
 
 	@Override

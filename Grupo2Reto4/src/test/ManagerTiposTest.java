@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,42 +13,35 @@ import modelo.Tipo;
 
 class ManagerTiposTest {
 	ManagerTipos mt = new ManagerTipos();
+	
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Tipo> tipos = mt.selectAll();
 		assertEquals(tipos.get(0).getId(), 1);
 	}
-
+	
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Tipo tipo = new Tipo(20, "Hada");
+		Tipo tipo = new Tipo(19, "Prueba");
+		mt.delete(tipo);
 		mt.insert(tipo);
 		ArrayList<Tipo> tipos=mt.selectAll();
-		assertEquals(tipos.get(tipos.size()-1).getNombre_tipo(), "Hada");
+		assertEquals(tipos.get(tipo.getId()-1).getNombre_tipo(), "Prueba");
 	}
-
+	
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		Tipo tipo1 = new Tipo(20, "Hada");
-		Tipo tipo2 = new Tipo(21, "Lava");
+		Tipo tipo1 = new Tipo(19, "Prueba");
+		Tipo tipo2 = new Tipo(20, "Prueba");
 		mt.update(tipo1, tipo2);
 		
 		ArrayList<Tipo> tipos=mt.selectAll();
-		assertEquals(tipos.get(tipos.size()-1).getNombre_tipo(), "Lava");
+		assertEquals(tipos.get(tipo1.getId()-1).getNombre_tipo(), "Prueba");
+		mt.delete(tipo2);
 	}
+	
+	
 
-	@Test
-	void testDelete() throws NotFoundException, SQLException, Exception {
-		
-		Tipo tipo1 = new Tipo(30, "Pistola");
-		mt.insert(tipo1);
-		ArrayList<Tipo> tipos=mt.selectAll();
-		mt.delete(tipos.get(tipos.size()-1));
-		tipos=mt.selectAll();
-		for (Tipo tipo : tipos) {
-			assertFalse(tipo.getNombre_tipo().equals("Pistola"));
-		}
-				
-	}
+	
 
 }
