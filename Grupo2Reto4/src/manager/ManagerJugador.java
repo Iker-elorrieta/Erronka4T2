@@ -164,17 +164,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			comando = conexion.createStatement();
 
 			comando.executeUpdate(
-					"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_id=" + user.getPc().getId_pc() + ";");
-
-			comando.executeUpdate(
-					"delete from " + DBConexion.T_CAJAS + " where pc_id=" + user.getPc().getId_pc() + ";");
-
-			comando.executeUpdate("delete from " + DBConexion.T_MIPC + " where user_login ='" + user.getLogin() + "';");
-
-			comando.executeUpdate(
-					"delete from " + DBConexion.T_EQUIPOS + " where user_login ='" + user.getLogin() + "';");
-
-			comando.executeUpdate(
 					"delete from " + DBConexion.T_USERS + " where user_login ='" + user.getLogin() + "';");
 
 		} finally {

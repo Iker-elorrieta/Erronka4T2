@@ -16,12 +16,13 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VistaProfesor extends JFrame {
+public class VistaProfesor extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -34,6 +35,11 @@ public class VistaProfesor extends JFrame {
 	private ManagerJugador mj = new ManagerJugador();
 	private JPasswordField passwordField;
 	private Jugador jugador;
+	private JButton confirmarCambios;
+	private JButton banear;
+	private JButton atras;
+	private JButton editar;
+	private JComboBox<String> comboBox;
 	/**
 	 * Launch the application.
 	 */
@@ -56,18 +62,7 @@ public class VistaProfesor extends JFrame {
 	 * @param user
 	 */
 	public VistaProfesor(Profesor user) {
-		try {
-			jugadores = mj.selectAll();
-		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 932, 543);
 		contentPane = new JPanel();
@@ -83,12 +78,9 @@ public class VistaProfesor extends JFrame {
 		separator.setBounds(451, 0, 11, 504);
 		contentPane.add(separator);
 
-		JComboBox<Jugador> comboBox = new JComboBox<Jugador>();
+		comboBox = new JComboBox<String>();
 		comboBox.setBounds(544, 55, 200, 27);
 		contentPane.add(comboBox);
-		
-		for (int i=0;i < jugadores.size();i++)
-			comboBox.addItem(jugadores.get(i));
 
 		nombre = new JTextField();
 		nombre.setEditable(false);
@@ -111,54 +103,126 @@ public class VistaProfesor extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_1.setBounds(560, 199, 84, 14);
 		contentPane.add(lblNewLabel_1);
-		
-		JButton editar = new JButton("Editar");
-		editar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!nombre.isEditable()) {
-					nombre.setEditable(true);
-					nickname.setEditable(true);
-					passwordField.setEditable(true);
-				}else {
-					nombre.setEditable(false);
-					nickname.setEditable(false);
-					passwordField.setEditable(false);
-				}
-					
-			}
-		});
+
+		editar = new JButton("Editar");
+		editar.addActionListener(this);
 		editar.setBounds(539, 380, 97, 23);
 		contentPane.add(editar);
-		
-		JButton banear = new JButton("Banear");
+		editar.setToolTipText("Pulsa una vez para habilitar la edición de campos, pulsa una segunda vez para deshabilitarla.");
+
+		banear = new JButton("Banear");
 		banear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (jugador.isBan()) {
+					jugador.setBan(false);
+					JOptionPane.showMessageDialog(null, "El jugador: " + jugador.getNombre() + ",  de nickname: "
+							+ jugador.getLogin() + ", ha sido baneado.");
+				} else {
+					jugador.setBan(true);
+					JOptionPane.showMessageDialog(null, "Se ha levantado el ban a el jugador: " + jugador.getNombre()
+							+ ",  de nickname: " + jugador.getLogin());
+				}
 			}
 		});
 		banear.setBounds(792, 380, 97, 23);
 		contentPane.add(banear);
-		
+		banear.setEnabled(false);
+
 		JButton seleccionar = new JButton("Seleccionár");
 		seleccionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jugador = (Jugador) comboBox.getSelectedItem();
+				int j = comboBox.getSelectedIndex();
+				jugador = jugadores.get(j);
 				nombre.setText(jugador.getNombre());
 				nickname.setText(jugador.getLogin());
 				passwordField.setText(jugador.getPass());
 			}
 		});
-		seleccionar.setBounds(777, 57, 89, 23);
+		seleccionar.setBounds(777, 57, 112, 23);
 		contentPane.add(seleccionar);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setEditable(false);
 		passwordField.setBounds(654, 253, 200, 20);
 		contentPane.add(passwordField);
-		
+
 		JLabel jpass = new JLabel("Contraseña:");
 		jpass.setHorizontalAlignment(SwingConstants.TRAILING);
 		jpass.setBounds(560, 256, 84, 14);
 		contentPane.add(jpass);
+
+		confirmarCambios = new JButton("Confirmar Cambios");
+		confirmarCambios.setEnabled(false);
+		confirmarCambios.setBounds(654, 305, 157, 23);
+		contentPane.add(confirmarCambios);
+
+		atras = new JButton("Atras");
+		atras.setBounds(10, 11, 105, 23);
+		atras.addActionListener(this);
+		contentPane.add(atras);
+		
+		try {
+			rellenarCampos();
+		} catch (NotFoundException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == atras) {
+			this.dispose();
+		} else if (e.getSource() == editar) {
+			try {
+				if (!esNull()) {
+					if (!nombre.isEditable()) {
+						nombre.setEditable(true);
+						nickname.setEditable(true);
+						passwordField.setEditable(true);
+						confirmarCambios.setEnabled(true);
+						banear.setEnabled(true);
+					} else {
+						nombre.setEditable(false);
+						nickname.setEditable(false);
+						passwordField.setEditable(false);
+						confirmarCambios.setEnabled(false);
+						banear.setEnabled(false);
+					}
+				}
+			} catch (NotFoundException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
+	public boolean esNull() throws NotFoundException {
+		boolean estaNull = false;
+		if (jugador == null)
+			throw new NotFoundException("No hay jugador seleccionado, selecciona uno.");
+
+		return estaNull;
+	}
+	
+	public void rellenarCampos() throws NotFoundException {
+		
+		try {
+			jugadores = mj.selectAll();
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new NotFoundException("No hay jugadores en la base de datos.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < jugadores.size(); i++)
+			comboBox.addItem(jugadores.get(i).getNombre() + " \"" + jugadores.get(i).getLogin() + "\"");
+	}
+
 }

@@ -9,6 +9,8 @@ public class Jugador extends Usuario {
 	private MiPc pc;
 	private boolean ban;
 
+	
+
 	public Jugador(String usuario, String login, String pass, ArrayList<Pokemon> equipo, MiPc pc, boolean ban) {
 		super(usuario, login, pass);
 		this.equipo = equipo;
@@ -26,6 +28,10 @@ public class Jugador extends Usuario {
 
 	public boolean isBan() {
 		return ban;
+	}
+	
+	public void setBan(boolean ban) {
+		this.ban = ban;
 	}
 
 	@Override
