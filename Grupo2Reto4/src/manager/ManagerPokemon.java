@@ -126,10 +126,10 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			comando.executeUpdate("update " + DBConexion.T_POKEMON + " set poke_id=" + p_new.getId() + ", poke_name='"
 					+ p_new.getNombre_pokemon() + "', poke_type1=" + p_new.getTipo()[0].getId() + ", poke_type2="
 					+ tipo2 + ", descripcion='" + descripcion + "', hp=" + p_new.getHp() + ", atk=" + p_new.getAtt()
-					+ ", " + ", def=" + p_new.getDef() + ", vel=" + p_new.getVel() + ", spAtk=" + p_new.getSatt()
-					+ ", spDef=" + p_new.getSdef() + ", poke_gen='" + p_new.getReg().getId() + "', poke_mov1="
-					+ p_new.getMovimientos().get(0).getId() + "', poke_mov2=" + p_new.getMovimientos().get(1).getId()
-					+ "', poke_mov3=" + p_new.getMovimientos().get(2).getId() + "', poke_mov4="
+					+ ", def=" + p_new.getDef() + ", vel=" + p_new.getVel() + ", spAtk=" + p_new.getSatt()
+					+ ", spDef=" + p_new.getSdef() + ", poke_gen=" + p_new.getReg().getId() + ", poke_mov1="
+					+ p_new.getMovimientos().get(0).getId() + ", poke_mov2=" + p_new.getMovimientos().get(1).getId()
+					+ ", poke_mov3=" + p_new.getMovimientos().get(2).getId() + ", poke_mov4="
 					+ p_new.getMovimientos().get(3).getId() + " where poke_id=" + p_old.getId()+";");
 
 		} finally {
