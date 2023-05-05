@@ -3,11 +3,9 @@ package vista;
 import java.awt.EventQueue;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import modelo.Jugador;
@@ -18,8 +16,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -88,14 +84,6 @@ public class VistaProfesor extends JFrame {
 		contentPane.add(separator);
 
 		JComboBox<Jugador> comboBox = new JComboBox<Jugador>();
-		comboBox.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				jugador = (Jugador) comboBox.getSelectedItem();
-				nombre.setText(jugador.getNombre());
-				nickname.setText(jugador.getLogin());
-				passwordField.setText(jugador.getPass());
-			}
-		});
 		comboBox.setBounds(544, 55, 200, 27);
 		contentPane.add(comboBox);
 		
@@ -143,10 +131,23 @@ public class VistaProfesor extends JFrame {
 		contentPane.add(editar);
 		
 		JButton banear = new JButton("Banear");
+		banear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		banear.setBounds(792, 380, 97, 23);
 		contentPane.add(banear);
 		
 		JButton seleccionar = new JButton("Seleccionár");
+		seleccionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jugador = (Jugador) comboBox.getSelectedItem();
+				nombre.setText(jugador.getNombre());
+				nickname.setText(jugador.getLogin());
+				passwordField.setText(jugador.getPass());
+			}
+		});
 		seleccionar.setBounds(777, 57, 89, 23);
 		contentPane.add(seleccionar);
 		

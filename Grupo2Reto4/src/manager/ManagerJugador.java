@@ -103,9 +103,6 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				conexion.close();
 		}
 
-		if (jugadores.size() == 0)
-			throw new NotFoundException("No hay jugadores.");
-
 		return jugadores;
 	}
 
@@ -137,7 +134,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 			comando = conexion.createStatement();
 
 			comando.executeUpdate("update " + DBConexion.T_USERS + " set user_login='" + user_new.getLogin()
-					+ "', user_name='" + user_new.getNombre() + "', user_pass='" + user_new.getPass()
+					+ "', user_name='" + user_new.getNombre() + "', user_pass='" + user_new.getPass() + "', baneado=" + user_new.isBan()
 					+ " where user_login='" + user_old.getLogin() + "';");
 
 			comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set user_login = '" + user_new.getLogin()

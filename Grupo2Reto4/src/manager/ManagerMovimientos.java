@@ -46,9 +46,8 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 			}
 
 		} finally {
-			registro.close();
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 		if (movimientos.size() == 0)
@@ -70,8 +69,8 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 					+ m.getPrecision() + ");");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -85,8 +84,8 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 				+ m_new.getTipo().getId() + ", potency=" + m_new.getPotencia() + ", pp=" + m_new.getPuntosPoder()
 				+ ", accuracy=" + m_new.getPrecision() + " where mov_id=" + m_old.getId() + ";");
 	} finally {
-		comando.close();
-		conexion.close();
+		if (conexion != null)
+			conexion.close();
 	}
 	}
 
@@ -101,8 +100,8 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 			comando.executeUpdate("delete from " + DBConexion.T_MOVS + " where mov_id =" + m.getId() + ";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}

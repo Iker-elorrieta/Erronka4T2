@@ -87,24 +87,26 @@ public class Metodos {
 
 		return usuario;
 	}
-	
-	public Region conseguirRegion(int id) throws NotFoundException, SQLException, Exception{
+
+	public Region conseguirRegion(int id) throws NotFoundException, SQLException, Exception {
 		ManagerRegion mr = new ManagerRegion();
 		ArrayList<Region> res = mr.selectAll();
-		return res.get(id-1);
+		return res.get(id - 1);
 	}
 
 	public boolean existeUsuario(String login) throws NotFoundException, SQLException, Exception {
 		// TODO Auto-generated method stub
 		ManagerJugador mu = new ManagerJugador();
 		ArrayList<Jugador> jugadores = mu.selectAll();
-		boolean existe=false;
-			for(Jugador jugador : jugadores) {
-				if(jugador.getLogin().equals(login))
-					existe=true;
+
+		boolean existe = false;
+		if (jugadores.size() != 0) {
+			for (Jugador jugador : jugadores) {
+				if (jugador.getLogin().equals(login))
+					existe = true;
 			}
-			
-			
+		}
+
 		return existe;
 	}
 

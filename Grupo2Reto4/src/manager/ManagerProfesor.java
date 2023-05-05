@@ -38,7 +38,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 				String pass = registro.getString(3);
 				Region r = m.conseguirRegion(registro.getInt(4));
 
-				Profesor p = new Profesor(login, nombre, pass, r);
+				Profesor p = new Profesor(nombre, login, pass, r);
 
 				profesores.add(p);
 			}
