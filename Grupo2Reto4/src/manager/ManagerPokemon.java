@@ -80,9 +80,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			}
 
 		} finally {
-			registro.close();
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 		if (pokemons.size() == 0)
@@ -107,8 +106,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					+ p.getMovimientos().get(2).getId() + "," + p.getMovimientos().get(3).getId() + ");");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}
@@ -134,8 +133,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 					+ p_new.getMovimientos().get(3).getId() + " where poke_id=" + p_old.getId()+";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -150,8 +149,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 			comando.executeUpdate("delete from " + DBConexion.T_POKEMON + " where poke_id =" + p.getId() + ";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}

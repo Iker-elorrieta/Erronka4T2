@@ -30,7 +30,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 		ArrayList<MiPc> pcs = new ArrayList<MiPc>();
 		ManagerCajas mc = new ManagerCajas();
 		ArrayList<Caja> cajasPC = mc.selectAll();
-		
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -47,11 +47,18 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 						.executeQuery("SELECT pc_box_id FROM " + DBConexion.T_CAJAS + " where pc_id = " + id + ";");
 
 				while (registro2.next() == true) {
-
 					int idbox = registro2.getInt(1);
+					Caja caja = null;
+					int i = 0;
+					do {
+						if (cajasPC.get(i).getId_caja() == idbox) {
+							caja = cajasPC.get(i);
+							cajasPC.remove(caja);
+							cajas.add(caja);
+						}
+						i++;
+					} while (caja == null && i < cajasPC.size());
 
-					Caja c = cajasPC.get(idbox-1);
-					cajas.add(c);
 				}
 
 				MiPc pc = new MiPc(cajas, id);
@@ -59,14 +66,9 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			}
 
 		} finally {
-			registro2.close();
-			registro.close();
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
-
-		if (pcs.size() == 0)
-			throw new NotFoundException("No hay pcs.");
 
 		return pcs;
 	}
@@ -89,8 +91,8 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			comando.executeUpdate("Insert into " + DBConexion.T_MIPC + "(user_login) values ('" + j.getLogin() + "');");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}
@@ -123,8 +125,8 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			}
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -139,8 +141,8 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 			comando.executeUpdate("delete from " + DBConexion.T_MIPC + " where pc_id ='" + pc.getId_pc() + "';");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 

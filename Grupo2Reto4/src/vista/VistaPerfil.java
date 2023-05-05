@@ -1,11 +1,9 @@
 package vista;
 
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import modelo.Jugador;
@@ -47,24 +45,11 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaPerfil frame = new VistaPerfil(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public VistaPerfil(Jugador jugador) {
-		jugador = new Jugador("clemen", "TheToastGod", "aaa", null, null, false);
 		jugadorActual = jugador;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(50, 50, 661, 699);
@@ -192,7 +177,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 
 				this.dispose();

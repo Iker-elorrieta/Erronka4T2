@@ -7,12 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import excepciones.NotFoundException;
 import manager.ManagerCajas;
+import manager.ManagerJugador;
 import manager.ManagerMovimientos;
 import manager.ManagerPC;
 import manager.ManagerPokemon;
 import manager.ManagerRegion;
 import manager.ManagerTipos;
 import modelo.Caja;
+import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
@@ -90,6 +92,20 @@ public class Metodos {
 		ManagerRegion mr = new ManagerRegion();
 		ArrayList<Region> res = mr.selectAll();
 		return res.get(id-1);
+	}
+
+	public boolean existeUsuario(String login) throws NotFoundException, SQLException, Exception {
+		// TODO Auto-generated method stub
+		ManagerJugador mu = new ManagerJugador();
+		ArrayList<Jugador> jugadores = mu.selectAll();
+		boolean existe=false;
+			for(Jugador jugador : jugadores) {
+				if(jugador.getLogin().equals(login))
+					existe=true;
+			}
+			
+			
+		return existe;
 	}
 
 }

@@ -43,7 +43,6 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private JLabel err3Passw;
 	private JButton atras;
 	private Metodos metodos = new Metodos();
-	// private ArrayList<Pokemon> pokemonALL = new ArrayList<Pokemon>();
 	private RutasImg rutas = new RutasImg();
 	private JScrollPane scrollPane;
 	private JPanel panel;
@@ -68,19 +67,16 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.setOpaque(false);
 		contentPane.setInheritsPopupMenu(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		// usuarios = metodos.arrayUsuarios();
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		nombreTF = new JTextField();
-		nombreTF.setBounds(381, 112, 185, 20);
+		nombreTF.setBounds(413, 113, 185, 20);
 		contentPane.add(nombreTF);
 		nombreTF.setColumns(10);
 
 		loginTF = new JTextField();
-		loginTF.setBounds(381, 168, 185, 20);
+		loginTF.setBounds(413, 169, 185, 20);
 		contentPane.add(loginTF);
 		loginTF.setColumns(10);
 
@@ -90,22 +86,22 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.add(atras);
 
 		JLabel jlabelNombre = new JLabel("Nombre del ususario:");
-		jlabelNombre.setBounds(223, 115, 148, 14);
+		jlabelNombre.setBounds(255, 116, 148, 14);
 		jlabelNombre.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelNombre);
 
 		JLabel jlabelNick = new JLabel("Nickname del usuario:");
-		jlabelNick.setBounds(218, 171, 153, 14);
+		jlabelNick.setBounds(250, 172, 153, 14);
 		jlabelNick.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelNick);
 
 		JLabel jlabelpassw1 = new JLabel("Contraseña:");
-		jlabelpassw1.setBounds(263, 238, 108, 14);
+		jlabelpassw1.setBounds(295, 239, 108, 14);
 		jlabelpassw1.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelpassw1);
 
 		JLabel jlabelpassw2 = new JLabel("Confirmar contraseña:");
-		jlabelpassw2.setBounds(218, 284, 153, 14);
+		jlabelpassw2.setBounds(250, 285, 153, 14);
 		jlabelpassw2.setHorizontalAlignment(SwingConstants.TRAILING);
 		contentPane.add(jlabelpassw2);
 
@@ -115,26 +111,29 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 		contentPane.add(jlabelTip);
 
 		passw1TF = new JPasswordField();
-		passw1TF.setBounds(381, 235, 185, 20);
+		passw1TF.setBounds(413, 236, 185, 20);
 		contentPane.add(passw1TF);
 
 		passw2TF = new JPasswordField();
-		passw2TF.setBounds(381, 281, 185, 20);
+		passw2TF.setBounds(413, 282, 185, 20);
 		contentPane.add(passw2TF);
 
 		errNombreV = new JLabel("El nombre no puede estar vacio");
+		errNombreV.setHorizontalAlignment(SwingConstants.TRAILING);
 		errNombreV.setBounds(10, 115, 213, 20);
 		errNombreV.setForeground(Color.RED);
 		contentPane.add(errNombreV);
 		errNombreV.setVisible(false);
 
 		err2Nick = new JLabel("");
-		err2Nick.setBounds(10, 171, 213, 14);
+		err2Nick.setHorizontalAlignment(SwingConstants.TRAILING);
+		err2Nick.setBounds(10, 171, 237, 14);
 		err2Nick.setForeground(Color.RED);
 		contentPane.add(err2Nick);
 		err2Nick.setVisible(false);
 
 		err3Passw = new JLabel("");
+		err3Passw.setHorizontalAlignment(SwingConstants.TRAILING);
 		err3Passw.setBounds(10, 257, 237, 14);
 		err3Passw.setForeground(Color.RED);
 		contentPane.add(err3Passw);
@@ -189,6 +188,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 			this.dispose();
 		} else if (e.getSource() == btnValidar) {
 			int ok = 0;
+
 			if (metodos.esVacio(nombreTF.getText()))
 				errNombreV.setVisible(true);
 			else {
@@ -199,15 +199,30 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 			if (metodos.esVacio(loginTF.getText())) {
 				err2Nick.setVisible(true);
 				err2Nick.setText("El nick no puede ser vacio.");
+			} else {
+				boolean existe = false;
+				try {
+					existe = metodos.existeUsuario(loginTF.getText());
+				} catch (NotFoundException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+
+				if (existe) {
+					err2Nick.setVisible(true);
+					err2Nick.setText("Este nick ya le pertenece a otro usuario.");
+				} else {
+					err2Nick.setVisible(false);
+					ok++;
+				}
 			}
-			/*
-			 * else if(loginTF.getText().equals(usuarios)) { err2Nick.setVisible(true);
-			 * err2Nick.setText("Este nick ya le pertenece a otro usuario."); }
-			 */
-			else {
-				err2Nick.setVisible(false);
-				ok++;
-			}
+
 			if (metodos.esVacio(String.valueOf(passw1TF.getPassword()))) {
 				err3Passw.setVisible(true);
 				err3Passw.setText("La contraseña no puede estar vacia.");
@@ -222,6 +237,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				err3Passw.setVisible(false);
 				ok++;
 			}
+
 			if (EquipoPKMN.size() == 0) {
 				errpkmn.setVisible(true);
 			} else {
@@ -230,6 +246,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 			}
 
 			if (ok == 4) {
+
 				JOptionPane.showMessageDialog(null, "Prueba a hacer login.", "Registrado correctamente",
 						JOptionPane.INFORMATION_MESSAGE);
 				Jugador user = new Jugador(nombreTF.getText(), loginTF.getText(),
@@ -244,8 +261,8 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
 				this.dispose();
+
 			}
 
 		}

@@ -44,7 +44,8 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 			}
 
 		} finally {
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 		if (profesores.size() == 0)
@@ -66,7 +67,8 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 					+ p.getNombre() + "','" + p.getPass() + "','" + p.getReg().getId() + "');");
 
 		} finally {
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}
@@ -83,7 +85,8 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 					+ p_new.getReg().getId() + "' where prof_login='" + p_old.getLogin() + "';");
 
 		} finally {
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -96,7 +99,8 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 
 			comando.executeUpdate("delete from " + DBConexion.T_PROFS + " where prof_login ='" + p.getLogin() + "';");
 		} finally {
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 

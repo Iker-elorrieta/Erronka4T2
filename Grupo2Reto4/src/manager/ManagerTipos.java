@@ -36,9 +36,8 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			}
 
 		} finally {
-			registro.close();
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 		if (tipos.size() == 0)
@@ -59,8 +58,8 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 					"Insert into " + DBConexion.T_TIPOS + " values (" + t.getId() + ", " + t.getNombre_tipo() + ");");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -73,8 +72,8 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			comando.executeUpdate("Update " + DBConexion.T_TIPOS + " set type_id="+t_new.getId()+", type_name='"+t_new.getNombre_tipo()+"' where type_id="+t_old.getId()+";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -87,8 +86,8 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 			comando = conexion.createStatement();
 			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_id=" + t.getId() + ";");
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 		
 	}

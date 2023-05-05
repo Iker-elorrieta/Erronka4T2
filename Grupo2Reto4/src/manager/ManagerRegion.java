@@ -36,9 +36,8 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			}
 
 		} finally {
-			registro.close();
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 		if (regiones.size() == 0)
@@ -58,8 +57,8 @@ public class ManagerRegion implements ManagerInterface<Region>{
 					"Insert into " + DBConexion.T_REGION + " values (" + r.getId() + ", " + r.getNombre() + ");");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -72,8 +71,8 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			comando.executeUpdate("Update " + DBConexion.T_REGION + " set type_id="+r_new.getId()+", type_name='"+r_new.getNombre()+"' where type_id="+r_old.getId()+";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -85,8 +84,8 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			comando = conexion.createStatement();
 			comando.executeUpdate("delete from " + DBConexion.T_REGION + " where type_id=" + r.getId() + ";");
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 		
 	}

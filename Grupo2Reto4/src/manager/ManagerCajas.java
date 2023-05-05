@@ -60,11 +60,9 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			}
 
 		} finally {
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
-
-		if (cajas.size() == 0)
-			throw new NotFoundException("No hay cajas.");
 
 		return cajas;
 	}
@@ -101,8 +99,8 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 			}
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 
 	}
@@ -122,8 +120,8 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 						+ " where pc_box_id=" + c_old.getId_caja() + ";");
 			}
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
@@ -141,8 +139,8 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 					"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id =" + c.getId_caja() + ";");
 
 		} finally {
-			comando.close();
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		}
 	}
 
