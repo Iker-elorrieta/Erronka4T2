@@ -43,7 +43,10 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				String login = registro.getString(1);
 				String nombre = registro.getString(2);
 				String passw = registro.getString(3);
-				boolean ban = registro.getBoolean(5);
+				
+				boolean ban =false;
+				if(registro.getInt(5)==1)
+					ban=true;
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				Statement comando2 = conexion.createStatement();
@@ -52,33 +55,37 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 
 				while (registro2.next()) {
 					Pokemon p1 = pokemon.get(registro2.getInt("poke_id1") - 1);
-
+					equipo.add(p1);
+					
 					Pokemon p2 = null;
-					if ((Integer) registro2.getInt("poke_id2") != 0)
+					if ((Integer) registro2.getInt("poke_id2") != 0) {
 						p2 = pokemon.get(registro2.getInt("poke_id2") - 1);
+						equipo.add(p2);
+					}
 
 					Pokemon p3 = null;
-					if ((Integer) registro2.getInt("poke_id3") != 0)
+					if ((Integer) registro2.getInt("poke_id3") != 0) {
 						p3 = pokemon.get(registro2.getInt("poke_id3") - 1);
+						equipo.add(p3);
+					}
 
 					Pokemon p4 = null;
-					if ((Integer) registro2.getInt("poke_id4") != 0)
+					if ((Integer) registro2.getInt("poke_id4") != 0) {
 						p4 = pokemon.get(registro2.getInt("poke_id4") - 1);
+						equipo.add(p4);
+					}
 
 					Pokemon p5 = null;
-					if ((Integer) registro2.getInt("poke_id5") != 0)
+					if ((Integer) registro2.getInt("poke_id5") != 0) {
 						p5 = pokemon.get(registro2.getInt("poke_id5") - 1);
+						equipo.add(p5);
+					}
 
 					Pokemon p6 = null;
-					if ((Integer) registro2.getInt("poke_id6") != 0)
+					if ((Integer) registro2.getInt("poke_id6") != 0) {
 						p6 = pokemon.get(registro2.getInt("poke_id6") - 1);
-
-					equipo.add(p1);
-					equipo.add(p2);
-					equipo.add(p3);
-					equipo.add(p4);
-					equipo.add(p5);
-					equipo.add(p6);
+						equipo.add(p6);
+					}
 
 				}
 
@@ -132,7 +139,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-
+			
 			comando.executeUpdate("update " + DBConexion.T_USERS + " set user_login='" + user_new.getLogin()
 					+ "', user_name='" + user_new.getNombre() + "', user_pass='" + user_new.getPass() + "', baneado=" + user_new.isBan()
 					+ " where user_login='" + user_old.getLogin() + "';");

@@ -40,6 +40,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	private JButton atras;
 	private JButton editar;
 	private JComboBox<String> comboBox;
+
 	/**
 	 * Launch the application.
 	 */
@@ -62,7 +63,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	 * @param user
 	 */
 	public VistaProfesor(Profesor user) {
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 932, 543);
 		contentPane = new JPanel();
@@ -108,19 +109,20 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		editar.addActionListener(this);
 		editar.setBounds(539, 380, 97, 23);
 		contentPane.add(editar);
-		editar.setToolTipText("Pulsa una vez para habilitar la edición de campos, pulsa una segunda vez para deshabilitarla.");
+		editar.setToolTipText(
+				"Pulsa una vez para habilitar la edición de campos, pulsa una segunda vez para deshabilitarla.");
 
 		banear = new JButton("Banear");
 		banear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (jugador.isBan()) {
 					jugador.setBan(false);
-					JOptionPane.showMessageDialog(null, "El jugador: " + jugador.getNombre() + ",  de nickname: "
-							+ jugador.getLogin() + ", ha sido baneado.");
-				} else {
-					jugador.setBan(true);
 					JOptionPane.showMessageDialog(null, "Se ha levantado el ban a el jugador: " + jugador.getNombre()
 							+ ",  de nickname: " + jugador.getLogin());
+				} else {
+					jugador.setBan(true);
+					JOptionPane.showMessageDialog(null, "El jugador: " + jugador.getNombre() + ",  de nickname: "
+							+ jugador.getLogin() + ", ha sido baneado.");
 				}
 			}
 		});
@@ -154,13 +156,14 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		confirmarCambios = new JButton("Confirmar Cambios");
 		confirmarCambios.setEnabled(false);
 		confirmarCambios.setBounds(654, 305, 157, 23);
+		confirmarCambios.addActionListener(this);
 		contentPane.add(confirmarCambios);
 
 		atras = new JButton("Atras");
 		atras.setBounds(10, 11, 105, 23);
 		atras.addActionListener(this);
 		contentPane.add(atras);
-		
+
 		try {
 			rellenarCampos();
 		} catch (NotFoundException e1) {
@@ -195,6 +198,19 @@ public class VistaProfesor extends JFrame implements ActionListener {
 				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
+		} else if (e.getSource() == confirmarCambios) {
+			try {
+				Jugador jugadorNew = new Jugador(nombre.getText(), nickname.getText(),
+						String.valueOf(passwordField.getPassword()), jugador.getEquipo(), jugador.getPc(),
+						jugador.isBan());
+				mj.update(jugador, jugadorNew);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -205,9 +221,9 @@ public class VistaProfesor extends JFrame implements ActionListener {
 
 		return estaNull;
 	}
-	
+
 	public void rellenarCampos() throws NotFoundException {
-		
+
 		try {
 			jugadores = mj.selectAll();
 		} catch (NotFoundException e) {
@@ -220,7 +236,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		for (int i = 0; i < jugadores.size(); i++)
 			comboBox.addItem(jugadores.get(i).getNombre() + " \"" + jugadores.get(i).getLogin() + "\"");
 	}
