@@ -148,9 +148,12 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 					+ "' where user_login='" + user_old.getLogin() + "';");
 
 			for (int i = 0; i < user_new.getEquipo().size(); i++) {
-
-				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
-						+ user_new.getEquipo().get(i).getId() + " where user_login = '" + user_new.getLogin() + "';");
+				if(user_new.getEquipo().get(i) != null) {
+					comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
+							+ user_new.getEquipo().get(i).getId() + " where user_login = '" + user_new.getLogin() + "';");
+					
+				}
+				
 			}
 
 		} finally {

@@ -95,10 +95,10 @@ public class MetodosVista {
 
 				comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" +(tamanyo+1)+" = "+p.getId()+" where user_login = '"+j.getLogin()+"';");
 
-				comando.executeUpdate("delete from "+DBConexion.T_CAJAS+" where pc_box_id ="+c.getId_caja()+";");
+				comando.executeUpdate("delete from "+DBConexion.T_CAJAS_POKEMON+" where pc_box_id ="+c.getId_caja()+";");
 
 			} finally {
-				registro.close();
+				
 				comando.close();
 				conexion.close();
 			}
