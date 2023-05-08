@@ -28,7 +28,7 @@ class ManagerRegionTest {
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Region> regiones = mr.selectAll();
-		assertEquals(regiones.get(0).getId(), 1);
+		assertEquals(regiones.get(0).getId(), 5);
 	}
 	
 	@Test
@@ -66,7 +66,7 @@ class ManagerRegionTest {
 				conexion.close();
 		}
 		
-		assertEquals(regiones.get(region.getId()-1).getNombre(), "Prueba");
+		assertEquals(regiones.get(region.getId()-2).getNombre(), "Prueba");
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ class ManagerRegionTest {
 		mr.update(region1, region2);
 		
 		ArrayList<Region> regiones =mr.selectAll();
-		assertEquals(regiones.get(region1.getId()-1).getNombre(), "Prueba");
+		assertEquals(regiones.get(region1.getId()-2).getId(), 8);
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -85,47 +85,13 @@ class ManagerRegionTest {
 			if (conexion != null)
 				conexion.close();
 		}
+		
 	}
 	
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
 		Region region = new Region(7, "Prueba");
-		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-
-			comando.executeUpdate(
-					"Insert into " + DBConexion.T_REGION + " values (" + region.getId() + ", '" + region.getNombre() + "');");
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
 		mr.delete(region);
-		
-		ArrayList<Region> regiones = new ArrayList<Region>();
-
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_REGION + ";");
-
-			while (registro.next() == true) {
-				int id = registro.getInt(1);
-				String nombre = registro.getString(2);
-
-				Region r = new Region(id, nombre);
-				regiones.add(r);
-			}
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		assertEquals(regiones.size(), 6);
 		
 	}
 

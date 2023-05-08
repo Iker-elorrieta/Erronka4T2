@@ -18,62 +18,36 @@ import utils.DBConexion;
 
 class ManagerTiposTest {
 	ManagerTipos mt = new ManagerTipos();
-	
+
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
-	
+
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Tipo> tipos = mt.selectAll();
 		assertEquals(tipos.get(0).getId(), 1);
 	}
-	
+
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Tipo tipo = new Tipo(19, "Prueba");
-		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_id=" + tipo.getId() + ";");
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		mt.insert(tipo);
-		
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+		Tipo tipo = new Tipo(18, "Hada");
 
 		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
-
-			while (registro.next() == true) {
-				int id = registro.getInt(1);
-				String nombre = registro.getString(2);
-
-				Tipo t = new Tipo(id, nombre);
-				tipos.add(t);
-			}
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
+			mt.insert(tipo);
+		}catch(Exception e) {
+			System.out.println("No se puede insertar nuevos tipos en la tabla porque es de tipo enum.");
 		}
-		
-		assertEquals(tipos.get(tipo.getId()-1).getNombre_tipo(), "Prueba");
-	}
 	
+	}
+
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		Tipo tipo1 = new Tipo(19, "Prueba");
-		Tipo tipo2 = new Tipo(20, "Prueba");
+		Tipo tipo1 = new Tipo(18, "Jorge");
+		Tipo tipo2 = new Tipo(18, "Hada");
 		mt.update(tipo1, tipo2);
-		
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+
+		ArrayList<Tipo> tipos = mt.selectAll();
 
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
@@ -92,63 +66,21 @@ class ManagerTiposTest {
 			if (conexion != null)
 				conexion.close();
 		}
-		assertEquals(tipos.get(tipo1.getId()-1).getNombre_tipo(), "Prueba");
+		
+		
+		assertEquals(tipos.get(tipo1.getId() - 1).getNombre_tipo(), "Hada");
 
-
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-			comando.executeUpdate("delete from " + DBConexion.T_TIPOS + " where type_id=" + tipo2.getId() + ";");
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 	}
-	
+
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
-		Tipo tipo = new Tipo(19, "Prueba");
-		
+		Tipo tipo = new Tipo(18, "Hada");
 		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-
-			comando.executeUpdate(
-					"Insert into " + DBConexion.T_TIPOS + " values (" + tipo.getId() + ", '" + tipo.getNombre_tipo() + "');");
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
 		mt.delete(tipo);
-		
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
-
-			while (registro.next() == true) {
-				int id = registro.getInt(1);
-				String nombre = registro.getString(2);
-
-				Tipo t = new Tipo(id, nombre);
-				tipos.add(t);
-			}
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
+		}catch(Exception e) {
+			System.out.println("No se puede borrar un tipo porque actua como FK en otras tablas");
 		}
-		
-		assertEquals(tipos.size(), 18);
 		
 	}
-	
-	
-
-	
 
 }

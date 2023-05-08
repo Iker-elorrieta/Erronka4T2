@@ -54,7 +54,7 @@ public class ManagerRegion implements ManagerInterface<Region>{
 			comando = conexion.createStatement();
 
 			comando.executeUpdate(
-					"Insert into " + DBConexion.T_REGION + " values (" + r.getId() + ", '" + r.getNombre() + "');");
+					"Insert into " + DBConexion.T_REGION + " values (" + r.getId() + ", '" + r.getNombre() + "', '"+r.getNombre()+"');");
 
 		} finally {
 			if (conexion != null)

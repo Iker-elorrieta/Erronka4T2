@@ -73,11 +73,11 @@ public class Metodos {
 		return pcs.get(id - 1);
 	}
 
-	public Jugador encontrarUsuario(ArrayList<Jugador> jugadores, String login, String passw) {
+	public Usuario encontrarUsuario(ArrayList<Usuario> users, String login, String passw) {
 		// TODO Auto-generated method stub
-		Jugador usuario = null;
+		Usuario usuario = null;
 
-		for (Jugador user : jugadores) {
+		for (Usuario user : users) {
 			if (user.getLogin().equals(login)) {
 				if (user.getPass().equals(passw)) {
 					usuario = user;

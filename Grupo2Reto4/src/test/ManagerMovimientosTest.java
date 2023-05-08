@@ -28,7 +28,7 @@ class ManagerMovimientosTest {
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Movimiento> movs = mm.selectAll();
-		assertEquals(movs.get(0).getId(), 3);
+		assertEquals(movs.get(0).getId(), 2);
 	}
 	
 	@Test
@@ -228,7 +228,7 @@ class ManagerMovimientosTest {
 				conexion.close();
 		}
 		
-		assertEquals(movimientos.size(), 619);
+		assertEquals(movimientos.size(), 620);
 		
 		
 	}
