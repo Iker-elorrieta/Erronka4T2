@@ -26,4 +26,8 @@ public class RutasImg {
 		String nPkDx = String.valueOf(num);
 		return "img/mini/" + nPkDx + ".png";
 	}
+	
+	public String jpgPoekdex() {
+		return "img/pokedex.jpg";
+	}
 }

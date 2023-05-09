@@ -10,6 +10,8 @@ import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import modelo.Jugador;
 import modelo.Profesor;
+import utils.RutasImg;
+
 import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -17,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -40,7 +43,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	private JButton atras;
 	private JButton editar;
 	private JComboBox<String> comboBox;
-
+	private RutasImg rutas = new RutasImg();
 	/**
 	 * Launch the application.
 	 */
@@ -163,13 +166,24 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		atras.setBounds(10, 11, 105, 23);
 		atras.addActionListener(this);
 		contentPane.add(atras);
-
-		try {
-			rellenarCampos();
-		} catch (NotFoundException e1) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
+		
+//		try {
+//			rellenarCampos();
+//		} catch (NotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			JOptionPane.showMessageDialog(null, e1.getMessage());
+//		}
+		
+		JLabel labelSelect = new JLabel("Seleccionár");
+		labelSelect.setHorizontalAlignment(SwingConstants.CENTER);
+		labelSelect.setBounds(131, 399, 112, 46);
+		contentPane.add(labelSelect);
+		
+		ImageIcon pkmnImg1 = new ImageIcon(rutas.jpgPoekdex());
+		JLabel pkmnIMG1 = new JLabel();
+		pkmnIMG1.setBounds(87, 71, 230, 400);
+		contentPane.add(pkmnIMG1);
+		pkmnIMG1.setIcon(pkmnImg1);
 	}
 
 	@Override
@@ -240,5 +254,4 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		for (int i = 0; i < jugadores.size(); i++)
 			comboBox.addItem(jugadores.get(i).getNombre() + " \"" + jugadores.get(i).getLogin() + "\"");
 	}
-
 }
