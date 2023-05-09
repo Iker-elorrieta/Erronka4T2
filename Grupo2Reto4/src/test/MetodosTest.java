@@ -12,6 +12,7 @@ import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import manager.ManagerProfesor;
+import modelo.Jugador;
 import modelo.Pokemon;
 import modelo.Profesor;
 import modelo.Region;
@@ -54,8 +55,8 @@ class MetodosTest {
 	}
 
 	@Test
-	void testExisteUsuario() {
-		fail("Not yet implemented");
+	void testExisteUsuario() throws NotFoundException, SQLException, Exception {
+		assertTrue(metodos.existeUsuario("clemen"));
 	}
 
 }

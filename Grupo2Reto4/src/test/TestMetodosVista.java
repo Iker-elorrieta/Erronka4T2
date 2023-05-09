@@ -84,7 +84,7 @@ class TestMetodosVista {
 		ArrayList<Caja> cajasNew = playerMN.selectAll().get(0).getPc().getCajas();
 		caja = cajasNew.get(0);
 		
-		assertEquals(pokeOldCaja.getNombre_pokemon(),"bulbasaur");
+		assertEquals(pokeOldCaja.getNombre_pokemon(),"Arceus");
 		assertEquals(equipoNew.get(equipoNew.size()-1),"bulbasaur");
 		//WIP
 	}
