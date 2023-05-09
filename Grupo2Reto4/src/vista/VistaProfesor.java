@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
+import manager.ManagerPokemon;
 import modelo.Jugador;
 import modelo.Profesor;
 import utils.RutasImg;
@@ -24,6 +25,8 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VistaProfesor extends JFrame implements ActionListener {
 
@@ -44,6 +47,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	private JButton editar;
 	private JComboBox<String> comboBox;
 	private RutasImg rutas = new RutasImg();
+	private ManagerPokemon mp = new ManagerPokemon();
 	/**
 	 * Launch the application.
 	 */
@@ -167,14 +171,34 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		atras.addActionListener(this);
 		contentPane.add(atras);
 		
-//		try {
-//			rellenarCampos();
-//		} catch (NotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			JOptionPane.showMessageDialog(null, e1.getMessage());
-//		}
+		try {
+			rellenarCampos();
+		} catch (NotFoundException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
 		
 		JLabel labelSelect = new JLabel("Seleccionár");
+		labelSelect.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				try {
+					VistaModificarDatos vd = new VistaModificarDatos(mp.selectAll().get(0));
+					vd.setVisible(true);
+				} catch (NotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		labelSelect.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSelect.setBounds(131, 399, 112, 46);
 		contentPane.add(labelSelect);

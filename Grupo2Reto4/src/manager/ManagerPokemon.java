@@ -116,7 +116,7 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 	public void update(Pokemon p_old, Pokemon p_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		try {
-			String descripcion = "Descripción genérica";
+			String descripcion = p_new.getNombre_pokemon()+" es un pokemon de la region de "+p_new.getReg().getNombre();
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			Integer tipo2 = null;
@@ -153,6 +153,72 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 				conexion.close();
 		}
 
+	}
+	
+	public Pokemon selectPokemon(int id) throws SQLException, NotFoundException, Exception  {
+		Pokemon pokemon = null;
+		ManagerMovimientos mm = new ManagerMovimientos();
+		ArrayList<Movimiento> movimientos = mm.selectAll();
+		ArrayList<Tipo> tiposA = new ArrayList<Tipo>();
+		ManagerTipos mt = new ManagerTipos();
+		tiposA=mt.selectAll();
+		try {
+			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			comando = conexion.createStatement();
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + " where poke_id="+id+";");
+
+			while (registro.next() == true) {
+				int pokeid = registro.getInt(1);
+				String name = registro.getString(2);
+				Integer tipo1 = registro.getInt(3);
+				Integer tipo2 = registro.getInt(4);
+				
+				Tipo tipos[] = new Tipo[2];
+				Tipo t1 = tiposA.get(tipo1-1);
+				Tipo t2 = null;
+
+				if(tipo2 != 0)
+					t2 = tiposA.get(tipo2-1);
+
+				tipos[0] = t1;
+				tipos[1] = t2;
+				
+				//String descripcion = registro.getString(5);
+				int hp = registro.getInt(6);
+				int atk = registro.getInt(7);
+				int def = registro.getInt(8);
+				int vel = registro.getInt(9);
+				int spAtk = registro.getInt(10);
+				int spDef = registro.getInt(11);
+
+				Region r = m.conseguirRegion(registro.getInt(12));
+
+				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
+
+				Movimiento m1 = movimientos.get(registro.getInt(13)-1);
+				Movimiento m2 = movimientos.get(registro.getInt(14)-1);
+				Movimiento m3 = movimientos.get(registro.getInt(15)-1);
+				Movimiento m4 = movimientos.get(registro.getInt(16)-1);
+
+				movimientos_pokemon.add(m1);
+				movimientos_pokemon.add(m2);
+				movimientos_pokemon.add(m3);
+				movimientos_pokemon.add(m4);
+
+				pokemon = new Pokemon(pokeid, name, tipos, hp, atk, def, spAtk, spDef, vel, movimientos_pokemon, r);
+
+				
+			}
+
+		} finally {
+			if (conexion != null)
+				conexion.close();
+		}
+
+		if (pokemon == null)
+			throw new NotFoundException("No hay pokemons.");
+		
+		return pokemon;
 	}
 
 }

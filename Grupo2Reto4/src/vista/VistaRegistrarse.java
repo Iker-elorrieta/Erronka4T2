@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
+import manager.ManagerPokemon;
 import modelo.Jugador;
 import modelo.Pokemon;
 import utils.RutasImg;
@@ -52,15 +53,19 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 	private JLabel jlabelpkmn;
 	private Pokemon pokemon;
 	private JButton btnValidar;
-
+	private ManagerPokemon mp = new ManagerPokemon();
 	/**
 	 * Launch the application.
 	 */
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
+	 * @throws SQLException 
+	 * @throws NotFoundException 
 	 */
-	public VistaRegistrarse() {
+	public VistaRegistrarse(){
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1037, 503);
 		contentPane = new JPanel();
@@ -297,7 +302,7 @@ public class VistaRegistrarse extends JFrame implements ActionListener {
 				public void mouseClicked(MouseEvent e) {
 
 					try {
-						pokemon = metodos.conseguirPokemon(Integer.valueOf(pkmnIMG1.getToolTipText()));
+						pokemon = mp.selectPokemon(Integer.valueOf(pkmnIMG1.getToolTipText()));
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

@@ -25,7 +25,7 @@ public class ManagerRegion implements ManagerInterface<Region>{
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_REGION + ";");
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_REGION + " order by reg_id;");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);

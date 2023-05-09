@@ -29,7 +29,7 @@ public class ManagerProfesor implements ManagerInterface<Profesor> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_PROFS + ";");
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_PROFS + " order by prof_gen;");
 
 			while (registro.next() == true) {
 

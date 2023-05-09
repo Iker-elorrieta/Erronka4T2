@@ -24,7 +24,7 @@ public class ManagerTipos implements ManagerInterface<Tipo> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + " order by type_id;");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);

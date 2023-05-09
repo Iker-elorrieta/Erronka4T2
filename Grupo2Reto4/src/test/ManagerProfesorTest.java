@@ -30,7 +30,7 @@ class ManagerProfesorTest {
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Profesor> profesores = mp.selectAll();
-		assertEquals(profesores.get(0).getReg().getId(), 2);
+		assertEquals(profesores.get(0).getReg().getId(), 1);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ class ManagerProfesorTest {
 
 		ArrayList<Profesor> profesores = mp.selectAll();
 
-		assertEquals(profesores.get(profesores.size() - 2).getLogin(), "prueba");
+		assertEquals(profesores.get(profesores.size() - 1).getLogin(), "prueba");
 
 	}
 
@@ -70,7 +70,7 @@ class ManagerProfesorTest {
 
 		ArrayList<Profesor> profesores = mp.selectAll();
 
-		assertEquals(profesores.get(profesores.size() - 2).getNombre(), "Profesor Prueba2");
+		assertEquals(profesores.get(profesores.size() - 1).getNombre(), "Profesor Prueba2");
 
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);

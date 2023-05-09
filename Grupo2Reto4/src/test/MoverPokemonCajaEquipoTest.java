@@ -68,7 +68,7 @@ class MoverPokemonCajaEquipoTest {
 		cajas.add(c);
 		MiPc pc = new MiPc(cajas,1);
 		
-		Jugador j = new Jugador("prueba1", "prueba", "123", equipo, pc, false);
+		Jugador j = new Jugador("prueba1", "prueba3", "123", equipo, pc, false);
 		
 		mj.insert(j);
 		

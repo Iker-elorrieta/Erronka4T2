@@ -1,4 +1,4 @@
-package controlador;
+package test;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import manager.ManagerProfesor;

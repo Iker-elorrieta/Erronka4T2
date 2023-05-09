@@ -53,6 +53,12 @@ class ManagerPokemonTest {
 	}
 	
 	@Test
+	void testSelectPokemon() throws NotFoundException, SQLException, Exception {
+		Pokemon pokemon = mp.selectPokemon(493);
+		assertEquals(pokemon.getNombre_pokemon(), "Arceus");
+	}
+	
+	@Test
 	void testInsert() throws SQLException, Exception {
 		
 		moveset.add(move1);
@@ -435,6 +441,8 @@ ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 		
 		
 	}
+	
+	
 
 	
 

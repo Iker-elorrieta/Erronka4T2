@@ -166,7 +166,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		JButton irAVistaCajas = new JButton("Ver Cajas");
 		irAVistaCajas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//A vista CajasPC(jugadorActual)
+				VistaCajasPC vistacajaspc = new VistaCajasPC(jugadorActual);
+				vistacajaspc.setVisible(true);
 			}
 		});
 		irAVistaCajas.setBounds(34, 470, 131, 35);

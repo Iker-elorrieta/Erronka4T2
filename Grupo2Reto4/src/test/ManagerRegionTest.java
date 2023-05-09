@@ -28,7 +28,7 @@ class ManagerRegionTest {
 	@Test
 	void testSelectAll() throws NotFoundException, SQLException, Exception {
 		ArrayList<Region> regiones = mr.selectAll();
-		assertEquals(regiones.get(0).getId(), 5);
+		assertEquals(regiones.get(0).getId(), 1);
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ class ManagerRegionTest {
 		mr.update(region1, region2);
 		
 		ArrayList<Region> regiones =mr.selectAll();
-		assertEquals(regiones.get(region1.getId()-2).getId(), 8);
+		assertEquals(regiones.get(region1.getId()-1).getId(), 8);
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -91,8 +91,12 @@ class ManagerRegionTest {
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
 		Region region = new Region(7, "Prueba");
+		mr.insert(region);
+		ArrayList<Region> regiones = mr.selectAll();
+		assertEquals(regiones.size(), 7);
 		mr.delete(region);
-		
+		regiones = mr.selectAll();
+		assertEquals(regiones.size(), 6);
 	}
 
 }

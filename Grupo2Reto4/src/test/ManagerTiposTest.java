@@ -31,20 +31,19 @@ class ManagerTiposTest {
 
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Tipo tipo = new Tipo(18, "Hada");
-
-		try {
-			mt.insert(tipo);
-		}catch(Exception e) {
-			System.out.println("No se puede insertar nuevos tipos en la tabla porque es de tipo enum.");
-		}
-	
+		Tipo tipo = new Tipo(19, "Prueba");
+		mt.insert(tipo);
+		ArrayList<Tipo> tipos = mt.selectAll();
+		assertEquals(tipos.get(tipos.size()-1).getId(), 19);
+		mt.delete(tipo);
 	}
 
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		Tipo tipo1 = new Tipo(18, "Jorge");
-		Tipo tipo2 = new Tipo(18, "Hada");
+		
+		Tipo tipo1 = new Tipo(19, "Prueba");
+		mt.insert(tipo1);
+		Tipo tipo2 = new Tipo(20, "Prueba");
 		mt.update(tipo1, tipo2);
 
 		ArrayList<Tipo> tipos = mt.selectAll();
@@ -67,20 +66,19 @@ class ManagerTiposTest {
 				conexion.close();
 		}
 		
-		
-		assertEquals(tipos.get(tipo1.getId() - 1).getNombre_tipo(), "Hada");
-
+		assertEquals(tipos.get(tipos.size() - 1).getId(), 20);
+		mt.delete(tipo2);
 	}
 
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
-		Tipo tipo = new Tipo(18, "Hada");
-		try {
+		Tipo tipo = new Tipo(19, "Prueba");
+		mt.insert(tipo);
+		ArrayList<Tipo> tipos = mt.selectAll();
+		assertEquals(tipos.size(), 19);
 		mt.delete(tipo);
-		}catch(Exception e) {
-			System.out.println("No se puede borrar un tipo porque actua como FK en otras tablas");
-		}
-		
+		tipos = mt.selectAll();
+		assertEquals(tipos.size(), 18);
 	}
 
 }

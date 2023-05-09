@@ -15,8 +15,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
+import javax.swing.JSlider;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
-public class VistaDatos extends JFrame implements ActionListener {
+public class VistaModificarDatos extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -24,6 +30,18 @@ public class VistaDatos extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private RutasImg rutas = new RutasImg();
+	private JSlider hpSlider;
+	private JSlider atkSlider;
+	private JSlider	sAtkSlider;
+	private JSlider defSlider;
+	private JSlider sDefSlider;
+	private JSlider velSlider;
+	private JSpinner hpSpinner;
+	private JSpinner atkSpinner;
+	private JSpinner defSpinner;
+	private JSpinner sAtkSpinner;
+	private JSpinner sDefSpinner;
+	private JSpinner velSpinner;
 
 	/**
 	 * Launch the application.VistaDatos.java
@@ -32,11 +50,9 @@ public class VistaDatos extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public VistaDatos(Pokemon pokemon) {
+	public VistaModificarDatos(Pokemon pokemon) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		
-		setBounds(100, 100, 478, 451);
+		setBounds(100, 100, 770, 451);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -59,42 +75,36 @@ public class VistaDatos extends JFrame implements ActionListener {
 
 		JProgressBar progressBarHP = new JProgressBar();
 		progressBarHP.setMaximum(255);
-		progressBarHP.setToolTipText(String.valueOf(pokemon.getHp()));
 		progressBarHP.setValue(pokemon.getHp());
 		progressBarHP.setBounds(233, 33, 214, 20);
 		contentPane.add(progressBarHP);
 
 		JProgressBar progressBarAtt = new JProgressBar();
 		progressBarAtt.setMaximum(255);
-		progressBarAtt.setToolTipText(String.valueOf(pokemon.getAtt()));
 		progressBarAtt.setValue(pokemon.getAtt());
 		progressBarAtt.setBounds(233, 64, 214, 20);
 		contentPane.add(progressBarAtt);
 
 		JProgressBar progressBarSAtt = new JProgressBar();
 		progressBarSAtt.setMaximum(255);
-		progressBarSAtt.setToolTipText(String.valueOf(pokemon.getSatt()));
 		progressBarSAtt.setValue(pokemon.getSatt());
 		progressBarSAtt.setBounds(233, 95, 214, 20);
 		contentPane.add(progressBarSAtt);
 
 		JProgressBar progressBarDeff = new JProgressBar();
 		progressBarDeff.setMaximum(255);
-		progressBarDeff.setToolTipText(String.valueOf(pokemon.getDef()));
 		progressBarDeff.setValue(pokemon.getDef());
 		progressBarDeff.setBounds(233, 126, 214, 20);
 		contentPane.add(progressBarDeff);
 
 		JProgressBar progressBarSDeff = new JProgressBar();
 		progressBarSDeff.setMaximum(255);
-		progressBarSDeff.setToolTipText(String.valueOf(pokemon.getSdef()));
 		progressBarSDeff.setValue(pokemon.getSdef());
 		progressBarSDeff.setBounds(233, 157, 214, 20);
 		contentPane.add(progressBarSDeff);
 
 		JProgressBar progressBarVel = new JProgressBar();
 		progressBarVel.setMaximum(255);
-		progressBarVel.setToolTipText(String.valueOf(pokemon.getVel()));
 		progressBarVel.setValue(pokemon.getVel());
 		progressBarVel.setBounds(233, 188, 214, 20);
 		contentPane.add(progressBarVel);
@@ -203,6 +213,120 @@ public class VistaDatos extends JFrame implements ActionListener {
 		lblMov4.setBackground(Color.WHITE);
 		lblMov4.setBounds(265, 326, 154, 43);
 		contentPane.add(lblMov4);
+		
+		hpSlider = new JSlider();
+		hpSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				hpSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarHP.setValue(hpSlider.getValue());
+						hpSpinner.setValue(hpSlider.getValue());
+					}
+				});
+			}
+		});
+		hpSlider.setMinorTickSpacing(1);
+		hpSlider.setValue(pokemon.getHp());
+		hpSlider.setMinimum(1);
+		hpSlider.setMaximum(255);
+		hpSlider.setBounds(473, 27, 200, 26);
+		contentPane.add(hpSlider);
+		
+		hpSpinner = new JSpinner();
+		hpSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		hpSpinner.setBounds(680, 30, 62, 20);
+		contentPane.add(hpSpinner);
+		
+		atkSlider = new JSlider();
+		atkSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				atkSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarAtt.setValue(atkSlider.getValue());
+						atkSpinner.setValue(atkSlider.getValue());
+					}
+				});
+			}
+		});
+		atkSlider.setMinorTickSpacing(1);
+		atkSlider.setValue(pokemon.getAtt());
+		atkSlider.setMinimum(1);
+		atkSlider.setMaximum(255);
+		atkSlider.setBounds(473, 58, 200, 26);
+		contentPane.add(atkSlider);
+		
+		atkSpinner = new JSpinner();
+		atkSpinner.setBounds(680, 61, 62, 20);
+		atkSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		contentPane.add(atkSpinner);
+		
+		sAtkSlider = new JSlider();
+		sAtkSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				sAtkSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarSAtt.setValue(sAtkSlider.getValue());
+						sAtkSpinner.setValue(sAtkSlider.getValue());
+					}
+				});
+			}
+		});
+		sAtkSlider.setMinorTickSpacing(1);
+		sAtkSlider.setMinimum(1);
+		sAtkSlider.setValue(pokemon.getSatt());
+		sAtkSlider.setMaximum(255);
+		sAtkSlider.setBounds(473, 89, 200, 26);
+		contentPane.add(sAtkSlider);
+		
+		sAtkSpinner = new JSpinner();
+		sAtkSpinner.setBounds(680, 92, 62, 20);
+		sAtkSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		contentPane.add(sAtkSpinner);
+		
+		defSlider = new JSlider();
+		defSlider.setMinorTickSpacing(1);
+		defSlider.setValue(pokemon.getDef());
+		defSlider.setMinimum(1);
+		defSlider.setMaximum(255);
+		defSlider.setBounds(473, 120, 200, 26);
+		contentPane.add(defSlider);
+		
+		defSpinner = new JSpinner();
+		defSpinner.setBounds(680, 123, 62, 20);
+		defSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		contentPane.add(defSpinner);
+		
+		sDefSlider = new JSlider();
+		sDefSlider.setMinorTickSpacing(1);
+		sDefSlider.setValue(pokemon.getSdef());
+		sDefSlider.setMinimum(1);
+		sDefSlider.setMaximum(255);
+		sDefSlider.setBounds(473, 151, 200, 26);
+		contentPane.add(sDefSlider);
+		
+		sDefSpinner = new JSpinner();
+		sDefSpinner.setBounds(680, 154, 62, 20);
+		sDefSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		contentPane.add(sDefSpinner);
+		
+		velSlider = new JSlider();
+		velSlider.setMinorTickSpacing(1);
+		velSlider.setValue(pokemon.getVel());
+		velSlider.setMinimum(1);
+		velSlider.setMaximum(255);
+		velSlider.setBounds(473, 182, 200, 26);
+		contentPane.add(velSlider);
+		
+		velSpinner = new JSpinner();
+		velSpinner.setBounds(680, 185, 62, 20);
+		velSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		contentPane.add(velSpinner);
 
 	}
 

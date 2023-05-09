@@ -105,5 +105,7 @@ public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 		}
 
 	}
+	
+	
 
 }
