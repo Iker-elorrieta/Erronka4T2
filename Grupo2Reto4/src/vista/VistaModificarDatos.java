@@ -52,7 +52,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 	 */
 	public VistaModificarDatos(Pokemon pokemon) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 770, 451);
+		setBounds(100, 100, 770, 561);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -111,7 +111,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 
 		JButton atras = new JButton("Atras");
 		atras.addActionListener(this);
-		atras.setBounds(0, 389, 89, 23);
+		atras.setBounds(0, 499, 89, 23);
 		contentPane.add(atras);
 
 		JLabel jName = new JLabel(pokemon.getNombre_pokemon());
@@ -175,7 +175,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov1.setForeground(new Color(0, 0, 0));
 		lblMov1.setBackground(Color.WHITE);
 		lblMov1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMov1.setBounds(34, 256, 154, 43);
+		lblMov1.setBounds(10, 273, 154, 43);
 		contentPane.add(lblMov1);
 
 		JLabel lblMov2 = new JLabel(pokemon.getMovimientos().get(1).getNombre());
@@ -187,7 +187,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov2.setForeground(Color.BLACK);
 		lblMov2.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblMov2.setBackground(Color.WHITE);
-		lblMov2.setBounds(265, 256, 154, 43);
+		lblMov2.setBounds(202, 273, 154, 43);
 		contentPane.add(lblMov2);
 
 		JLabel lblMov3 = new JLabel(pokemon.getMovimientos().get(2).getNombre());
@@ -199,7 +199,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov3.setForeground(Color.BLACK);
 		lblMov3.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblMov3.setBackground(Color.WHITE);
-		lblMov3.setBounds(34, 326, 154, 43);
+		lblMov3.setBounds(399, 273, 154, 43);
 		contentPane.add(lblMov3);
 
 		JLabel lblMov4 = new JLabel(pokemon.getMovimientos().get(3).getNombre());
@@ -211,7 +211,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov4.setForeground(Color.BLACK);
 		lblMov4.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		lblMov4.setBackground(Color.WHITE);
-		lblMov4.setBounds(265, 326, 154, 43);
+		lblMov4.setBounds(588, 273, 154, 43);
 		contentPane.add(lblMov4);
 		
 		hpSlider = new JSlider();
