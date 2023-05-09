@@ -4,14 +4,19 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import modelo.Jugador;
+import modelo.Pokemon;
+import utils.RutasImg;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -41,6 +46,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	private int editable = 0;
 	private JButton botonDarseDeBaja;
 	private Jugador jugadorActual;
+	private RutasImg rutas = new RutasImg();
+	private Metodos metodos = new Metodos();
 
 	/**
 	 * Launch the application.
@@ -111,6 +118,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		panel.setLayout(new GridLayout(0, 3, 10, 10));
 		contentPane.add(panel);
 
+		verEquipo();
+
 		errNombreV = new JLabel("El nombre no puede estar vacio");
 		errNombreV.setBounds(34, 126, 213, 20);
 		errNombreV.setForeground(Color.RED);
@@ -153,6 +162,41 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		botonAceptarCambios.setEnabled(false);
 		botonAceptarCambios.setBounds(260, 335, 148, 23);
 		contentPane.add(botonAceptarCambios);
+		
+		JButton irAVistaCajas = new JButton("Ver Cajas");
+		irAVistaCajas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//A vista CajasPC(jugadorActual)
+			}
+		});
+		irAVistaCajas.setBounds(34, 470, 131, 35);
+		contentPane.add(irAVistaCajas);
+	}
+
+	private void verEquipo() {
+		// TODO Auto-generated method stub
+		int i = 0;
+
+		for (Pokemon pokemon : jugadorActual.getEquipo()) {
+
+			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(pokemon.getId()));
+			JLabel pkmnIMG1 = new JLabel();
+			pkmnIMG1.setToolTipText(jugadorActual.getEquipo().get(i).getNombre_pokemon());
+			panel.add(pkmnIMG1);
+			pkmnIMG1.setIcon(pkmnImg1);
+
+			i++;
+		}
+
+		if (i < 7) {
+			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(0));
+			JLabel pkmnIMG1 = new JLabel();
+			pkmnIMG1.setToolTipText("Vacio.");
+			panel.add(pkmnIMG1);
+			pkmnIMG1.setIcon(pkmnImg1);
+
+			i++;
+		}
 	}
 
 	@Override
@@ -160,7 +204,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource() == atras) {
 			this.dispose();
-		} else {
+		} else if (e.getSource() == botonDarseDeBaja){
 			int eleccion = JOptionPane.showConfirmDialog(botonDarseDeBaja,
 					"¿Estás REALMENTE seguro de que quieres darte de baja?");
 
@@ -182,6 +226,78 @@ public class VistaPerfil extends JFrame implements ActionListener {
 
 				this.dispose();
 			}
+		}	else if (e.getSource() == botonAceptarCambios) {
+				int ok = 0;
+
+				if (metodos.esVacio(nombreTF.getText()))
+					errNombreV.setVisible(true);
+				else {
+					errNombreV.setVisible(false);
+					ok++;
+				}
+
+				if (metodos.esVacio(loginTF.getText())) {
+					err2Nick.setVisible(true);
+					err2Nick.setText("El nick no puede ser vacio.");
+				} else {
+					boolean existe = false;
+					try {
+						existe = metodos.existeUsuario(loginTF.getText());
+					} catch (NotFoundException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+
+					if (existe) {
+						err2Nick.setVisible(true);
+						err2Nick.setText("Este nick ya le pertenece a otro usuario.");
+					} else {
+						err2Nick.setVisible(false);
+						ok++;
+					}
+				}
+
+				if (metodos.esVacio(String.valueOf(passwordField_1.getPassword()))) {
+					err3Passw.setVisible(true);
+					err3Passw.setText("La contraseña no puede estar vacia.");
+				} else if (!metodos.esVacio(String.valueOf(passwordField_1.getPassword()))
+						&& metodos.esVacio(String.valueOf(passwordField.getPassword()))) {
+					err3Passw.setVisible(true);
+					err3Passw.setText("Confirmacion de contraseña vacia.");
+				} else if (!String.valueOf(passwordField_1.getPassword()).equals(String.valueOf(passwordField.getPassword()))) {
+					err3Passw.setVisible(true);
+					err3Passw.setText("Confirmacion de contraseña incorrecta.");
+				} else {
+					err3Passw.setVisible(false);
+					ok++;
+				}
+				
+				if (ok == 3) {
+
+					JOptionPane.showMessageDialog(null, "Prueba a hacer login.", "Registrado correctamente",
+							JOptionPane.INFORMATION_MESSAGE);
+					Jugador userUpdate = new Jugador(nombreTF.getText(), loginTF.getText(),
+							String.valueOf(passwordField_1.getPassword()), jugadorActual.getEquipo(), jugadorActual.getPc(), false);
+					ManagerJugador mj = new ManagerJugador();
+					try {
+						mj.update(jugadorActual, userUpdate);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					this.dispose();
+
+				}
+				
 		}
 	}
 

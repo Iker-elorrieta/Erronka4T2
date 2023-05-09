@@ -146,16 +146,13 @@ public class MetodosVista {
 		ArrayList<Pokemon> lista = man.selectAll();
 
 		Pokemon pokeSeleccionado = lista.get(opcion - 1);
-		
-		
-		
 
 		if (pokeSeleccionado != null) {
 			
 			try {
 				conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 				comando = conexion.createStatement();
-				comando.executeUpdate("update "+DBConexion.T_CAJAS_POKEMON+" set "+""+" where pc_id="+pc.getId_pc()+" and box_id="+caja.getId_caja()+";");
+				comando.executeUpdate("delete from "+DBConexion.T_CAJAS_POKEMON+" where pc_id="+pc.getId_pc()+" and box_id="+caja.getId_caja()+" and poke_id="+pokeSeleccionado.getId()+";");
 			} finally {
 				registro.close();
 				comando.close();
@@ -181,5 +178,7 @@ public class MetodosVista {
 		equipo.add(poke1);
 		cajaElegida.add(poke2);
 	}
+	
+	
 	
 }

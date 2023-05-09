@@ -6,17 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import excepciones.NotFoundException;
-import manager.ManagerCajas;
 import manager.ManagerJugador;
-import manager.ManagerMovimientos;
-import manager.ManagerPC;
 import manager.ManagerPokemon;
 import manager.ManagerRegion;
 import manager.ManagerTipos;
-import modelo.Caja;
 import modelo.Jugador;
-import modelo.MiPc;
-import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Region;
 import modelo.Tipo;
@@ -40,16 +34,7 @@ public class Metodos {
 			ArrayList<Tipo> tipos = mt.selectAll();
 			t = tipos.get(id - 1);
 		}
-
 		return t;
-
-	}
-
-	public Movimiento conseguirMovimiento(int idM) throws NotFoundException, SQLException, Exception {
-		// TODO Auto-generated method stub
-		ManagerMovimientos mm = new ManagerMovimientos();
-		ArrayList<Movimiento> m = mm.selectAll();
-		return m.get(idM - 2);
 	}
 
 	public Pokemon conseguirPokemon(int idpokemon) throws NotFoundException, SQLException, Exception {
@@ -57,20 +42,6 @@ public class Metodos {
 		ManagerPokemon mp = new ManagerPokemon();
 		ArrayList<Pokemon> pokemons = mp.selectAll();
 		return pokemons.get(idpokemon - 1);
-	}
-
-	public Caja conseguirCajas(int idbox) throws NotFoundException, SQLException, Exception {
-		// TODO Auto-generated method stub
-		ManagerCajas mc = new ManagerCajas();
-		ArrayList<Caja> cajas = mc.selectAll();
-		return cajas.get(idbox - 1);
-	}
-
-	public MiPc conseguirPc(int id) throws NotFoundException, SQLException, Exception {
-		// TODO Auto-generated method stub
-		ManagerPC mpc = new ManagerPC();
-		ArrayList<MiPc> pcs = mpc.selectAll();
-		return pcs.get(id - 1);
 	}
 
 	public Usuario encontrarUsuario(ArrayList<Usuario> users, String login, String passw) {
@@ -84,7 +55,6 @@ public class Metodos {
 				}
 			}
 		}
-
 		return usuario;
 	}
 
@@ -106,7 +76,6 @@ public class Metodos {
 					existe = true;
 			}
 		}
-
 		return existe;
 	}
 
