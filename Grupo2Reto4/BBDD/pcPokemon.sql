@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 172.17.0.1
--- Tiempo de generación: 10-05-2023 a las 11:25:35
--- Versión del servidor: 8.0.31
--- Versión de PHP: 8.1.18
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 10-05-2023 a las 14:00:22
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,28 +18,57 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pcPokemon`
+-- Base de datos: `pcpokemon`
 --
-CREATE DATABASE IF NOT EXISTS `pcPokemon` DEFAULT CHARACTER SET utf8mb4 ;
-USE `pcPokemon`;
+CREATE DATABASE IF NOT EXISTS `pcpokemon` DEFAULT CHARACTER SET utf8mb4 ;
+USE `pcpokemon`;
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cargarCajas` (IN `id` INT)   begin
+declare i int default 0;
+while i < 8
+	do insert into Caja (pc_id) values(id);
+	set i = i + 1;
+	end while;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cargarEquipo` (IN `id` INT, IN `user_login` VARCHAR(30))   begin
+declare duplicado bool default 0;
+declare esNull bool default 0;
+declare continue handler for 1062 set duplicado = 1;
+declare continue handler for 1048 set esNull = 1;
+insert into Equipo (user_login, poke_id1) values (user_login, id);
+if duplicado = 1 then
+	select concat ('Ya existe el pokemon ',id ,' en el equipo') Error;
+elseif esNull = 1 then
+	select concat ('No puedes poner un valor nulo') Error;
+else
+	select concat ('Añadido al equipo el pokemon ',id) ALERT;
+end if;
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Caja`
+-- Estructura de tabla para la tabla `caja`
 --
 
-CREATE TABLE `Caja` (
-  `pc_box_id` int NOT NULL,
-  `pc_id` int DEFAULT NULL,
-  `box_pokemon` int DEFAULT '0'
-) ;
+CREATE TABLE `caja` (
+  `pc_box_id` int(11) NOT NULL,
+  `pc_id` int(11) DEFAULT NULL,
+  `box_pokemon` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Caja`
+-- Volcado de datos para la tabla `caja`
 --
 
-INSERT INTO `Caja` (`pc_box_id`, `pc_id`, `box_pokemon`) VALUES
+INSERT INTO `caja` (`pc_box_id`, `pc_id`, `box_pokemon`) VALUES
 (1, 2, 0),
 (2, 2, 0),
 (3, 2, 0),
@@ -52,58 +81,58 @@ INSERT INTO `Caja` (`pc_box_id`, `pc_id`, `box_pokemon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `CajaPokemon`
+-- Estructura de tabla para la tabla `cajapokemon`
 --
 
-CREATE TABLE `CajaPokemon` (
-  `pc_id` int NOT NULL,
-  `pc_box_id` int NOT NULL,
-  `poke_id` int DEFAULT NULL
+CREATE TABLE `cajapokemon` (
+  `pc_id` int(11) NOT NULL,
+  `pc_box_id` int(11) NOT NULL,
+  `poke_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Equipo`
+-- Estructura de tabla para la tabla `equipo`
 --
 
-CREATE TABLE `Equipo` (
+CREATE TABLE `equipo` (
   `user_login` varchar(30) DEFAULT NULL,
-  `poke_id1` int NOT NULL,
-  `poke_id2` int DEFAULT NULL,
-  `poke_id3` int DEFAULT NULL,
-  `poke_id4` int DEFAULT NULL,
-  `poke_id5` int DEFAULT NULL,
-  `poke_id6` int DEFAULT NULL
+  `poke_id1` int(11) NOT NULL,
+  `poke_id2` int(11) DEFAULT NULL,
+  `poke_id3` int(11) DEFAULT NULL,
+  `poke_id4` int(11) DEFAULT NULL,
+  `poke_id5` int(11) DEFAULT NULL,
+  `poke_id6` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Equipo`
+-- Volcado de datos para la tabla `equipo`
 --
 
-INSERT INTO `Equipo` (`user_login`, `poke_id1`, `poke_id2`, `poke_id3`, `poke_id4`, `poke_id5`, `poke_id6`) VALUES
+INSERT INTO `equipo` (`user_login`, `poke_id1`, `poke_id2`, `poke_id3`, `poke_id4`, `poke_id5`, `poke_id6`) VALUES
 ('clemen', 477, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Movimiento`
+-- Estructura de tabla para la tabla `movimiento`
 --
 
-CREATE TABLE `Movimiento` (
-  `mov_id` int NOT NULL,
+CREATE TABLE `movimiento` (
+  `mov_id` int(11) NOT NULL,
   `move_name` varchar(30) DEFAULT NULL,
-  `mov_type` int DEFAULT NULL,
-  `potency` int DEFAULT NULL,
-  `pp` int DEFAULT '5',
-  `accuracy` int DEFAULT '100'
+  `mov_type` int(11) DEFAULT NULL,
+  `potency` int(11) DEFAULT NULL,
+  `pp` int(11) DEFAULT 5,
+  `accuracy` int(11) DEFAULT 100
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Movimiento`
+-- Volcado de datos para la tabla `movimiento`
 --
 
-INSERT INTO `Movimiento` (`mov_id`, `move_name`, `mov_type`, `potency`, `pp`, `accuracy`) VALUES
+INSERT INTO `movimiento` (`mov_id`, `move_name`, `mov_type`, `potency`, `pp`, `accuracy`) VALUES
 (2, 'karate-chop', 2, 50, 25, 100),
 (3, 'double-slap', 1, 15, 10, 85),
 (4, 'comet-punch', 1, 18, 15, 85),
@@ -739,77 +768,77 @@ CREATE TABLE `mov_potencia_media` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `PC`
+-- Estructura de tabla para la tabla `pc`
 --
 
-CREATE TABLE `PC` (
-  `pc_id` int NOT NULL,
+CREATE TABLE `pc` (
+  `pc_id` int(11) NOT NULL,
   `user_login` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `PC`
+-- Volcado de datos para la tabla `pc`
 --
 
-INSERT INTO `PC` (`pc_id`, `user_login`) VALUES
+INSERT INTO `pc` (`pc_id`, `user_login`) VALUES
 (2, 'clemen');
 
 --
--- Disparadores `PC`
+-- Disparadores `pc`
 --
 DELIMITER $$
-CREATE TRIGGER `borrar_cajas` BEFORE DELETE ON `PC` FOR EACH ROW BEGIN
+CREATE TRIGGER `borrar_cajas` BEFORE DELETE ON `pc` FOR EACH ROW BEGIN
 delete from CajaPokemon where pc_id = old.pc_id;
 delete from Caja where pc_id = old.pc_id;
 end
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `crearCajas` AFTER INSERT ON `PC` FOR EACH ROW call cargarCajas(new.pc_id)
+CREATE TRIGGER `crearCajas` AFTER INSERT ON `pc` FOR EACH ROW call cargarCajas(new.pc_id)
 $$
 DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `pokeGen`
+-- Estructura Stand-in para la vista `pokegen`
 -- (Véase abajo para la vista actual)
 --
-CREATE TABLE `pokeGen` (
-`poke_gen` int
-,`Cantidad` bigint
+CREATE TABLE `pokegen` (
+`poke_gen` int(11)
+,`Cantidad` bigint(21)
 );
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Pokemon`
+-- Estructura de tabla para la tabla `pokemon`
 --
 
-CREATE TABLE `Pokemon` (
-  `poke_id` int NOT NULL,
+CREATE TABLE `pokemon` (
+  `poke_id` int(11) NOT NULL,
   `poke_name` varchar(30) DEFAULT NULL,
-  `poke_type1` int NOT NULL,
-  `poke_type2` int DEFAULT NULL,
+  `poke_type1` int(11) NOT NULL,
+  `poke_type2` int(11) DEFAULT NULL,
   `descripcion` varchar(350) NOT NULL,
-  `hp` int DEFAULT NULL,
-  `atk` int DEFAULT NULL,
-  `def` int DEFAULT NULL,
-  `vel` int DEFAULT NULL,
-  `spAtk` int DEFAULT NULL,
-  `spDef` int DEFAULT NULL,
-  `poke_gen` int NOT NULL,
-  `poke_mov1` int NOT NULL,
-  `poke_mov2` int NOT NULL,
-  `poke_mov3` int NOT NULL,
-  `poke_mov4` int NOT NULL
-) ;
+  `hp` int(11) DEFAULT NULL,
+  `atk` int(11) DEFAULT NULL,
+  `def` int(11) DEFAULT NULL,
+  `vel` int(11) DEFAULT NULL,
+  `spAtk` int(11) DEFAULT NULL,
+  `spDef` int(11) DEFAULT NULL,
+  `poke_gen` int(11) NOT NULL,
+  `poke_mov1` int(11) NOT NULL,
+  `poke_mov2` int(11) NOT NULL,
+  `poke_mov3` int(11) NOT NULL,
+  `poke_mov4` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Pokemon`
+-- Volcado de datos para la tabla `pokemon`
 --
 
-INSERT INTO `Pokemon` (`poke_id`, `poke_name`, `poke_type1`, `poke_type2`, `descripcion`, `hp`, `atk`, `def`, `vel`, `spAtk`, `spDef`, `poke_gen`, `poke_mov1`, `poke_mov2`, `poke_mov3`, `poke_mov4`) VALUES
+INSERT INTO `pokemon` (`poke_id`, `poke_name`, `poke_type1`, `poke_type2`, `descripcion`, `hp`, `atk`, `def`, `vel`, `spAtk`, `spDef`, `poke_gen`, `poke_mov1`, `poke_mov2`, `poke_mov3`, `poke_mov4`) VALUES
 (1, 'Bulbasaur', 12, 4, '', 45, 49, 49, 45, 65, 65, 1, 33, 33, 33, 33),
 (2, 'Ivysaur', 12, 4, ' ', 60, 62, 63, 60, 80, 80, 1, 33, 33, 33, 33),
 (3, 'Venusaur', 12, 4, ' ', 80, 82, 83, 80, 100, 100, 1, 33, 33, 33, 33),
@@ -1535,21 +1564,21 @@ INSERT INTO `Pokemon` (`poke_id`, `poke_name`, `poke_type1`, `poke_type2`, `desc
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Profesor`
+-- Estructura de tabla para la tabla `profesor`
 --
 
-CREATE TABLE `Profesor` (
+CREATE TABLE `profesor` (
   `prof_login` varchar(30) NOT NULL,
   `prof_name` varchar(30) NOT NULL,
   `prof_pass` varchar(30) NOT NULL,
-  `prof_gen` int NOT NULL
+  `prof_gen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Profesor`
+-- Volcado de datos para la tabla `profesor`
 --
 
-INSERT INTO `Profesor` (`prof_login`, `prof_name`, `prof_pass`, `prof_gen`) VALUES
+INSERT INTO `profesor` (`prof_login`, `prof_name`, `prof_pass`, `prof_gen`) VALUES
 ('abedul', 'Profesor Abedul', 'HoennHoenn', 3),
 ('elm', 'Profesor Elm', 'JhotoJhoto', 2),
 ('encina', 'Profesora Encina', 'UnovaUnova', 5),
@@ -1559,20 +1588,20 @@ INSERT INTO `Profesor` (`prof_login`, `prof_name`, `prof_pass`, `prof_gen`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Region`
+-- Estructura de tabla para la tabla `region`
 --
 
-CREATE TABLE `Region` (
-  `reg_id` int NOT NULL,
-  `reg_name` enum('Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Prueba') CHARACTER SET utf8mb4  NOT NULL,
+CREATE TABLE `region` (
+  `reg_id` int(11) NOT NULL,
+  `reg_name` enum('Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Prueba') NOT NULL,
   `reg_desc` varchar(600) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Region`
+-- Volcado de datos para la tabla `region`
 --
 
-INSERT INTO `Region` (`reg_id`, `reg_name`, `reg_desc`) VALUES
+INSERT INTO `region` (`reg_id`, `reg_name`, `reg_desc`) VALUES
 (5, 'Unova', 'En Teselia, con respecto a las demás regiones, hay ciudades mucho más modernas. Por ejemplo, en Ciudad Porcelana, existen grandes edificios. Esta región tiene mucho que ver con la construcción, ya que los nombres de los lugares se refieren a los materiales y los procesos de la cerámica: Pueblo Arcilla, Ciudad Porcelana, Ciudad Teja, Bosque Azulejo, etc.'),
 (3, 'Hoenn', 'Formada por un complejo de islas, es la primera región en contar con zonas donde el clima difiere. Posee nueve ciudades, siete pueblos, trece cuevas, un volcán semidormido y un monte que actúa como cementerio Pokémon. Entre estas, la más curiosa es ciudad Arborada: sus habitantes viven en las copas de los árboles; y la más peculiar, Arrecípolis: es inaccesible sin buceo.'),
 (2, 'Johto', 'Johto es una región situada al oeste de Kanto. Las dos regiones se unen por las Cataratas Tohjo, que sirve de cruce con la Cueva Plateada. Johto y Kanto están unidos por el Magnetotrén mediante tierra y por el S.S. Aqua por vía marina. Los nombres de las ciudades son nombres de plantas o están relacionados con ellas.'),
@@ -1583,10 +1612,10 @@ INSERT INTO `Region` (`reg_id`, `reg_name`, `reg_desc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `statsTotales`
+-- Estructura Stand-in para la vista `statstotales`
 -- (Véase abajo para la vista actual)
 --
-CREATE TABLE `statsTotales` (
+CREATE TABLE `statstotales` (
 `Nombre` varchar(30)
 ,`Stats` decimal(37,0)
 );
@@ -1594,72 +1623,72 @@ CREATE TABLE `statsTotales` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Tipo`
+-- Estructura de tabla para la tabla `tipo`
 --
 
-CREATE TABLE `Tipo` (
-  `type_id` int NOT NULL,
-  `type_name` enum('Fuego','Agua','Planta','Tierra','Roca','Acero','Lucha','Hielo','Dragon','Electrico','Volador','Hada','Siniestro','Veneno','Fantasma','Psiquico','Bicho','Normal','Prueba') CHARACTER SET utf8mb4  NOT NULL
+CREATE TABLE `tipo` (
+  `type_id` int(11) NOT NULL,
+  `type_name` enum('Fuego','Agua','Planta','Tierra','Roca','Acero','Lucha','Hielo','Dragon','Electrico','Volador','Hada','Siniestro','Veneno','Fantasma','Psiquico','Bicho','Normal','Prueba') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Tipo`
+-- Volcado de datos para la tabla `tipo`
 --
 
-INSERT INTO `Tipo` (`type_id`, `type_name`) VALUES
+INSERT INTO `tipo` (`type_id`, `type_name`) VALUES
+(1, 'Normal'),
+(2, 'Lucha'),
+(3, 'Volador'),
+(4, 'Veneno'),
+(5, 'Tierra'),
+(6, 'Roca'),
+(7, 'Bicho'),
+(8, 'Fantasma'),
+(9, 'Acero'),
 (10, 'Fuego'),
 (11, 'Agua'),
 (12, 'Planta'),
-(5, 'Tierra'),
-(6, 'Roca'),
-(9, 'Acero'),
-(2, 'Lucha'),
+(13, 'Electrico'),
+(14, 'Psiquico'),
 (15, 'Hielo'),
 (16, 'Dragon'),
-(13, 'Electrico'),
-(3, 'Volador'),
-(18, 'Hada'),
 (17, 'Siniestro'),
-(4, 'Veneno'),
-(8, 'Fantasma'),
-(14, 'Psiquico'),
-(7, 'Bicho'),
-(1, 'Normal');
+(18, 'Hada');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `Usuario` (
+CREATE TABLE `usuario` (
   `user_login` varchar(30) NOT NULL,
   `user_name` varchar(30) NOT NULL,
   `user_pass` varchar(30) NOT NULL,
-  `user_team` int DEFAULT '1',
-  `baneado` tinyint(1) DEFAULT '0'
+  `user_team` int(11) DEFAULT 1,
+  `baneado` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
--- Volcado de datos para la tabla `Usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `Usuario` (`user_login`, `user_name`, `user_pass`, `user_team`, `baneado`) VALUES
+INSERT INTO `usuario` (`user_login`, `user_name`, `user_pass`, `user_team`, `baneado`) VALUES
 ('clemen', 'Clemen', '123', 1, 1);
 
 --
--- Disparadores `Usuario`
+-- Disparadores `usuario`
 --
 DELIMITER $$
-CREATE TRIGGER `AltaUsuario` AFTER INSERT ON `Usuario` FOR EACH ROW insert into PC (user_login) values (new.user_login)
+CREATE TRIGGER `AltaUsuario` AFTER INSERT ON `usuario` FOR EACH ROW insert into PC (user_login) values (new.user_login)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `borrar_equipo` BEFORE DELETE ON `Usuario` FOR EACH ROW delete from Equipo where user_login = old.user_login
+CREATE TRIGGER `borrar_equipo` BEFORE DELETE ON `usuario` FOR EACH ROW delete from Equipo where user_login = old.user_login
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `borrar_pc` BEFORE DELETE ON `Usuario` FOR EACH ROW delete from PC where user_login = old.user_login
+CREATE TRIGGER `borrar_pc` BEFORE DELETE ON `usuario` FOR EACH ROW delete from PC where user_login = old.user_login
 $$
 DELIMITER ;
 
@@ -1670,49 +1699,49 @@ DELIMITER ;
 --
 DROP TABLE IF EXISTS `mov_potencia_media`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `mov_potencia_media`  AS SELECT `Tipo`.`type_name` AS `Tipo`, truncate(avg(`Movimiento`.`potency`),0) AS `Potencia media` FROM (`Movimiento` join `Tipo` on((`Movimiento`.`mov_type` = `Tipo`.`type_id`))) GROUP BY `Tipo`.`type_name` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `mov_potencia_media`  AS SELECT `tipo`.`type_name` AS `Tipo`, truncate(avg(`movimiento`.`potency`),0) AS `Potencia media` FROM (`movimiento` join `tipo` on(`movimiento`.`mov_type` = `tipo`.`type_id`)) GROUP BY `tipo`.`type_name``type_name`  ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura para la vista `pokeGen`
+-- Estructura para la vista `pokegen`
 --
-DROP TABLE IF EXISTS `pokeGen`;
+DROP TABLE IF EXISTS `pokegen`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `pokeGen`  AS SELECT `Pokemon`.`poke_gen` AS `poke_gen`, count(`Pokemon`.`poke_id`) AS `Cantidad` FROM `Pokemon` GROUP BY `Pokemon`.`poke_gen` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `pokegen`  AS SELECT `pokemon`.`poke_gen` AS `poke_gen`, count(`pokemon`.`poke_id`) AS `Cantidad` FROM `pokemon` GROUP BY `pokemon`.`poke_gen``poke_gen`  ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura para la vista `statsTotales`
+-- Estructura para la vista `statstotales`
 --
-DROP TABLE IF EXISTS `statsTotales`;
+DROP TABLE IF EXISTS `statstotales`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `statsTotales`  AS SELECT `Pokemon`.`poke_name` AS `Nombre`, sum((((((`Pokemon`.`hp` + `Pokemon`.`atk`) + `Pokemon`.`def`) + `Pokemon`.`spAtk`) + `Pokemon`.`spDef`) + `Pokemon`.`vel`)) AS `Stats` FROM `Pokemon` GROUP BY `Pokemon`.`poke_name` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `statstotales`  AS SELECT `pokemon`.`poke_name` AS `Nombre`, sum(`pokemon`.`hp` + `pokemon`.`atk` + `pokemon`.`def` + `pokemon`.`spAtk` + `pokemon`.`spDef` + `pokemon`.`vel`) AS `Stats` FROM `pokemon` GROUP BY `pokemon`.`poke_name``poke_name`  ;
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `Caja`
+-- Indices de la tabla `caja`
 --
-ALTER TABLE `Caja`
+ALTER TABLE `caja`
   ADD PRIMARY KEY (`pc_box_id`),
   ADD KEY `fk_pc_id` (`pc_id`);
 
 --
--- Indices de la tabla `CajaPokemon`
+-- Indices de la tabla `cajapokemon`
 --
-ALTER TABLE `CajaPokemon`
+ALTER TABLE `cajapokemon`
   ADD PRIMARY KEY (`pc_id`,`pc_box_id`),
   ADD KEY `fk_caja` (`pc_box_id`),
   ADD KEY `fk_pokemon` (`poke_id`);
 
 --
--- Indices de la tabla `Equipo`
+-- Indices de la tabla `equipo`
 --
-ALTER TABLE `Equipo`
+ALTER TABLE `equipo`
   ADD KEY `FK_user` (`user_login`),
   ADD KEY `FK_poke_team` (`poke_id1`),
   ADD KEY `FK_poke_team2` (`poke_id2`),
@@ -1722,24 +1751,24 @@ ALTER TABLE `Equipo`
   ADD KEY `FK_poke_team6` (`poke_id6`);
 
 --
--- Indices de la tabla `Movimiento`
+-- Indices de la tabla `movimiento`
 --
-ALTER TABLE `Movimiento`
+ALTER TABLE `movimiento`
   ADD PRIMARY KEY (`mov_id`),
   ADD UNIQUE KEY `move_name` (`move_name`),
   ADD KEY `fk_mov_type` (`mov_type`);
 
 --
--- Indices de la tabla `PC`
+-- Indices de la tabla `pc`
 --
-ALTER TABLE `PC`
+ALTER TABLE `pc`
   ADD PRIMARY KEY (`pc_id`),
   ADD KEY `fk_pc_user` (`user_login`);
 
 --
--- Indices de la tabla `Pokemon`
+-- Indices de la tabla `pokemon`
 --
-ALTER TABLE `Pokemon`
+ALTER TABLE `pokemon`
   ADD PRIMARY KEY (`poke_id`),
   ADD KEY `fk_pk_type1` (`poke_type1`),
   ADD KEY `fk_pk_type2` (`poke_type2`),
@@ -1750,32 +1779,32 @@ ALTER TABLE `Pokemon`
   ADD KEY `fk_region_poke` (`poke_gen`);
 
 --
--- Indices de la tabla `Profesor`
+-- Indices de la tabla `profesor`
 --
-ALTER TABLE `Profesor`
+ALTER TABLE `profesor`
   ADD PRIMARY KEY (`prof_login`),
   ADD UNIQUE KEY `prof_gen` (`prof_gen`);
 
 --
--- Indices de la tabla `Region`
+-- Indices de la tabla `region`
 --
-ALTER TABLE `Region`
+ALTER TABLE `region`
   ADD PRIMARY KEY (`reg_id`,`reg_name`),
   ADD UNIQUE KEY `reg_id` (`reg_id`),
   ADD UNIQUE KEY `reg_name` (`reg_name`),
   ADD UNIQUE KEY `reg_desc` (`reg_desc`);
 
 --
--- Indices de la tabla `Tipo`
+-- Indices de la tabla `tipo`
 --
-ALTER TABLE `Tipo`
+ALTER TABLE `tipo`
   ADD PRIMARY KEY (`type_id`,`type_name`),
   ADD UNIQUE KEY `type_name` (`type_name`);
 
 --
--- Indices de la tabla `Usuario`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `Usuario`
+ALTER TABLE `usuario`
   ADD PRIMARY KEY (`user_login`);
 
 --
@@ -1783,82 +1812,82 @@ ALTER TABLE `Usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `Caja`
+-- AUTO_INCREMENT de la tabla `caja`
 --
-ALTER TABLE `Caja`
-  MODIFY `pc_box_id` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `caja`
+  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `Movimiento`
+-- AUTO_INCREMENT de la tabla `movimiento`
 --
-ALTER TABLE `Movimiento`
-  MODIFY `mov_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=622;
+ALTER TABLE `movimiento`
+  MODIFY `mov_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=622;
 
 --
--- AUTO_INCREMENT de la tabla `PC`
+-- AUTO_INCREMENT de la tabla `pc`
 --
-ALTER TABLE `PC`
-  MODIFY `pc_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+ALTER TABLE `pc`
+  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `Caja`
+-- Filtros para la tabla `caja`
 --
-ALTER TABLE `Caja`
-  ADD CONSTRAINT `fk_pc_id` FOREIGN KEY (`pc_id`) REFERENCES `PC` (`pc_id`) ON UPDATE CASCADE;
+ALTER TABLE `caja`
+  ADD CONSTRAINT `fk_pc_id` FOREIGN KEY (`pc_id`) REFERENCES `pc` (`pc_id`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `CajaPokemon`
+-- Filtros para la tabla `cajapokemon`
 --
-ALTER TABLE `CajaPokemon`
-  ADD CONSTRAINT `fk_caja` FOREIGN KEY (`pc_box_id`) REFERENCES `Caja` (`pc_box_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pc` FOREIGN KEY (`pc_id`) REFERENCES `PC` (`pc_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pokemon` FOREIGN KEY (`poke_id`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE;
+ALTER TABLE `cajapokemon`
+  ADD CONSTRAINT `fk_caja` FOREIGN KEY (`pc_box_id`) REFERENCES `caja` (`pc_box_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pc` FOREIGN KEY (`pc_id`) REFERENCES `pc` (`pc_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pokemon` FOREIGN KEY (`poke_id`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Equipo`
+-- Filtros para la tabla `equipo`
 --
-ALTER TABLE `Equipo`
-  ADD CONSTRAINT `FK_poke_team` FOREIGN KEY (`poke_id1`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_poke_team2` FOREIGN KEY (`poke_id2`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_poke_team3` FOREIGN KEY (`poke_id3`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_poke_team4` FOREIGN KEY (`poke_id4`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_poke_team5` FOREIGN KEY (`poke_id5`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_poke_team6` FOREIGN KEY (`poke_id6`) REFERENCES `Pokemon` (`poke_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_login`) REFERENCES `Usuario` (`user_login`) ON UPDATE CASCADE;
+ALTER TABLE `equipo`
+  ADD CONSTRAINT `FK_poke_team` FOREIGN KEY (`poke_id1`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_poke_team2` FOREIGN KEY (`poke_id2`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_poke_team3` FOREIGN KEY (`poke_id3`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_poke_team4` FOREIGN KEY (`poke_id4`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_poke_team5` FOREIGN KEY (`poke_id5`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_poke_team6` FOREIGN KEY (`poke_id6`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_login`) REFERENCES `usuario` (`user_login`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Movimiento`
+-- Filtros para la tabla `movimiento`
 --
-ALTER TABLE `Movimiento`
-  ADD CONSTRAINT `fk_mov_type` FOREIGN KEY (`mov_type`) REFERENCES `Tipo` (`type_id`) ON UPDATE CASCADE;
+ALTER TABLE `movimiento`
+  ADD CONSTRAINT `fk_mov_type` FOREIGN KEY (`mov_type`) REFERENCES `tipo` (`type_id`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `PC`
+-- Filtros para la tabla `pc`
 --
-ALTER TABLE `PC`
-  ADD CONSTRAINT `fk_pc_user` FOREIGN KEY (`user_login`) REFERENCES `Usuario` (`user_login`) ON UPDATE CASCADE;
+ALTER TABLE `pc`
+  ADD CONSTRAINT `fk_pc_user` FOREIGN KEY (`user_login`) REFERENCES `usuario` (`user_login`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `Pokemon`
+-- Filtros para la tabla `pokemon`
 --
-ALTER TABLE `Pokemon`
-  ADD CONSTRAINT `fk_pk_mov1` FOREIGN KEY (`poke_mov1`) REFERENCES `Movimiento` (`mov_id`),
-  ADD CONSTRAINT `fk_pk_mov2` FOREIGN KEY (`poke_mov2`) REFERENCES `Movimiento` (`mov_id`),
-  ADD CONSTRAINT `fk_pk_mov3` FOREIGN KEY (`poke_mov3`) REFERENCES `Movimiento` (`mov_id`),
-  ADD CONSTRAINT `fk_pk_mov4` FOREIGN KEY (`poke_mov4`) REFERENCES `Movimiento` (`mov_id`),
-  ADD CONSTRAINT `fk_pk_type1` FOREIGN KEY (`poke_type1`) REFERENCES `Tipo` (`type_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pk_type2` FOREIGN KEY (`poke_type2`) REFERENCES `Tipo` (`type_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_region_poke` FOREIGN KEY (`poke_gen`) REFERENCES `Region` (`reg_id`);
+ALTER TABLE `pokemon`
+  ADD CONSTRAINT `fk_pk_mov1` FOREIGN KEY (`poke_mov1`) REFERENCES `movimiento` (`mov_id`),
+  ADD CONSTRAINT `fk_pk_mov2` FOREIGN KEY (`poke_mov2`) REFERENCES `movimiento` (`mov_id`),
+  ADD CONSTRAINT `fk_pk_mov3` FOREIGN KEY (`poke_mov3`) REFERENCES `movimiento` (`mov_id`),
+  ADD CONSTRAINT `fk_pk_mov4` FOREIGN KEY (`poke_mov4`) REFERENCES `movimiento` (`mov_id`),
+  ADD CONSTRAINT `fk_pk_type1` FOREIGN KEY (`poke_type1`) REFERENCES `tipo` (`type_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pk_type2` FOREIGN KEY (`poke_type2`) REFERENCES `tipo` (`type_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_region_poke` FOREIGN KEY (`poke_gen`) REFERENCES `region` (`reg_id`);
 
 --
--- Filtros para la tabla `Profesor`
+-- Filtros para la tabla `profesor`
 --
-ALTER TABLE `Profesor`
-  ADD CONSTRAINT `fk_pro_region` FOREIGN KEY (`prof_gen`) REFERENCES `Region` (`reg_id`);
+ALTER TABLE `profesor`
+  ADD CONSTRAINT `fk_pro_region` FOREIGN KEY (`prof_gen`) REFERENCES `region` (`reg_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
