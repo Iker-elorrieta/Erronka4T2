@@ -7,11 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
-import manager.ManagerPokemon;
 import manager.ManagerRegion;
 import manager.ManagerTipos;
 import modelo.Jugador;
-import modelo.Pokemon;
 import modelo.Region;
 import modelo.Tipo;
 import modelo.Usuario;
@@ -37,12 +35,7 @@ public class Metodos {
 		return t;
 	}
 
-	public Pokemon conseguirPokemon(int idpokemon) throws NotFoundException, SQLException, Exception {
-		// TODO Auto-generated method stub
-		ManagerPokemon mp = new ManagerPokemon();
-		ArrayList<Pokemon> pokemons = mp.selectAll();
-		return pokemons.get(idpokemon - 1);
-	}
+
 
 	public Usuario encontrarUsuario(ArrayList<Usuario> users, String login, String passw) {
 		// TODO Auto-generated method stub

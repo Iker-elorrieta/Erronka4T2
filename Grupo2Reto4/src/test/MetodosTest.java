@@ -12,7 +12,6 @@ import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import manager.ManagerProfesor;
-import modelo.Pokemon;
 import modelo.Profesor;
 import modelo.Region;
 import modelo.Tipo;
@@ -33,11 +32,6 @@ class MetodosTest {
 		assertEquals(tipo.getNombre_tipo(), "Hada");
 	}
 
-	@Test
-	void testConseguirPokemon() throws NotFoundException, SQLException, Exception {
-		Pokemon pokemon = metodos.conseguirPokemon(493);
-		assertEquals(pokemon.getNombre_pokemon(), "Arceus");
-	}
 
 	@Test
 	void testEncontrarUsuario() throws NotFoundException, SQLException, Exception {

@@ -80,9 +80,11 @@ class ManagerJugadorTest {
 
 			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
 
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+			if (conexion != null)
+				conexion.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 	}
 
@@ -336,6 +338,8 @@ class ManagerJugadorTest {
 		assertEquals(jugadores.get(0).getLogin(), "aaaaa");
 		
 		
+		if (conexion != null)
+			conexion.close();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -1096,6 +1100,8 @@ class ManagerJugadorTest {
 			}
 			assertEquals(jugadores.size(), jugadores2.size() + 1);
 			
+			if (conexion != null)
+				conexion.close();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

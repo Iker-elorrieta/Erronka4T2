@@ -49,9 +49,8 @@ class ManagerProfesorTest {
 				conexion.close();
 		}
 
-		mr.delete(r);
+		
 		mr.insert(r);
-
 		mp.insert(prof);
 
 		ArrayList<Profesor> profesores = mp.selectAll();
@@ -99,7 +98,6 @@ class ManagerProfesorTest {
 		Region r = new Region(7, "Prueba");
 		Profesor prof = new Profesor("Profesor Prueba", "prueba", "PruebaPrueba", r);
 
-		mr.delete(r);
 		mr.insert(r);
 		mp.insert(prof);
 
