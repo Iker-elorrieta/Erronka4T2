@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import controlador.Metodos;
 import excepciones.NotFoundException;
+import modelo.Caja;
 import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Pokemon;
@@ -22,7 +23,7 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 	ResultSet registro2;
 	ResultSet registro3;
 	Metodos m = new Metodos();
-
+	ManagerCajas mc = new ManagerCajas();
 	@Override
 	public ArrayList<Jugador> selectAll() throws SQLException, NotFoundException, Exception {
 		// TODO Auto-generated method stub
@@ -33,8 +34,10 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 		pokemon = mp.selectAll();
 		ManagerPC mpc = new ManagerPC();
 		ArrayList<MiPc> pcs = mpc.selectAll();
+		
+		conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
 		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
@@ -151,6 +154,12 @@ public class ManagerJugador implements ManagerInterface<Jugador> {
 				if(user_new.getEquipo().get(i) != null) {
 					comando.executeUpdate("update " + DBConexion.T_EQUIPOS + " set poke_id" + (i + 1) + " = "
 							+ user_new.getEquipo().get(i).getId() + " where user_login = '" + user_new.getLogin() + "';");
+					
+					int cont=0;
+					
+					for (Caja caja : user_old.getPc().getCajas()) {
+						mc.update(caja, user_new.getPc().getCajas().get(cont));
+					}
 					
 				}
 				

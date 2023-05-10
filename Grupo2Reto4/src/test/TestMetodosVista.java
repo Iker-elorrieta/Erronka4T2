@@ -35,9 +35,9 @@ class TestMetodosVista {
 	Movimiento move4 = new Movimiento(450, "bug-bite", 20, 100, bicho, 60);
 	ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 	ArrayList<Pokemon> listaPokemon = new ArrayList<Pokemon>();
-	String nombre = "bulbasaur";
+	String nombre = "Bulbasaur";
 	Pokemon pokemon1 = new Pokemon(1, nombre, tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
-	Caja caja = new Caja(1, listaPokemon);
+	
 	ArrayList<Caja> cajas = new ArrayList<Caja>();
 	MiPc pcTest = new MiPc(cajas, 1);
 	ManagerPC pc = new ManagerPC();
@@ -47,46 +47,53 @@ class TestMetodosVista {
 	
 	@Test
 	void testAnyadirPokemon() throws NotFoundException, ArrayListLlenoException, SQLException, Exception {
-		listadoPC= 	pc.selectAll();
-		MiPc pcGet = listadoPC.get(0);
 		
-		//--> 
-		moveset.add(move1);
-		moveset.add(move2);
-		moveset.add(move3);
-		moveset.add(move4);
-		listaPokemon.add(pokemon1);
-		//-->	
-		mv.anyadirPokemon(pokemon1.getId(), pcGet, pcGet.getCajas().get(0));
+		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
+		equipo.add(pokemon1);
+		Jugador jugadorNEW = new Jugador("PruebaAnyadirPKMNnombre", "PruebaAnyadirPKMNlogin", "123", equipo, null, false);
+		playerMN.insert(jugadorNEW);
 		
-		ArrayList<MiPc>listadoPC2 = pc.selectAll();
-		MiPc pcGet2 = listadoPC2.get(0);
-		assertEquals(pcGet2.getCajas().get(0).getPokemon().get(0).getNombre_pokemon(),nombre);
+		ArrayList<Jugador> jugadores=playerMN.selectAll();
+		for(Jugador jugador : jugadores) {
+			if(jugador.getLogin().equals("PruebaAnyadirPKMNlogin"))
+				jugadorNEW=jugador;
+		}
+		
+		MiPc pcGet = jugadorNEW.getPc();
+		
+		Pokemon pokemon2 = new Pokemon(493, "G.O.D.", null, 1,1,1,1,1,1, null, null);	
+		
+		mv.anyadirPokemon(pokemon2.getId(), pcGet, pcGet.getCajas().get(0));
+		
+		jugadores=playerMN.selectAll();
+		for(Jugador jugador : jugadores) {
+			if(jugador.getLogin().equals("PruebaAnyadirPKMNlogin"))
+				jugadorNEW=jugador;
+		}
+		
+		assertEquals(jugadorNEW.getPc().getCajas().get(0).getPokemon().get(0).getNombre_pokemon(), "Arceus");
 	}
 	
 	@Test
 	void testIntercambiarEquipoToCaja() throws NotFoundException, SQLException, Exception {
+		Jugador jugadorNEW =null;
+		ArrayList<Jugador> jugadores=playerMN.selectAll();
+		for(Jugador jugador : jugadores) {
+			if(jugador.getLogin().equals("PruebaAnyadirPKMNlogin"))
+				jugadorNEW=jugador;
+		}
+		int posEquipo=0;
+		int posCaja=0;
 		
-		int posEquipo = 0;
-		int posCaja = 0;
-		cajas.add(caja);
-		Jugador player = playerMN.selectAll().get(0);
-		//ArrayList<Pokemon> equipoOld = player.getEquipo();
-		//Pokemon pokeOld = equipoOld.get(posEquipo);
-		Caja caja = playerMN.selectAll().get(0).getPc().getCajas().get(0);
-		ArrayList<Pokemon> cajaOld = caja.getPokemon();
-		Pokemon pokeOldCaja = cajaOld.get(posCaja);
-		//-->
-		mv.intercambiarFromEquipoToCaja(posEquipo, posCaja, player, caja);
-		//<-- Utilizaremos siempre la posicion 0
-		player = playerMN.selectAll().get(0);
-		ArrayList<Pokemon> equipoNew = player.getEquipo();
-		ArrayList<Caja> cajasNew = playerMN.selectAll().get(0).getPc().getCajas();
-		caja = cajasNew.get(0);
+
+		jugadorNEW=mv.intercambiarFromEquipoToCaja(posEquipo, posCaja, jugadorNEW, jugadorNEW.getPc().getCajas().get(0));
 		
-		assertEquals(pokeOldCaja.getNombre_pokemon(),"Arceus");
-		assertEquals(equipoNew.get(equipoNew.size()-1),"bulbasaur");
-		//WIP
+		ArrayList<Pokemon> equipoNew = jugadorNEW.getEquipo();
+		
+		assertEquals(jugadorNEW.getPc().getCajas().get(0).getPokemon().get(0).getNombre_pokemon(),"Bulbasaur");
+		assertEquals(equipoNew.get(0).getNombre_pokemon(),"Arceus");
+		
+		playerMN.delete(jugadorNEW);
 	}
 
 }

@@ -116,7 +116,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 				Integer poke_id = null;
 				if (c_new.getPokemon().get(i) != null)
 					poke_id = c_new.getPokemon().get(i).getId();
-				comando.executeUpdate("update from " + DBConexion.T_CAJAS_POKEMON + " set poke_id=" + poke_id
+				comando.executeUpdate("update " + DBConexion.T_CAJAS_POKEMON + " set poke_id=" + poke_id
 						+ " where pc_box_id=" + c_old.getId_caja() + ";");
 			}
 		} finally {

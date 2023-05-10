@@ -3,26 +3,16 @@ package test;
 
 
 import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
-
-
 import controlador.MetodosVista;
 import excepciones.ArrayListLlenoException;
 import manager.ManagerCajas;
 import manager.ManagerJugador;
-import manager.ManagerPC;
 import manager.ManagerPokemon;
 import modelo.Caja;
 import modelo.Jugador;
-import modelo.MiPc;
 import modelo.Movimiento;
 import modelo.Pokemon;
 import modelo.Region;
@@ -31,13 +21,10 @@ import modelo.Tipo;
 
 class MoverPokemonCajaEquipoTest {
 	
-	Connection conexion;
-	Statement comando;
-	ResultSet registro;
+
 	Region reg = new Region(1,"Kanto");
 	MetodosVista m = new MetodosVista();
 	ManagerJugador mj = new ManagerJugador();
-	ManagerPC mpc = new ManagerPC();
 	ManagerCajas mc = new ManagerCajas();
 	
 	ManagerPokemon mp = new ManagerPokemon();
@@ -51,37 +38,34 @@ class MoverPokemonCajaEquipoTest {
 		
 		ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 		
-		
-		
-		Pokemon p = new Pokemon(1111, "bulbasaur", tipos,45,49,49,45,65,65,moveset, reg);
-		
-		ArrayList<Pokemon> plista = new ArrayList<Pokemon>();
-		
-		
-		plista.add(p);
-		Caja c = new Caja(1,plista);
-		
+		Pokemon p = new Pokemon(1, "Bulbasaur", tipos,45,49,49,45,65,65,moveset, reg);
+		Pokemon p2 = new Pokemon(2, "Ivysaur", tipos,45,49,49,45,65,65,moveset, reg);
 		ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
-		
-		ArrayList<Caja> cajas = new ArrayList<Caja>();
-		
-		cajas.add(c);
-		MiPc pc = new MiPc(cajas,1);
-		
-		Jugador j = new Jugador("prueba1", "prueba3", "123", equipo, pc, false);
+		equipo.add(p);
+		Jugador j = new Jugador("prueba1", "prueba3", "123", equipo, null, false);
 		
 		mj.insert(j);
 		
-		mp.insert(p);
+		ArrayList<Jugador> jugadores=mj.selectAll();
+		for(Jugador jugador : jugadores) {
+			if(jugador.getLogin().equals("prueba3"))
+				j=jugador;
+		}
+		Caja c = j.getPc().getCajas().get(0);
+		c.getPokemon().add(p2);
 		
-		mpc.insert(pc);
 		
-		mc.insert(c);
+		mc.update(c,c);
+		jugadores=mj.selectAll();
+		for(Jugador jugador : jugadores) {
+			if(jugador.getLogin().equals("prueba3"))
+				j=jugador;
+		}
 		
+		assertEquals(j.getEquipo().size(), 1);
+		c = j.getPc().getCajas().get(0);
 		try {
-			m.moverPokemonCajaEquipo(j, p, c);
-			
-			
+			m.moverPokemonCajaEquipo(j, p2, c);
 		} catch (ArrayListLlenoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,11 +75,11 @@ class MoverPokemonCajaEquipoTest {
 		}
 		
 		
-		assertEquals(j.getEquipo().get(0),p);
-		assertEquals(j.getPc().getCajas().get(0).getPokemon().get(0),null);
+		assertEquals(j.getEquipo().size(), 2);
+		System.out.println(j.getEquipo().get(0).getNombre_pokemon());
+		System.out.println(j.getEquipo().get(1).getNombre_pokemon());
+		assertEquals(j.getPc().getCajas().get(0).getPokemon().size(), 0);
 		
-		mc.delete(c);
-		mpc.delete(pc);
 		mj.delete(j);
 		
 	}

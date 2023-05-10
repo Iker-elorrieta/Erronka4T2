@@ -12,7 +12,6 @@ import controlador.Metodos;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import manager.ManagerProfesor;
-import modelo.Jugador;
 import modelo.Pokemon;
 import modelo.Profesor;
 import modelo.Region;

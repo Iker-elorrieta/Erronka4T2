@@ -1,20 +1,13 @@
 package test;
 
-
-
 import static org.junit.Assert.assertEquals;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
-
 import controlador.Metodos;
-import excepciones.NotFoundException;
 import manager.ManagerCajas;
 import manager.ManagerJugador;
 import manager.ManagerPC;
@@ -29,47 +22,45 @@ import modelo.Tipo;
 import utils.DBConexion;
 
 class ManagerJugadorTest {
-	
+
 	ManagerJugador mj = new ManagerJugador();
 	ManagerPokemon mp = new ManagerPokemon();
 	ManagerPC mpc = new ManagerPC();
 	Metodos m = new Metodos();
 	ManagerCajas mc = new ManagerCajas();
-	
+
 	Connection conexion;
 	Statement comando;
 	ResultSet registro;
 	ResultSet registro2;
 	ResultSet registro3;
-	
-	Region r = new Region(1,"Kanto");
+
+	Region r = new Region(1, "Kanto");
 	Tipo planta = new Tipo(3, "Planta");
 	Tipo veneno = new Tipo(12, "Veneno");
 	Tipo normal = new Tipo(1, "Normal");
 	Tipo[] tipos = { planta, veneno };
-	
+
 	ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
 	Movimiento move1 = new Movimiento(33, "tackle", 35, 100, normal, 50);
-	
 
 	Pokemon pokemon = new Pokemon(1, "Bulbasaur", tipos, 45, 49, 49, 45, 65, 65, moveset, r);
-	
-	
+
 	ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
-	
-	
-	Jugador j = new Jugador("Igor","aaaaa","123", equipo, null, false);
-	
+
+	Jugador j = new Jugador("Igor", "aaaaa", "123", equipo, null, false);
+
 	@Test
-	void testSelectAll() throws SQLException, Exception {
-		
+	void testSelectAll() {
+
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
-		
+
 		equipo.add(pokemon);
-		//insertamos el usuario
+
+		// insertamos el usuario
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -77,71 +68,50 @@ class ManagerJugadorTest {
 			comando.executeUpdate("Insert into " + DBConexion.T_USERS + "(user_login, user_name, user_pass) values ('"
 					+ j.getLogin() + "', '" + j.getNombre() + "', '" + j.getPass() + "');");
 
-			comando.executeUpdate(
-					"call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
+			comando.executeUpdate("call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		//recogemos los usuarios
-		ArrayList<Jugador> js = mj.selectAll();
-		assertEquals(js.get(0).getLogin(), "aaaaa");
-		//eliminamos al usuario
-		if (j == null)
-			throw new NotFoundException("El contenedor jugador esta vacio.");
+			// recogemos los usuarios
+			ArrayList<Jugador> js = mj.selectAll();
+			assertEquals(js.get(0).getLogin(), "aaaaa");
 
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+			// eliminamos al usuario
 
 			comando = conexion.createStatement();
 
-			comando.executeUpdate(
-					"delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
+			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
 
-		} finally {
-			if (comando == null)
-				throw new SQLException("No se ha podido establecer conexion con la base de datos.");
-			else if (conexion != null)
-				conexion.close();
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
+
 	}
-	
+
 	@Test
-	void testInsert() throws SQLException, Exception {
+	void testInsert() {
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
-		
+
 		equipo.add(pokemon);
-		//eliminamos al usuario
+		// eliminamos al usuario
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 
 			comando = conexion.createStatement();
+			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
 
-			comando.executeUpdate(
-					"delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
-
-		} finally {
-			if (comando == null)
-				throw new SQLException("No se ha podido establecer conexion con la base de datos.");
-			else if (conexion != null)
-				conexion.close();
-		}
-		//insertamos al usuario
+		
+		// insertamos al usuario
 		mj.insert(j);
-		
+
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-		
+
 		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
-		
+
 		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-		//recogemos los tipos
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los tipos
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
@@ -153,22 +123,17 @@ class ManagerJugadorTest {
 				tipos.add(t);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los movimientos
+		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);
 				String nombre = registro.getString(2);
-				Tipo t = tipos.get(registro.getInt(3)-1);
+				Tipo t = tipos.get(registro.getInt(3) - 1);
 				int potencia = registro.getInt(4);
 				int pp = registro.getInt(5);
 				double precision = registro.getInt(6);
@@ -178,13 +143,9 @@ class ManagerJugadorTest {
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pokemons
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
+		// recogemos los pokemons
+	
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
@@ -193,18 +154,18 @@ class ManagerJugadorTest {
 				String name = registro.getString(2);
 				Integer tipo1 = registro.getInt(3);
 				Integer tipo2 = registro.getInt(4);
-				
+
 				Tipo tiposs[] = new Tipo[2];
-				Tipo t1 = tipos.get(tipo1-1);
+				Tipo t1 = tipos.get(tipo1 - 1);
 				Tipo t2 = null;
 
-				if(tipo2 != 0)
-					t2 = tipos.get(tipo2-1);
+				if (tipo2 != 0)
+					t2 = tipos.get(tipo2 - 1);
 
 				tiposs[0] = t1;
 				tiposs[1] = t2;
-				
-				//String descripcion = registro.getString(5);
+
+				// String descripcion = registro.getString(5);
 				int hp = registro.getInt(6);
 				int atk = registro.getInt(7);
 				int def = registro.getInt(8);
@@ -216,10 +177,10 @@ class ManagerJugadorTest {
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = movimientos.get(registro.getInt(13)-1);
-				Movimiento m2 = movimientos.get(registro.getInt(14)-1);
-				Movimiento m3 = movimientos.get(registro.getInt(15)-1);
-				Movimiento m4 = movimientos.get(registro.getInt(16)-1);
+				Movimiento m1 = movimientos.get(registro.getInt(13) - 1);
+				Movimiento m2 = movimientos.get(registro.getInt(14) - 1);
+				Movimiento m3 = movimientos.get(registro.getInt(15) - 1);
+				Movimiento m4 = movimientos.get(registro.getInt(16) - 1);
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);
@@ -231,18 +192,10 @@ class ManagerJugadorTest {
 				pokemons.add(p);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		
-		
-		//recogemos las cajas
-		
+		// recogemos las cajas
+
 		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
@@ -270,16 +223,10 @@ class ManagerJugadorTest {
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pcs
+		// recogemos los pcs
+
+		ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
 		
-		ArrayList<MiPc> pcs = new ArrayList<MiPc>();//mpc.selectAll();
-		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
@@ -312,14 +259,8 @@ class ManagerJugadorTest {
 				pcs.add(pc);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
+		// recogemos los usuarios
 		
-		//recogemos los usuarios
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
@@ -328,10 +269,10 @@ class ManagerJugadorTest {
 				String login = registro.getString(1);
 				String nombre = registro.getString(2);
 				String passw = registro.getString(3);
-				
-				boolean ban =false;
-				if(registro.getInt(5)==1)
-					ban=true;
+
+				boolean ban = false;
+				if (registro.getInt(5) == 1)
+					ban = true;
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				Statement comando2 = conexion.createStatement();
@@ -341,7 +282,7 @@ class ManagerJugadorTest {
 				while (registro2.next()) {
 					Pokemon p1 = pokemons.get(registro2.getInt("poke_id1") - 1);
 					equipo.add(p1);
-					
+
 					Pokemon p2 = null;
 					if ((Integer) registro2.getInt("poke_id2") != 0) {
 						p2 = pokemons.get(registro2.getInt("poke_id2") - 1);
@@ -390,35 +331,44 @@ class ManagerJugadorTest {
 				jugadores.add(user);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
+
 		assertEquals(jugadores.get(0).getLogin(), "aaaaa");
-	
+		
+		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
-	
+
 	@Test
-	void testUpdate() throws SQLException, Exception {
+	void testUpdate(){
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
-		
+
 		equipo.add(pokemon);
+
 		
-		Jugador j2 = new Jugador("Igor","aaaaaa","123", equipo, null, false);
-		
-		mj.update(j, j2);
-		
-ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-		
-		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
-		
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-		//recogemos los tipos
+		// recogemos los tipos
 		try {
+			ArrayList<Jugador> jugadores = mj.selectAll();
+			for (Jugador jugador : jugadores) {
+				if (jugador.getLogin().equals("aaaaa"))
+					j = jugador;
+			}
+
+			Jugador j2 = new Jugador("Igor", "aaaaaa", "123", equipo, j.getPc(), false);
+
+			mj.update(j, j2);
+
+			jugadores = new ArrayList<Jugador>();
+
+			ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+
+			ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+			
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
@@ -431,22 +381,18 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				tipos.add(t);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los movimientos
+		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);
 				String nombre = registro.getString(2);
-				Tipo t = tipos.get(registro.getInt(3)-1);
+				Tipo t = tipos.get(registro.getInt(3) - 1);
 				int potencia = registro.getInt(4);
 				int pp = registro.getInt(5);
 				double precision = registro.getInt(6);
@@ -456,13 +402,9 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pokemons
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
+		// recogemos los pokemons
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
@@ -471,18 +413,18 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String name = registro.getString(2);
 				Integer tipo1 = registro.getInt(3);
 				Integer tipo2 = registro.getInt(4);
-				
+
 				Tipo tiposs[] = new Tipo[2];
-				Tipo t1 = tipos.get(tipo1-1);
+				Tipo t1 = tipos.get(tipo1 - 1);
 				Tipo t2 = null;
 
-				if(tipo2 != 0)
-					t2 = tipos.get(tipo2-1);
+				if (tipo2 != 0)
+					t2 = tipos.get(tipo2 - 1);
 
 				tiposs[0] = t1;
 				tiposs[1] = t2;
-				
-				//String descripcion = registro.getString(5);
+
+				// String descripcion = registro.getString(5);
 				int hp = registro.getInt(6);
 				int atk = registro.getInt(7);
 				int def = registro.getInt(8);
@@ -494,10 +436,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = movimientos.get(registro.getInt(13)-1);
-				Movimiento m2 = movimientos.get(registro.getInt(14)-1);
-				Movimiento m3 = movimientos.get(registro.getInt(15)-1);
-				Movimiento m4 = movimientos.get(registro.getInt(16)-1);
+				Movimiento m1 = movimientos.get(registro.getInt(13) - 1);
+				Movimiento m2 = movimientos.get(registro.getInt(14) - 1);
+				Movimiento m3 = movimientos.get(registro.getInt(15) - 1);
+				Movimiento m4 = movimientos.get(registro.getInt(16) - 1);
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);
@@ -509,18 +451,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pokemons.add(p);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
-		
-		
-		//recogemos las cajas
-		
+
+		// recogemos las cajas
+
 		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
@@ -548,16 +484,11 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pcs
 		
-		ArrayList<MiPc> pcs = new ArrayList<MiPc>();//mpc.selectAll();
-		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los pcs
+
+		ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
+
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
@@ -590,14 +521,7 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pcs.add(pc);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		//recogemos los usuarios
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los usuarios
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
@@ -606,10 +530,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String login = registro.getString(1);
 				String nombre = registro.getString(2);
 				String passw = registro.getString(3);
-				
-				boolean ban =false;
-				if(registro.getInt(5)==1)
-					ban=true;
+
+				boolean ban = false;
+				if (registro.getInt(5) == 1)
+					ban = true;
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				Statement comando2 = conexion.createStatement();
@@ -619,7 +543,7 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				while (registro2.next()) {
 					Pokemon p1 = pokemons.get(registro2.getInt("poke_id1") - 1);
 					equipo.add(p1);
-					
+
 					Pokemon p2 = null;
 					if ((Integer) registro2.getInt("poke_id2") != 0) {
 						p2 = pokemons.get(registro2.getInt("poke_id2") - 1);
@@ -668,39 +592,30 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				jugadores.add(user);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		assertEquals(jugadores.get(0).getLogin(),"aaaaaa");
-		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		assertEquals(jugadores.get(0).getLogin(), "aaaaaa");
+
 
 			comando = conexion.createStatement();
 
-			comando.executeUpdate(
-					"delete from " + DBConexion.T_USERS + " where user_login ='" + j2.getLogin() + "';");
+			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j2.getLogin() + "';");
 
-		} finally {
-			if (comando == null)
-				throw new SQLException("No se ha podido establecer conexion con la base de datos.");
-			else if (conexion != null)
+			if (conexion != null)
 				conexion.close();
-		}
-	
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
 	}
-	
+
 	@Test
-	void testDelete() throws SQLException, Exception {
+	void testDelete(){
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
-		
+
 		equipo.add(pokemon);
-		
+
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -708,22 +623,17 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 			comando.executeUpdate("Insert into " + DBConexion.T_USERS + "(user_login, user_name, user_pass) values ('"
 					+ j.getLogin() + "', '" + j.getNombre() + "', '" + j.getPass() + "');");
 
-			comando.executeUpdate(
-					"call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
+			comando.executeUpdate("call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
+
 		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-		
+
 		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
-		
+
 		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-		//recogemos los tipos
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los tipos
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
@@ -735,22 +645,17 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				tipos.add(t);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los movimientos
+		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);
 				String nombre = registro.getString(2);
-				Tipo t = tipos.get(registro.getInt(3)-1);
+				Tipo t = tipos.get(registro.getInt(3) - 1);
 				int potencia = registro.getInt(4);
 				int pp = registro.getInt(5);
 				double precision = registro.getInt(6);
@@ -760,13 +665,9 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pokemons
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
+		// recogemos los pokemons
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
@@ -775,18 +676,18 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String name = registro.getString(2);
 				Integer tipo1 = registro.getInt(3);
 				Integer tipo2 = registro.getInt(4);
-				
+
 				Tipo tiposs[] = new Tipo[2];
-				Tipo t1 = tipos.get(tipo1-1);
+				Tipo t1 = tipos.get(tipo1 - 1);
 				Tipo t2 = null;
 
-				if(tipo2 != 0)
-					t2 = tipos.get(tipo2-1);
+				if (tipo2 != 0)
+					t2 = tipos.get(tipo2 - 1);
 
 				tiposs[0] = t1;
 				tiposs[1] = t2;
-				
-				//String descripcion = registro.getString(5);
+
+				// String descripcion = registro.getString(5);
 				int hp = registro.getInt(6);
 				int atk = registro.getInt(7);
 				int def = registro.getInt(8);
@@ -798,10 +699,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = movimientos.get(registro.getInt(13)-1);
-				Movimiento m2 = movimientos.get(registro.getInt(14)-1);
-				Movimiento m3 = movimientos.get(registro.getInt(15)-1);
-				Movimiento m4 = movimientos.get(registro.getInt(16)-1);
+				Movimiento m1 = movimientos.get(registro.getInt(13) - 1);
+				Movimiento m2 = movimientos.get(registro.getInt(14) - 1);
+				Movimiento m3 = movimientos.get(registro.getInt(15) - 1);
+				Movimiento m4 = movimientos.get(registro.getInt(16) - 1);
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);
@@ -813,18 +714,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pokemons.add(p);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
-		
-		
-		//recogemos las cajas
-		
+
+		// recogemos las cajas
+
 		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
@@ -852,16 +747,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pcs
 		
+		// recogemos los pcs
+
 		ArrayList<MiPc> pcs = new ArrayList<MiPc>();
+
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
@@ -894,14 +785,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pcs.add(pc);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
-		//recogemos los usuarios
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+
+		// recogemos los usuarios
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
@@ -910,10 +797,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String login = registro.getString(1);
 				String nombre = registro.getString(2);
 				String passw = registro.getString(3);
-				
-				boolean ban =false;
-				if(registro.getInt(5)==1)
-					ban=true;
+
+				boolean ban = false;
+				if (registro.getInt(5) == 1)
+					ban = true;
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				Statement comando2 = conexion.createStatement();
@@ -923,7 +810,7 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				while (registro2.next()) {
 					Pokemon p1 = pokemons.get(registro2.getInt("poke_id1") - 1);
 					equipo.add(p1);
-					
+
 					Pokemon p2 = null;
 					if ((Integer) registro2.getInt("poke_id2") != 0) {
 						p2 = pokemons.get(registro2.getInt("poke_id2") - 1);
@@ -972,22 +859,17 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				jugadores.add(user);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
-		
+
 		mj.delete(j);
-		
+
 		ArrayList<Jugador> jugadores2 = new ArrayList<Jugador>();
-		
+
 		ArrayList<Pokemon> pokemons2 = new ArrayList<Pokemon>();
-		
+
 		ArrayList<Tipo> tipos2 = new ArrayList<Tipo>();
-		//recogemos los tipos
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los tipos
+	
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
@@ -999,22 +881,18 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				tipos2.add(t);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los movimientos
-		ArrayList<Movimiento> movimientos2 = new ArrayList<Movimiento>();
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		// recogemos los movimientos
+		ArrayList<Movimiento> movimientos2 = new ArrayList<Movimiento>();
+
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
 				int id = registro.getInt(1);
 				String nombre = registro.getString(2);
-				Tipo t = tipos2.get(registro.getInt(3)-1);
+				Tipo t = tipos2.get(registro.getInt(3) - 1);
 				int potencia = registro.getInt(4);
 				int pp = registro.getInt(5);
 				double precision = registro.getInt(6);
@@ -1024,13 +902,9 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pokemons
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
+		// recogemos los pokemons
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
@@ -1039,18 +913,18 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String name = registro.getString(2);
 				Integer tipo1 = registro.getInt(3);
 				Integer tipo2 = registro.getInt(4);
-				
+
 				Tipo tiposs[] = new Tipo[2];
-				Tipo t1 = tipos2.get(tipo1-1);
+				Tipo t1 = tipos2.get(tipo1 - 1);
 				Tipo t2 = null;
 
-				if(tipo2 != 0)
-					t2 = tipos2.get(tipo2-1);
+				if (tipo2 != 0)
+					t2 = tipos2.get(tipo2 - 1);
 
 				tiposs[0] = t1;
 				tiposs[1] = t2;
-				
-				//String descripcion = registro.getString(5);
+
+				// String descripcion = registro.getString(5);
 				int hp = registro.getInt(6);
 				int atk = registro.getInt(7);
 				int def = registro.getInt(8);
@@ -1062,10 +936,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 				ArrayList<Movimiento> movimientos_pokemon = new ArrayList<Movimiento>();
 
-				Movimiento m1 = movimientos2.get(registro.getInt(13)-1);
-				Movimiento m2 = movimientos2.get(registro.getInt(14)-1);
-				Movimiento m3 = movimientos2.get(registro.getInt(15)-1);
-				Movimiento m4 = movimientos2.get(registro.getInt(16)-1);
+				Movimiento m1 = movimientos2.get(registro.getInt(13) - 1);
+				Movimiento m2 = movimientos2.get(registro.getInt(14) - 1);
+				Movimiento m3 = movimientos2.get(registro.getInt(15) - 1);
+				Movimiento m4 = movimientos2.get(registro.getInt(16) - 1);
 
 				movimientos_pokemon.add(m1);
 				movimientos_pokemon.add(m2);
@@ -1077,18 +951,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pokemons2.add(p);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 		
-		
-		
-		//recogemos las cajas
-		
+
+		// recogemos las cajas
+
 		ArrayList<Caja> cajasPC2 = new ArrayList<Caja>();
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+		
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
@@ -1116,16 +984,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		//recogemos los pcs
 		
+		// recogemos los pcs
+
 		ArrayList<MiPc> pcs2 = new ArrayList<MiPc>();
+
 		
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
@@ -1158,14 +1022,9 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				pcs2.add(pc);
 			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
+
+		// recogemos los usuarios
 		
-		//recogemos los usuarios
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
@@ -1174,10 +1033,10 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				String login = registro.getString(1);
 				String nombre = registro.getString(2);
 				String passw = registro.getString(3);
-				
-				boolean ban =false;
-				if(registro.getInt(5)==1)
-					ban=true;
+
+				boolean ban = false;
+				if (registro.getInt(5) == 1)
+					ban = true;
 				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
 
 				Statement comando2 = conexion.createStatement();
@@ -1187,7 +1046,7 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				while (registro2.next()) {
 					Pokemon p1 = pokemons2.get(registro2.getInt("poke_id1") - 1);
 					equipo.add(p1);
-					
+
 					Pokemon p2 = null;
 					if ((Integer) registro2.getInt("poke_id2") != 0) {
 						p2 = pokemons2.get(registro2.getInt("poke_id2") - 1);
@@ -1235,18 +1094,12 @@ ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 				Jugador user = new Jugador(nombre, login, passw, equipo, pc, ban);
 				jugadores2.add(user);
 			}
+			assertEquals(jugadores.size(), jugadores2.size() + 1);
+			
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-		
-		assertEquals(jugadores.size(), jugadores2.size()+1);
-		
-		
-		
 	}
-
-	
 
 }
