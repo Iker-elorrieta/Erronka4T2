@@ -11,16 +11,10 @@ public class Profesor extends Usuario{
 		this.reg = reg;
 	}
 	
-	
 
 	public Region getReg() {
 		return reg;
 	}
-
-
-
-
-
 
 	@Override
 	public boolean Validar() {

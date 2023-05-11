@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Metodos;
+import controlador.MetodosVista;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
 import manager.ManagerProfesor;
@@ -36,6 +37,7 @@ public class VistaLogin extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton atras;
 	private Metodos metodos = new Metodos();
+	private MetodosVista metodosV = new MetodosVista();
 	private JTextField loginTF;
 	private JPasswordField passw1TF;
 	private JButton btnLogin;
@@ -159,12 +161,14 @@ public class VistaLogin extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, "ESTE USUARIO A SIDO BANEADO POR INFRINGIR LAS NORMAS.",
 								"ALERTA!!!!", JOptionPane.INFORMATION_MESSAGE);
 					} else {
+						metodosV.guardarLogin(user);
 						VistaPerfil vp = new VistaPerfil(((Jugador) user));
 						vp.setVisible(true);
 						this.dispose();
 					}
 
 				} else {
+					metodosV.guardarLogin(user);
 					VistaProfesor vp = new VistaProfesor(((Profesor) user));
 					vp.setVisible(true);
 					this.dispose();

@@ -48,6 +48,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	private Jugador jugadorActual;
 	private RutasImg rutas = new RutasImg();
 	private Metodos metodos = new Metodos();
+	private JButton irAVistaCajas;
 
 	/**
 	 * Launch the application.
@@ -159,17 +160,13 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		contentPane.add(botonDarseDeBaja);
 
 		botonAceptarCambios = new JButton("Aceptar Cambios");
+		botonAceptarCambios.addActionListener(this);
 		botonAceptarCambios.setEnabled(false);
 		botonAceptarCambios.setBounds(260, 335, 148, 23);
 		contentPane.add(botonAceptarCambios);
 		
-		JButton irAVistaCajas = new JButton("Ver Cajas");
-		irAVistaCajas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VistaCajasPC vistacajaspc = new VistaCajasPC(jugadorActual);
-				vistacajaspc.setVisible(true);
-			}
-		});
+		irAVistaCajas = new JButton("Ver Cajas");
+		irAVistaCajas.addActionListener(this);
 		irAVistaCajas.setBounds(34, 470, 131, 35);
 		contentPane.add(irAVistaCajas);
 	}
@@ -179,20 +176,10 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		int i = 0;
 
 		for (Pokemon pokemon : jugadorActual.getEquipo()) {
-
+			
 			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(pokemon.getId()));
 			JLabel pkmnIMG1 = new JLabel();
 			pkmnIMG1.setToolTipText(jugadorActual.getEquipo().get(i).getNombre_pokemon());
-			panel.add(pkmnIMG1);
-			pkmnIMG1.setIcon(pkmnImg1);
-
-			i++;
-		}
-
-		if (i < 7) {
-			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(0));
-			JLabel pkmnIMG1 = new JLabel();
-			pkmnIMG1.setToolTipText("Vacio.");
 			panel.add(pkmnIMG1);
 			pkmnIMG1.setIcon(pkmnImg1);
 
@@ -299,6 +286,10 @@ public class VistaPerfil extends JFrame implements ActionListener {
 
 				}
 				
+		}else if (e.getSource() == irAVistaCajas){
+			VistaCajasPC vistacajaspc = new VistaCajasPC(jugadorActual);
+			vistacajaspc.setVisible(true);
+			this.dispose();
 		}
 	}
 

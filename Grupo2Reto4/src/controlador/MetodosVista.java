@@ -71,7 +71,7 @@ public class MetodosVista {
 		try {
 			FileWriter fic = new FileWriter("LoginHistorial/historial.txt");
 
-			fic.write(cadena + "El usuario " + user.getNombre() + " con usuario " + user.getLogin()
+			fic.write(cadena + "El usuario " + user.getNombre() + " con login " + user.getLogin()
 					+ " ha iniciado sesion el " + fechaS + " a la(s) " + horaS);
 
 			fic.close();

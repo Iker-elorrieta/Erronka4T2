@@ -116,7 +116,8 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 	public void update(Pokemon p_old, Pokemon p_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		try {
-			String descripcion = p_new.getNombre_pokemon()+" es un pokemon de la region de "+p_new.getReg().getNombre();
+			String descripcion="";
+			//String descripcion = p_new.getNombre_pokemon()+" es un pokemon de la region de "+p_new.getReg().getNombre();
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			Integer tipo2 = null;

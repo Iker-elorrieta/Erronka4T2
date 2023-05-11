@@ -3,9 +3,12 @@ package vista;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import manager.ManagerPokemon;
+import modelo.Movimiento;
 import modelo.Pokemon;
 import utils.RutasImg;
 import javax.swing.JProgressBar;
@@ -19,8 +22,12 @@ import javax.swing.JSlider;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JComboBox;
 
 public class VistaModificarDatos extends JFrame implements ActionListener {
 
@@ -32,7 +39,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 	private RutasImg rutas = new RutasImg();
 	private JSlider hpSlider;
 	private JSlider atkSlider;
-	private JSlider	sAtkSlider;
+	private JSlider sAtkSlider;
 	private JSlider defSlider;
 	private JSlider sDefSlider;
 	private JSlider velSlider;
@@ -42,6 +49,18 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 	private JSpinner sAtkSpinner;
 	private JSpinner sDefSpinner;
 	private JSpinner velSpinner;
+	private ManagerPokemon mp = new ManagerPokemon();
+	private JComboBox<String> comboBoxMov1;
+	private JComboBox<String> comboBoxMov2;
+	private JComboBox<String> comboBoxMov3;
+	private JComboBox<String> comboBoxMov4;
+	private ArrayList<Movimiento> movimientos;
+	private JLabel lblMov1;
+	private JLabel lblMov2;
+	private JLabel lblMov3;
+	private JLabel lblMov4;
+	private JButton atras;
+	private Pokemon pokemon_backup;
 
 	/**
 	 * Launch the application.VistaDatos.java
@@ -50,12 +69,17 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public VistaModificarDatos(Pokemon pokemon) {
+
+	public VistaModificarDatos(Pokemon pokemon, ArrayList<Movimiento> movimientosA) {
+		movimientos = movimientosA;
+		pokemon_backup = new Pokemon(pokemon.getId(), pokemon.getNombre_pokemon(), pokemon.getTipo(),
+				pokemon.getHp(), pokemon.getAtt(), pokemon.getDef(), pokemon.getSatt(), pokemon.getSdef(),
+				pokemon.getVel(), pokemon.getMovimientos(), pokemon.getReg());
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 770, 561);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -109,7 +133,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		progressBarVel.setBounds(233, 188, 214, 20);
 		contentPane.add(progressBarVel);
 
-		JButton atras = new JButton("Atras");
+		atras = new JButton("Atras");
 		atras.addActionListener(this);
 		atras.setBounds(0, 499, 89, 23);
 		contentPane.add(atras);
@@ -156,17 +180,17 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		contentPane.add(lblVel);
 
 		JLabel tipo1 = new JLabel(pokemon.getTipo()[0].getNombre_tipo());
-		tipo1.setBounds(10, 185, 62, 14);
+		tipo1.setBounds(20, 185, 79, 14);
 		contentPane.add(tipo1);
-		
-		String tipo2S="";
-		if(pokemon.getTipo()[1] != null)
-			tipo2S=pokemon.getTipo()[1].getNombre_tipo();
+
+		String tipo2S = "";
+		if (pokemon.getTipo()[1] != null)
+			tipo2S = pokemon.getTipo()[1].getNombre_tipo();
 		JLabel tipo2 = new JLabel(tipo2S);
-		tipo2.setBounds(97, 185, 62, 14);
+		tipo2.setBounds(105, 185, 62, 14);
 		contentPane.add(tipo2);
 
-		JLabel lblMov1 = new JLabel(pokemon.getMovimientos().get(0).getNombre());
+		lblMov1 = new JLabel(pokemon.getMovimientos().get(0).getNombre());
 		lblMov1.setToolTipText("<html>" + "Tipo: " + pokemon.getMovimientos().get(0).getTipo().getNombre_tipo() + "<br>"
 				+ "Potencia: " + pokemon.getMovimientos().get(0).getPotencia() + "<br>" + "Precision: "
 				+ pokemon.getMovimientos().get(0).getPrecision() + "<br>" + "PP: "
@@ -178,7 +202,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov1.setBounds(10, 273, 154, 43);
 		contentPane.add(lblMov1);
 
-		JLabel lblMov2 = new JLabel(pokemon.getMovimientos().get(1).getNombre());
+		lblMov2 = new JLabel(pokemon.getMovimientos().get(1).getNombre());
 		lblMov2.setToolTipText("<html>" + "Tipo: " + pokemon.getMovimientos().get(1).getTipo().getNombre_tipo() + "<br>"
 				+ "Potencia: " + pokemon.getMovimientos().get(1).getPotencia() + "<br>" + "Precision: "
 				+ pokemon.getMovimientos().get(1).getPrecision() + "<br>" + "PP: "
@@ -190,7 +214,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov2.setBounds(202, 273, 154, 43);
 		contentPane.add(lblMov2);
 
-		JLabel lblMov3 = new JLabel(pokemon.getMovimientos().get(2).getNombre());
+		lblMov3 = new JLabel(pokemon.getMovimientos().get(2).getNombre());
 		lblMov3.setToolTipText("<html>" + "Tipo: " + pokemon.getMovimientos().get(2).getTipo().getNombre_tipo() + "<br>"
 				+ "Potencia: " + pokemon.getMovimientos().get(2).getPotencia() + "<br>" + "Precision: "
 				+ pokemon.getMovimientos().get(2).getPrecision() + "<br>" + "PP: "
@@ -202,7 +226,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov3.setBounds(399, 273, 154, 43);
 		contentPane.add(lblMov3);
 
-		JLabel lblMov4 = new JLabel(pokemon.getMovimientos().get(3).getNombre());
+		lblMov4 = new JLabel(pokemon.getMovimientos().get(3).getNombre());
 		lblMov4.setToolTipText("<html>" + "Tipo: " + pokemon.getMovimientos().get(3).getTipo().getNombre_tipo() + "<br>"
 				+ "Potencia: " + pokemon.getMovimientos().get(3).getPotencia() + "<br>" + "Precision: "
 				+ pokemon.getMovimientos().get(3).getPrecision() + "<br>" + "PP: "
@@ -213,7 +237,7 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		lblMov4.setBackground(Color.WHITE);
 		lblMov4.setBounds(588, 273, 154, 43);
 		contentPane.add(lblMov4);
-		
+
 		hpSlider = new JSlider();
 		hpSlider.addMouseListener(new MouseAdapter() {
 			@Override
@@ -233,12 +257,13 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		hpSlider.setMaximum(255);
 		hpSlider.setBounds(473, 27, 200, 26);
 		contentPane.add(hpSlider);
-		
+
 		hpSpinner = new JSpinner();
-		hpSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		hpSpinner.setEnabled(false);
+		hpSpinner.setModel(new SpinnerNumberModel(pokemon.getHp(), 1, 255, 1));
 		hpSpinner.setBounds(680, 30, 62, 20);
 		contentPane.add(hpSpinner);
-		
+
 		atkSlider = new JSlider();
 		atkSlider.addMouseListener(new MouseAdapter() {
 			@Override
@@ -258,12 +283,13 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		atkSlider.setMaximum(255);
 		atkSlider.setBounds(473, 58, 200, 26);
 		contentPane.add(atkSlider);
-		
+
 		atkSpinner = new JSpinner();
+		atkSpinner.setEnabled(false);
 		atkSpinner.setBounds(680, 61, 62, 20);
-		atkSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		atkSpinner.setModel(new SpinnerNumberModel(pokemon.getAtt(), 1, 255, 1));
 		contentPane.add(atkSpinner);
-		
+
 		sAtkSlider = new JSlider();
 		sAtkSlider.addMouseListener(new MouseAdapter() {
 			@Override
@@ -283,57 +309,249 @@ public class VistaModificarDatos extends JFrame implements ActionListener {
 		sAtkSlider.setMaximum(255);
 		sAtkSlider.setBounds(473, 89, 200, 26);
 		contentPane.add(sAtkSlider);
-		
+
 		sAtkSpinner = new JSpinner();
+		sAtkSpinner.setEnabled(false);
 		sAtkSpinner.setBounds(680, 92, 62, 20);
-		sAtkSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		sAtkSpinner.setModel(new SpinnerNumberModel(pokemon.getSatt(), 1, 255, 1));
 		contentPane.add(sAtkSpinner);
-		
+
 		defSlider = new JSlider();
+		defSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				defSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarDeff.setValue(defSlider.getValue());
+						defSpinner.setValue(defSlider.getValue());
+					}
+				});
+			}
+		});
 		defSlider.setMinorTickSpacing(1);
 		defSlider.setValue(pokemon.getDef());
 		defSlider.setMinimum(1);
 		defSlider.setMaximum(255);
 		defSlider.setBounds(473, 120, 200, 26);
 		contentPane.add(defSlider);
-		
+
 		defSpinner = new JSpinner();
+		defSpinner.setEnabled(false);
+		defSpinner.setValue(pokemon.getDef());
 		defSpinner.setBounds(680, 123, 62, 20);
-		defSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		defSpinner.setModel(new SpinnerNumberModel(pokemon.getDef(), 1, 255, 1));
 		contentPane.add(defSpinner);
-		
+
 		sDefSlider = new JSlider();
+		sDefSlider = new JSlider();
+		sDefSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				sDefSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarSDeff.setValue(sDefSlider.getValue());
+						sDefSpinner.setValue(sDefSlider.getValue());
+					}
+				});
+			}
+		});
 		sDefSlider.setMinorTickSpacing(1);
 		sDefSlider.setValue(pokemon.getSdef());
 		sDefSlider.setMinimum(1);
 		sDefSlider.setMaximum(255);
 		sDefSlider.setBounds(473, 151, 200, 26);
 		contentPane.add(sDefSlider);
-		
+
 		sDefSpinner = new JSpinner();
+		sDefSpinner.setEnabled(false);
+		sDefSpinner.setValue(pokemon.getSdef());
 		sDefSpinner.setBounds(680, 154, 62, 20);
-		sDefSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		sDefSpinner.setModel(new SpinnerNumberModel(pokemon.getSdef(), 1, 255, 1));
 		contentPane.add(sDefSpinner);
-		
+
 		velSlider = new JSlider();
+		velSlider = new JSlider();
+		velSlider = new JSlider();
+		velSlider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				velSlider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						progressBarVel.setValue(velSlider.getValue());
+						velSpinner.setValue(velSlider.getValue());
+					}
+				});
+			}
+		});
 		velSlider.setMinorTickSpacing(1);
 		velSlider.setValue(pokemon.getVel());
 		velSlider.setMinimum(1);
 		velSlider.setMaximum(255);
 		velSlider.setBounds(473, 182, 200, 26);
 		contentPane.add(velSlider);
-		
+
 		velSpinner = new JSpinner();
+		velSpinner.setEnabled(false);
+		velSpinner.setValue(pokemon.getVel());
 		velSpinner.setBounds(680, 185, 62, 20);
-		velSpinner.setModel(new SpinnerNumberModel(1, 1, 255, 1));
+		velSpinner.setModel(new SpinnerNumberModel(pokemon.getVel(), 1, 255, 1));
 		contentPane.add(velSpinner);
 
+		JButton aceptarCambios = new JButton("Aceptar Cambios");
+		aceptarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int eleccion = JOptionPane.showConfirmDialog(aceptarCambios, "¿Estás seguro?");
+				if (eleccion == 0) {
+					String[] nombre_movs = { lblMov1.getText(), lblMov2.getText(), lblMov3.getText(),
+							lblMov4.getText() };
+					ArrayList<Movimiento> moveset = new ArrayList<Movimiento>();
+
+					for (int numMov = 0; numMov < 4; numMov++) {
+						for (int i = 0; i < movimientos.size(); i++) {
+							if (nombre_movs[numMov].equals(movimientos.get(i).getNombre()))
+								moveset.add(movimientos.get(i));
+						}
+					}
+
+					Pokemon pokemon = new Pokemon(pokemon_backup.getId(), pokemon_backup.getNombre_pokemon(),
+							pokemon_backup.getTipo(), (int) hpSpinner.getValue(), (int) atkSpinner.getValue(),
+							(int) defSpinner.getValue(), (int) sAtkSpinner.getValue(), (int) sDefSpinner.getValue(),
+							(int) velSpinner.getValue(), moveset, pokemon_backup.getReg());
+					try {
+						mp.update(pokemon_backup, pokemon);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					atras.doClick();
+				}
+
+			}
+		});
+		aceptarCambios.setBounds(600, 486, 154, 36);
+		contentPane.add(aceptarCambios);
+
+		comboBoxMov1 = new JComboBox<String>();
+		comboBoxMov1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int op=0;
+				for (int i = 0; i < movimientos.size(); i++) {
+					if (comboBoxMov1.getSelectedItem().equals(movimientos.get(i).getNombre()))
+						op=movimientos.get(i).getId()-1;
+				}
+				cambiarMovimiento(op, 1);
+			}
+		});
+		comboBoxMov1.setMaximumRowCount(13);
+		comboBoxMov1.setBounds(10, 344, 154, 20);
+		contentPane.add(comboBoxMov1);
+		
+		
+		comboBoxMov2 = new JComboBox<String>();
+		comboBoxMov2.setMaximumRowCount(13);
+		comboBoxMov2.setBounds(202, 343, 154, 20);
+		comboBoxMov2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int op=0;
+				for (int i = 0; i < movimientos.size(); i++) {
+					if (comboBoxMov2.getSelectedItem().equals(movimientos.get(i).getNombre()))
+						op=movimientos.get(i).getId()-1;
+				}
+				cambiarMovimiento(op, 2);
+			}
+		});
+		contentPane.add(comboBoxMov2);
+
+		comboBoxMov3 = new JComboBox<String>();
+		comboBoxMov3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int op=0;
+				for (int i = 0; i < movimientos.size(); i++) {
+					if (comboBoxMov3.getSelectedItem().equals(movimientos.get(i).getNombre()))
+						op=movimientos.get(i).getId()-1;
+				}
+				cambiarMovimiento(op, 3);
+			}
+		});
+		comboBoxMov3.setMaximumRowCount(13);
+		comboBoxMov3.setBounds(399, 343, 154, 20);
+		contentPane.add(comboBoxMov3);
+
+		comboBoxMov4 = new JComboBox<String>();
+		comboBoxMov4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int op=0;
+				for (int i = 0; i < movimientos.size(); i++) {
+					if (comboBoxMov4.getSelectedItem().equals(movimientos.get(i).getNombre()))
+						op=movimientos.get(i).getId()-1;
+				}
+				cambiarMovimiento(op, 4);
+			}
+		});
+		comboBoxMov4.setMaximumRowCount(13);
+		comboBoxMov4.setBounds(588, 343, 154, 20);
+		contentPane.add(comboBoxMov4);
+		
+		llenarComboBox();
+	}
+
+	private void llenarComboBox() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < movimientos.size(); i++) {
+			comboBoxMov1.addItem(movimientos.get(i).getNombre());
+			comboBoxMov2.addItem(movimientos.get(i).getNombre());
+			comboBoxMov3.addItem(movimientos.get(i).getNombre());
+			comboBoxMov4.addItem(movimientos.get(i).getNombre());
+		}
+		comboBoxMov1.setSelectedIndex(pokemon_backup.getMovimientos().get(0).getId()-1);
+		comboBoxMov2.setSelectedIndex(pokemon_backup.getMovimientos().get(1).getId()-1);
+		comboBoxMov3.setSelectedIndex(pokemon_backup.getMovimientos().get(2).getId()-1);
+		comboBoxMov4.setSelectedIndex(pokemon_backup.getMovimientos().get(3).getId()-1);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		this.dispose();
+	}
+
+	public void cambiarMovimiento(int id_mov, int pos_mov) {
+		switch (pos_mov) {
+		case 1:
+			lblMov1.setText(movimientos.get(id_mov - 1).getNombre());
+			lblMov1.setToolTipText("<html>" + "Tipo: " + movimientos.get(id_mov - 1).getTipo().getNombre_tipo() + "<br>"
+					+ "Potencia: " + movimientos.get(id_mov - 1).getPotencia() + "<br>" + "Precision: "
+					+ movimientos.get(id_mov - 1).getPrecision() + "<br>" + "PP: "
+					+ movimientos.get(id_mov - 1).getPuntosPoder() + "</html>");
+			break;
+		case 2:
+			lblMov2.setText(movimientos.get(id_mov - 1).getNombre());
+			lblMov2.setToolTipText("<html>" + "Tipo: " + movimientos.get(id_mov - 1).getTipo().getNombre_tipo() + "<br>"
+					+ "Potencia: " + movimientos.get(id_mov - 1).getPotencia() + "<br>" + "Precision: "
+					+ movimientos.get(id_mov - 1).getPrecision() + "<br>" + "PP: "
+					+ movimientos.get(id_mov - 1).getPuntosPoder() + "</html>");
+			break;
+		case 3:
+			lblMov3.setText(movimientos.get(id_mov - 1).getNombre());
+			lblMov3.setToolTipText("<html>" + "Tipo: " + movimientos.get(id_mov - 1).getTipo().getNombre_tipo() + "<br>"
+					+ "Potencia: " + movimientos.get(id_mov - 1).getPotencia() + "<br>" + "Precision: "
+					+ movimientos.get(id_mov - 1).getPrecision() + "<br>" + "PP: "
+					+ movimientos.get(id_mov - 1).getPuntosPoder() + "</html>");
+			break;
+		case 4:
+			lblMov4.setText(movimientos.get(id_mov - 1).getNombre());
+			lblMov4.setToolTipText("<html>" + "Tipo: " + movimientos.get(id_mov - 1).getTipo().getNombre_tipo() + "<br>"
+					+ "Potencia: " + movimientos.get(id_mov - 1).getPotencia() + "<br>" + "Precision: "
+					+ movimientos.get(id_mov - 1).getPrecision() + "<br>" + "PP: "
+					+ movimientos.get(id_mov - 1).getPuntosPoder() + "</html>");
+			break;
+		}
 	}
 
 	public String tabla() {

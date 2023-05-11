@@ -8,11 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import excepciones.NotFoundException;
 import manager.ManagerJugador;
+import manager.ManagerMovimientos;
 import manager.ManagerPokemon;
 import modelo.Jugador;
+import modelo.Movimiento;
+import modelo.Pokemon;
 import modelo.Profesor;
 import utils.RutasImg;
-
 import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -27,6 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import javax.swing.JSlider;
 
 public class VistaProfesor extends JFrame implements ActionListener {
 
@@ -48,6 +52,18 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	private JComboBox<String> comboBox;
 	private RutasImg rutas = new RutasImg();
 	private ManagerPokemon mp = new ManagerPokemon();
+	private ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+	private ManagerMovimientos mm = new ManagerMovimientos();
+	private ArrayList<Movimiento> movimientos;
+	private JSlider slider;
+	private JLabel num_pkdxC;
+	private JLabel num_pkdxD;
+	private JLabel num_pkdxA;
+	private JLabel pkdex_arriba;
+	private JLabel pkdex_centro;
+	private JLabel pkdex_abajo;
+	ImageIcon[] galeria = new ImageIcon[3];
+
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +87,20 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	 */
 	public VistaProfesor(Profesor user) {
 
+		try {
+			jugadores = mj.selectAll();
+			pokemon = mp.selectAll();
+			movimientos = mm.selectAll();
+		} catch (NotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 932, 543);
 		contentPane = new JPanel();
@@ -78,6 +108,33 @@ public class VistaProfesor extends JFrame implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		num_pkdxD = new JLabel("");
+		num_pkdxD.setBounds(246, 290, 38, 36);
+		contentPane.add(num_pkdxD);
+
+		num_pkdxC = new JLabel("");
+		num_pkdxC.setBounds(267, 221, 27, 36);
+		contentPane.add(num_pkdxC);
+
+		num_pkdxA = new JLabel("");
+		num_pkdxA.setBounds(246, 154, 38, 36);
+		contentPane.add(num_pkdxA);
+
+		pkdex_abajo = new JLabel("");
+		pkdex_abajo.setHorizontalAlignment(SwingConstants.CENTER);
+		pkdex_abajo.setBounds(188, 290, 38, 38);
+		contentPane.add(pkdex_abajo);
+
+		pkdex_arriba = new JLabel("");
+		pkdex_arriba.setHorizontalAlignment(SwingConstants.CENTER);
+		pkdex_arriba.setBounds(188, 153, 38, 38);
+		contentPane.add(pkdex_arriba);
+
+		pkdex_centro = new JLabel("");
+		pkdex_centro.setHorizontalAlignment(SwingConstants.CENTER);
+		pkdex_centro.setBounds(159, 192, 97, 97);
+		contentPane.add(pkdex_centro);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -87,6 +144,15 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		contentPane.add(separator);
 
 		comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int j = comboBox.getSelectedIndex();
+				jugador = jugadores.get(j);
+				nombre.setText(jugador.getNombre());
+				nickname.setText(jugador.getLogin());
+				passwordField.setText(jugador.getPass());
+			}
+		});
 		comboBox.setBounds(544, 55, 200, 27);
 		contentPane.add(comboBox);
 
@@ -137,19 +203,6 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		contentPane.add(banear);
 		banear.setEnabled(false);
 
-		JButton seleccionar = new JButton("Seleccionár");
-		seleccionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int j = comboBox.getSelectedIndex();
-				jugador = jugadores.get(j);
-				nombre.setText(jugador.getNombre());
-				nickname.setText(jugador.getLogin());
-				passwordField.setText(jugador.getPass());
-			}
-		});
-		seleccionar.setBounds(777, 57, 112, 23);
-		contentPane.add(seleccionar);
-
 		passwordField = new JPasswordField();
 		passwordField.setEditable(false);
 		passwordField.setBounds(654, 253, 200, 20);
@@ -170,44 +223,79 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		atras.setBounds(10, 11, 105, 23);
 		atras.addActionListener(this);
 		contentPane.add(atras);
-		
+
 		try {
 			rellenarCampos();
 		} catch (NotFoundException e1) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-		
+
 		JLabel labelSelect = new JLabel("Seleccionár");
 		labelSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				try {
-					VistaModificarDatos vd = new VistaModificarDatos(mp.selectAll().get(0));
+				if(!num_pkdxC.getText().equals("")) {
+					VistaModificarDatos vd = new VistaModificarDatos(pokemon.get(Integer.valueOf(num_pkdxC.getText()) - 1),
+						movimientos);
 					vd.setVisible(true);
-				} catch (NotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				}else {
+					JOptionPane.showMessageDialog(null, "Deslizate por el Slider lateral para seleccionar un pokemon.");
 				}
-				
+
 			}
 		});
 		labelSelect.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSelect.setBounds(131, 399, 112, 46);
 		contentPane.add(labelSelect);
-		
+
 		ImageIcon pkmnImg1 = new ImageIcon(rutas.jpgPoekdex());
 		JLabel pkmnIMG1 = new JLabel();
 		pkmnIMG1.setBounds(87, 71, 230, 400);
 		contentPane.add(pkmnIMG1);
 		pkmnIMG1.setIcon(pkmnImg1);
+
+		slider = new JSlider();
+		slider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				slider.addMouseMotionListener(new MouseMotionAdapter() {
+					@Override
+					public void mouseDragged(MouseEvent e) {
+						num_pkdxA.setText(String.valueOf(slider.getValue() - 1));
+						num_pkdxC.setText(String.valueOf(slider.getValue()));
+						num_pkdxD.setText(String.valueOf(slider.getValue() + 1));
+
+						galeria[1] = new ImageIcon(rutas.PNGfrontalPKMN(slider.getValue()));
+						if (Integer.valueOf(num_pkdxC.getText()) == slider.getMinimum()) {
+							num_pkdxA.setText("");
+							galeria[0] = null;
+							galeria[2] = new ImageIcon(rutas.PNGpequenyo(slider.getValue() + 1));
+						} else if (Integer.valueOf(num_pkdxC.getText()) == slider.getMaximum()) {
+							num_pkdxD.setText("");
+							galeria[2] = null;
+							galeria[0] = new ImageIcon(rutas.PNGpequenyo(slider.getValue() - 1));
+						} else {
+							galeria[0] = new ImageIcon(rutas.PNGpequenyo(slider.getValue() - 1));
+							galeria[1] = new ImageIcon(rutas.PNGfrontalPKMN(slider.getValue()));
+							galeria[2] = new ImageIcon(rutas.PNGpequenyo(slider.getValue() + 1));
+						}
+						pkdex_arriba.setIcon(galeria[0]);
+						pkdex_centro.setIcon(galeria[1]);
+						pkdex_abajo.setIcon(galeria[2]);
+					}
+				});
+			}
+		});
+		slider.setPaintTicks(true);
+		slider.setValue(1);
+		slider.setSnapToTicks(true);
+		slider.setMinorTickSpacing(1);
+		slider.setMinimum(1);
+		slider.setMaximum(649);
+		slider.setOrientation(SwingConstants.VERTICAL);
+		slider.setBounds(361, 58, 76, 413);
+		contentPane.add(slider);
 	}
 
 	@Override
@@ -261,19 +349,6 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	}
 
 	public void rellenarCampos() throws NotFoundException {
-
-		try {
-			jugadores = mj.selectAll();
-		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
-			throw new NotFoundException("No hay jugadores en la base de datos.");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		for (int i = 0; i < jugadores.size(); i++)
 			comboBox.addItem(jugadores.get(i).getNombre() + " \"" + jugadores.get(i).getLogin() + "\"");
