@@ -35,7 +35,7 @@ class ManagerProfesorTest {
 
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Region r = new Region(7, "Prueba");
+		Region r = new Region(6, "Prueba");
 		Profesor prof = new Profesor("Profesor Prueba", "prueba", "PruebaPrueba", r);
 
 		try {
@@ -61,7 +61,7 @@ class ManagerProfesorTest {
 
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		Region r = new Region(7, "Prueba");
+		Region r = new Region(6, "Prueba");
 		Profesor prof1 = new Profesor("Profesor Prueba", "prueba", "PruebaPrueba", r);
 		Profesor prof2 = new Profesor("Profesor Prueba2", "prueba", "PruebaPrueba", r);
 
@@ -95,7 +95,7 @@ class ManagerProfesorTest {
 
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
-		Region r = new Region(7, "Prueba");
+		Region r = new Region(6, "Prueba");
 		Profesor prof = new Profesor("Profesor Prueba", "prueba", "PruebaPrueba", r);
 
 		mr.insert(r);

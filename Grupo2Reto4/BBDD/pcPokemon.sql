@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2023 a las 14:00:22
+-- Tiempo de generación: 11-05-2023 a las 13:18:55
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pcpokemon`
 --
-CREATE DATABASE IF NOT EXISTS `pcpokemon` DEFAULT CHARACTER SET utf8mb4 ;
+DROP DATABASE IF EXISTS `pcpokemon`;
+CREATE DATABASE IF NOT EXISTS `pcpokemon` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
 USE `pcpokemon`;
 
 DELIMITER $$
@@ -50,6 +51,37 @@ else
 end if;
 end$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `mostrarCont` (IN `us` VARCHAR(30))   select actualizar(us)$$
+
+--
+-- Funciones
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `actualizar` (`log` VARCHAR(30)) RETURNS INT(11) READS SQL DATA begin
+declare contador int default 1;
+declare pokemon int default 0;
+Select poke_id2 into pokemon from Equipo where log=Equipo.user_login;
+if pokemon > 0 then
+	set contador = contador +1;
+    end if;
+Select poke_id3 into pokemon from Equipo where log=Equipo.user_login;
+if pokemon > 0 then
+	set contador = contador +1;
+    end if;
+Select poke_id4 into pokemon from Equipo where log=Equipo.user_login;
+if pokemon > 0 then
+	set contador = contador +1;
+    end if;
+Select poke_id5 into pokemon from Equipo where log=Equipo.user_login;
+if pokemon > 0 then
+	set contador = contador +1;
+    end if;
+Select poke_id6 into pokemon from Equipo where log=Equipo.user_login;
+if pokemon > 0 then
+	set contador = contador +1;
+end if;
+return contador;
+end$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -62,7 +94,7 @@ CREATE TABLE `caja` (
   `pc_box_id` int(11) NOT NULL,
   `pc_id` int(11) DEFAULT NULL,
   `box_pokemon` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `caja`
@@ -88,7 +120,7 @@ CREATE TABLE `cajapokemon` (
   `pc_id` int(11) NOT NULL,
   `pc_box_id` int(11) NOT NULL,
   `poke_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -104,14 +136,22 @@ CREATE TABLE `equipo` (
   `poke_id4` int(11) DEFAULT NULL,
   `poke_id5` int(11) DEFAULT NULL,
   `poke_id6` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `equipo`
 --
 
 INSERT INTO `equipo` (`user_login`, `poke_id1`, `poke_id2`, `poke_id3`, `poke_id4`, `poke_id5`, `poke_id6`) VALUES
-('clemen', 477, NULL, NULL, NULL, NULL, NULL);
+('clemen', 477, 25, 26, NULL, 200, 450);
+
+--
+-- Disparadores `equipo`
+--
+DELIMITER $$
+CREATE TRIGGER `actualizarDatos` AFTER UPDATE ON `equipo` FOR EACH ROW update Usuario set user_team = actualizar(new.user_login) where Usuario.user_login=new.user_login
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -126,14 +166,14 @@ CREATE TABLE `movimiento` (
   `potency` int(11) DEFAULT NULL,
   `pp` int(11) DEFAULT 5,
   `accuracy` int(11) DEFAULT 100
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `movimiento`
 --
 
 INSERT INTO `movimiento` (`mov_id`, `move_name`, `mov_type`, `potency`, `pp`, `accuracy`) VALUES
-(2, 'karate-chop', 2, 50, 25, 100),
+(2, 'Karate-chop', 2, 50, 25, 100),
 (3, 'double-slap', 1, 15, 10, 85),
 (4, 'comet-punch', 1, 18, 15, 85),
 (5, 'mega-punch', 1, 80, 20, 85),
@@ -774,7 +814,7 @@ CREATE TABLE `mov_potencia_media` (
 CREATE TABLE `pc` (
   `pc_id` int(11) NOT NULL,
   `user_login` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `pc`
@@ -832,7 +872,7 @@ CREATE TABLE `pokemon` (
   `poke_mov2` int(11) NOT NULL,
   `poke_mov3` int(11) NOT NULL,
   `poke_mov4` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `pokemon`
@@ -1487,79 +1527,7 @@ INSERT INTO `pokemon` (`poke_id`, `poke_name`, `poke_type1`, `poke_type2`, `desc
 (646, 'Kyurem', 16, 15, '', 125, 130, 90, 95, 130, 90, 5, 33, 33, 33, 33),
 (647, 'Keldeo', 11, 2, '', 91, 72, 90, 108, 129, 90, 5, 33, 33, 33, 33),
 (648, 'Meloetta', 1, 14, '', 100, 77, 77, 90, 128, 128, 5, 33, 33, 33, 33),
-(649, 'Genesect', 7, 9, '', 71, 120, 95, 99, 120, 95, 5, 33, 33, 33, 33),
-(650, 'Chespin', 12, NULL, '', 56, 61, 65, 38, 48, 45, 6, 33, 33, 33, 33),
-(651, 'Quilladin', 12, NULL, '', 61, 78, 95, 57, 56, 58, 6, 33, 33, 33, 33),
-(652, 'Chesnaught', 12, 2, '', 88, 107, 122, 64, 74, 75, 6, 33, 33, 33, 33),
-(653, 'Fennekin', 10, NULL, '', 40, 45, 40, 60, 62, 60, 6, 33, 33, 33, 33),
-(654, 'Braixen', 10, NULL, '', 59, 59, 58, 73, 90, 70, 6, 33, 33, 33, 33),
-(655, 'Delphox', 10, 14, '', 75, 69, 72, 104, 114, 100, 6, 33, 33, 33, 33),
-(656, 'Froakie', 11, NULL, '', 41, 56, 40, 71, 62, 44, 6, 33, 33, 33, 33),
-(657, 'Frogadier', 11, NULL, '', 54, 63, 52, 97, 83, 56, 6, 33, 33, 33, 33),
-(658, 'Greninja', 11, 17, '', 72, 95, 67, 122, 103, 71, 6, 33, 33, 33, 33),
-(659, 'Bunnelby', 1, NULL, '', 38, 36, 38, 57, 32, 36, 6, 33, 33, 33, 33),
-(660, 'Diggersby', 1, 5, '', 85, 56, 77, 78, 50, 77, 6, 33, 33, 33, 33),
-(661, 'Fletchling', 1, 3, '', 45, 50, 43, 62, 40, 38, 6, 33, 33, 33, 33),
-(662, 'Fletchinder', 10, 3, '', 62, 73, 55, 84, 56, 52, 6, 33, 33, 33, 33),
-(663, 'Talonflame', 10, 3, '', 78, 81, 71, 126, 74, 69, 6, 33, 33, 33, 33),
-(664, 'Scatterbug', 7, NULL, '', 38, 35, 40, 35, 27, 25, 6, 33, 33, 33, 33),
-(665, 'Spewga', 7, NULL, '', 45, 22, 60, 29, 27, 30, 6, 33, 33, 33, 33),
-(666, 'Vivillon', 7, 3, '', 80, 52, 50, 89, 90, 50, 6, 33, 33, 33, 33),
-(667, 'Litleo', 10, 1, '', 62, 50, 58, 72, 73, 54, 6, 33, 33, 33, 33),
-(668, 'Pyroar', 10, 1, '', 86, 68, 72, 106, 109, 66, 6, 33, 33, 33, 33),
-(669, 'Flabébé', 18, NULL, '', 44, 38, 39, 42, 61, 79, 6, 33, 33, 33, 33),
-(670, 'Floette', 18, NULL, '', 54, 45, 47, 52, 75, 98, 6, 33, 33, 33, 33),
-(671, 'Florges', 18, NULL, '', 78, 65, 68, 75, 112, 154, 6, 33, 33, 33, 33),
-(672, 'Skiddo', 12, NULL, '', 66, 65, 48, 52, 62, 57, 6, 33, 33, 33, 33),
-(673, 'Gogoat', 12, NULL, '', 123, 100, 62, 68, 97, 81, 6, 33, 33, 33, 33),
-(674, 'Pancham', 2, NULL, '', 67, 82, 62, 43, 46, 48, 6, 33, 33, 33, 33),
-(675, 'Pangoro', 2, 17, '', 95, 124, 78, 58, 69, 71, 6, 33, 33, 33, 33),
-(676, 'Furfrou', 1, NULL, '', 75, 80, 60, 102, 65, 90, 6, 33, 33, 33, 33),
-(677, 'Espurr', 14, NULL, '', 62, 48, 54, 68, 63, 60, 6, 33, 33, 33, 33),
-(678, 'Meowstic', 14, NULL, '', 74, 48, 76, 104, 83, 81, 6, 33, 33, 33, 33),
-(679, 'Honedge', 9, 8, '', 45, 80, 100, 28, 35, 37, 6, 33, 33, 33, 33),
-(680, 'Doublade', 9, 8, '', 59, 110, 150, 35, 45, 49, 6, 33, 33, 33, 33),
-(681, 'Aegislash', 9, 8, '', 60, 50, 150, 60, 50, 150, 6, 33, 33, 33, 33),
-(682, 'Spritzee', 18, NULL, '', 78, 52, 60, 23, 63, 65, 6, 33, 33, 33, 33),
-(683, 'Aromatisse', 18, NULL, '', 101, 72, 72, 29, 99, 89, 6, 33, 33, 33, 33),
-(684, 'Swirlix', 18, NULL, '', 62, 48, 66, 49, 59, 57, 6, 33, 33, 33, 33),
-(685, 'Slurpuff', 18, NULL, '', 82, 80, 86, 72, 85, 75, 6, 33, 33, 33, 33),
-(686, 'Inkay', 17, 14, '', 53, 54, 53, 45, 37, 46, 6, 33, 33, 33, 33),
-(687, 'Malamar', 17, 14, '', 86, 92, 88, 73, 68, 75, 6, 33, 33, 33, 33),
-(688, 'Binacle', 6, 11, '', 42, 52, 67, 50, 39, 56, 6, 33, 33, 33, 33),
-(689, 'Barbaracle', 6, 11, '', 72, 105, 115, 68, 54, 86, 6, 33, 33, 33, 33),
-(690, 'Skrelp', 4, 11, '', 50, 60, 60, 30, 60, 60, 6, 33, 33, 33, 33),
-(691, 'Dragalge', 4, 16, '', 65, 75, 90, 44, 97, 123, 6, 33, 33, 33, 33),
-(692, 'Clauncher', 11, NULL, '', 50, 53, 62, 44, 58, 63, 6, 33, 33, 33, 33),
-(693, 'Clawitzer', 11, NULL, '', 71, 73, 88, 59, 120, 89, 6, 33, 33, 33, 33),
-(694, 'Helioptile', 13, 1, '', 44, 38, 33, 70, 61, 43, 6, 33, 33, 33, 33),
-(695, 'Heliolisk', 13, 1, '', 62, 55, 52, 109, 109, 94, 6, 33, 33, 33, 33),
-(696, 'Tyrunt', 6, 16, '', 58, 89, 77, 48, 45, 45, 6, 33, 33, 33, 33),
-(697, 'Tyrantrum', 6, 16, '', 82, 121, 119, 71, 69, 59, 6, 33, 33, 33, 33),
-(698, 'Amaura', 6, 15, '', 77, 59, 50, 46, 67, 63, 6, 33, 33, 33, 33),
-(699, 'Aurorus', 6, 15, '', 123, 77, 72, 58, 99, 92, 6, 33, 33, 33, 33),
-(700, 'Sylveon', 18, NULL, '', 95, 65, 60, 60, 110, 130, 6, 33, 33, 33, 33),
-(701, 'Hawlucha', 2, 3, '', 78, 92, 75, 118, 74, 63, 6, 33, 33, 33, 33),
-(702, 'Dedenne', 13, 18, '', 67, 58, 57, 101, 81, 67, 6, 33, 33, 33, 33),
-(703, 'Carbink', 6, 18, '', 50, 50, 150, 50, 50, 150, 6, 33, 33, 33, 33),
-(704, 'Goomy', 16, NULL, '', 45, 50, 35, 40, 55, 75, 6, 33, 33, 33, 33),
-(705, 'Sliggoo', 16, NULL, '', 68, 75, 53, 60, 83, 113, 6, 33, 33, 33, 33),
-(706, 'Goodra', 16, NULL, '', 90, 100, 70, 80, 110, 150, 6, 33, 33, 33, 33),
-(707, 'Klefki', 9, 18, '', 57, 80, 91, 75, 80, 87, 6, 33, 33, 33, 33),
-(708, 'Phantump', 8, 12, '', 43, 70, 48, 38, 50, 60, 6, 33, 33, 33, 33),
-(709, 'Trevenant', 8, 12, '', 85, 110, 76, 56, 65, 82, 6, 33, 33, 33, 33),
-(710, 'Pumpkaboo', 8, 12, '', 44, 66, 70, 56, 44, 55, 6, 33, 33, 33, 33),
-(711, 'Gourgeist', 8, 12, '', 55, 85, 122, 99, 58, 75, 6, 33, 33, 33, 33),
-(712, 'Bergmite', 15, NULL, '', 55, 69, 85, 28, 32, 35, 6, 33, 33, 33, 33),
-(713, 'Avalugg', 15, NULL, '', 95, 117, 184, 28, 44, 46, 6, 33, 33, 33, 33),
-(714, 'Noibat', 3, 16, '', 40, 30, 35, 55, 45, 40, 6, 33, 33, 33, 33),
-(715, 'Noivern', 3, 16, '', 85, 70, 80, 123, 97, 80, 6, 33, 33, 33, 33),
-(716, 'Xerneas', 18, NULL, '', 126, 131, 95, 99, 131, 98, 6, 33, 33, 33, 33),
-(717, 'Yveltal', 17, 3, '', 126, 131, 95, 99, 131, 98, 6, 33, 33, 33, 33),
-(718, 'Zygarde', 16, 5, '', 108, 100, 121, 95, 81, 95, 6, 33, 33, 33, 33),
-(719, 'Diancie', 6, 18, '', 50, 100, 150, 50, 100, 150, 6, 33, 33, 33, 33),
-(720, 'Hoopa', 14, 8, '', 80, 110, 60, 70, 150, 130, 6, 33, 33, 33, 33),
-(721, 'Volcanion', 10, 11, '', 80, 110, 120, 70, 130, 90, 6, 33, 33, 33, 33);
+(649, 'Genesect', 7, 9, '', 71, 120, 95, 99, 120, 95, 5, 33, 33, 33, 33);
 
 -- --------------------------------------------------------
 
@@ -1572,7 +1540,7 @@ CREATE TABLE `profesor` (
   `prof_name` varchar(30) NOT NULL,
   `prof_pass` varchar(30) NOT NULL,
   `prof_gen` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `profesor`
@@ -1583,7 +1551,7 @@ INSERT INTO `profesor` (`prof_login`, `prof_name`, `prof_pass`, `prof_gen`) VALU
 ('elm', 'Profesor Elm', 'JhotoJhoto', 2),
 ('encina', 'Profesora Encina', 'UnovaUnova', 5),
 ('oak', 'Profesor Oak', 'KantoKanto', 1),
-('serbal', 'Profesor Serbal', 'KalosKalos', 6);
+('serbal', 'Profesor Serval', 'ShinnohShinnoh', 4);
 
 -- --------------------------------------------------------
 
@@ -1595,7 +1563,7 @@ CREATE TABLE `region` (
   `reg_id` int(11) NOT NULL,
   `reg_name` enum('Kanto','Johto','Hoenn','Sinnoh','Unova','Kalos','Prueba') NOT NULL,
   `reg_desc` varchar(600) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `region`
@@ -1605,7 +1573,6 @@ INSERT INTO `region` (`reg_id`, `reg_name`, `reg_desc`) VALUES
 (5, 'Unova', 'En Teselia, con respecto a las demás regiones, hay ciudades mucho más modernas. Por ejemplo, en Ciudad Porcelana, existen grandes edificios. Esta región tiene mucho que ver con la construcción, ya que los nombres de los lugares se refieren a los materiales y los procesos de la cerámica: Pueblo Arcilla, Ciudad Porcelana, Ciudad Teja, Bosque Azulejo, etc.'),
 (3, 'Hoenn', 'Formada por un complejo de islas, es la primera región en contar con zonas donde el clima difiere. Posee nueve ciudades, siete pueblos, trece cuevas, un volcán semidormido y un monte que actúa como cementerio Pokémon. Entre estas, la más curiosa es ciudad Arborada: sus habitantes viven en las copas de los árboles; y la más peculiar, Arrecípolis: es inaccesible sin buceo.'),
 (2, 'Johto', 'Johto es una región situada al oeste de Kanto. Las dos regiones se unen por las Cataratas Tohjo, que sirve de cruce con la Cueva Plateada. Johto y Kanto están unidos por el Magnetotrén mediante tierra y por el S.S. Aqua por vía marina. Los nombres de las ciudades son nombres de plantas o están relacionados con ellas.'),
-(6, 'Kalos', 'Kalos presenta la mayor población de cualquier región, así como la variedad más amplia de especies Pokémon, que proceden de todo el mundo.Además, en Kalos se originaron las megaevoluciones, que permiten a los Pokémon, cuando ya no pueden evolucionar más o no posean evolución, acceder a una forma más poderosa.'),
 (1, 'Kanto', 'Kanto es una región situada al este de Johto y al sur de Sinnoh. La gran mayoría de las ciudades tiene nombres de colores: Ciudad Verde, Ciudad Carmín, Ciudad Celeste, etc., siendo la más importante por excelencia Ciudad Azafrán, pues en ella se encuentra la sede del centro empresarial más importante de la región, Silph S.A..'),
 (4, 'Sinnoh', 'Sinnoh tiene climas muy variados. Predominan los fríos, incluyendo por primera vez nieve en el mundo Pokémon. La región es mayormente terrestre, con solo dos rutas acuáticas. Además se encuentran los lagos: el Lago Valor, el Lago Veraz, el Lago Agudeza y la Fuente Despedida cada uno relacionado con uno de los Pokémon legendarios de la región.');
 
@@ -1629,7 +1596,7 @@ CREATE TABLE `statstotales` (
 CREATE TABLE `tipo` (
   `type_id` int(11) NOT NULL,
   `type_name` enum('Fuego','Agua','Planta','Tierra','Roca','Acero','Lucha','Hielo','Dragon','Electrico','Volador','Hada','Siniestro','Veneno','Fantasma','Psiquico','Bicho','Normal','Prueba') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipo`
@@ -1667,14 +1634,14 @@ CREATE TABLE `usuario` (
   `user_pass` varchar(30) NOT NULL,
   `user_team` int(11) DEFAULT 1,
   `baneado` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`user_login`, `user_name`, `user_pass`, `user_team`, `baneado`) VALUES
-('clemen', 'Clemen', '123', 1, 1);
+('clemen', 'Clemen', '123', 5, 1);
 
 --
 -- Disparadores `usuario`
@@ -1693,31 +1660,6 @@ $$
 DELIMITER ;
 
 -- --------------------------------------------------------
-
---
--- Estructura para la vista `mov_potencia_media`
---
-DROP TABLE IF EXISTS `mov_potencia_media`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `mov_potencia_media`  AS SELECT `tipo`.`type_name` AS `Tipo`, truncate(avg(`movimiento`.`potency`),0) AS `Potencia media` FROM (`movimiento` join `tipo` on(`movimiento`.`mov_type` = `tipo`.`type_id`)) GROUP BY `tipo`.`type_name``type_name`  ;
-
--- --------------------------------------------------------
-
---
--- Estructura para la vista `pokegen`
---
-DROP TABLE IF EXISTS `pokegen`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `pokegen`  AS SELECT `pokemon`.`poke_gen` AS `poke_gen`, count(`pokemon`.`poke_id`) AS `Cantidad` FROM `pokemon` GROUP BY `pokemon`.`poke_gen``poke_gen`  ;
-
--- --------------------------------------------------------
-
---
--- Estructura para la vista `statstotales`
---
-DROP TABLE IF EXISTS `statstotales`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `statstotales`  AS SELECT `pokemon`.`poke_name` AS `Nombre`, sum(`pokemon`.`hp` + `pokemon`.`atk` + `pokemon`.`def` + `pokemon`.`spAtk` + `pokemon`.`spDef` + `pokemon`.`vel`) AS `Stats` FROM `pokemon` GROUP BY `pokemon`.`poke_name``poke_name`  ;
 
 --
 -- Índices para tablas volcadas
@@ -1815,7 +1757,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento`
@@ -1827,7 +1769,7 @@ ALTER TABLE `movimiento`
 -- AUTO_INCREMENT de la tabla `pc`
 --
 ALTER TABLE `pc`
-  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- Restricciones para tablas volcadas

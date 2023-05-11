@@ -33,7 +33,7 @@ class ManagerRegionTest {
 	
 	@Test
 	void testInsert() throws NotFoundException, SQLException, Exception {
-		Region region = new Region(7, "Prueba");
+		Region region = new Region(6, "Prueba");
 		
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
@@ -71,12 +71,12 @@ class ManagerRegionTest {
 	
 	@Test
 	void testUpdate() throws NotFoundException, SQLException, Exception {
-		Region region1 = new Region(7, "Prueba");
-		Region region2 = new Region(8, "Prueba");
+		Region region1 = new Region(6, "Prueba");
+		Region region2 = new Region(7, "Prueba");
 		mr.update(region1, region2);
 		
 		ArrayList<Region> regiones =mr.selectAll();
-		assertEquals(regiones.get(region1.getId()-1).getId(), 8);
+		assertEquals(regiones.get(region1.getId()-1).getId(), 7);
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -90,13 +90,13 @@ class ManagerRegionTest {
 	
 	@Test
 	void testDelete() throws NotFoundException, SQLException, Exception {
-		Region region = new Region(7, "Prueba");
+		Region region = new Region(6, "Prueba");
 		mr.insert(region);
 		ArrayList<Region> regiones = mr.selectAll();
-		assertEquals(regiones.size(), 7);
+		assertEquals(regiones.size(), 6);
 		mr.delete(region);
 		regiones = mr.selectAll();
-		assertEquals(regiones.size(), 6);
+		assertEquals(regiones.size(), 5);
 	}
 
 }

@@ -437,7 +437,7 @@ ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 				conexion.close();
 		}
 		
-		assertEquals(pokemons.size(), 721);
+		assertEquals(pokemons.size(), 649);
 		
 		
 	}
