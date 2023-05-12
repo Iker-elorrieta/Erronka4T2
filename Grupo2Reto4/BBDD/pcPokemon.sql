@@ -1660,7 +1660,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`user_login`, `user_name`, `user_pass`, `user_team`, `baneado`) VALUES
-('anuel', 'Anuel AA', '123', 1, 0),
+('anuel', 'Anuel AA', '123', 1, 1),
 ('clemen', 'Clemen', '123', 6, 0);
 
 --
