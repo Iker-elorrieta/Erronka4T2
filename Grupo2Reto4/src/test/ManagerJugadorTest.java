@@ -82,9 +82,9 @@ class ManagerJugadorTest {
 
 			if (conexion != null)
 				conexion.close();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -103,18 +103,16 @@ class ManagerJugadorTest {
 			comando = conexion.createStatement();
 			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
 
-		
-		// insertamos al usuario
-		mj.insert(j);
+			// insertamos al usuario
+			mj.insert(j);
 
-		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+			ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
-		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+			ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-		// recogemos los tipos
-		
-			comando = conexion.createStatement();
+			ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+			// recogemos los tipos
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
 			while (registro.next() == true) {
@@ -125,11 +123,9 @@ class ManagerJugadorTest {
 				tipos.add(t);
 			}
 
-		
-		// recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+			// recogemos los movimientos
+			ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
@@ -145,10 +141,8 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pokemons
-	
-			comando = conexion.createStatement();
+			// recogemos los pokemons
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
 			while (registro.next() == true) {
@@ -194,11 +188,10 @@ class ManagerJugadorTest {
 				pokemons.add(p);
 			}
 
-		// recogemos las cajas
+			// recogemos las cajas
 
-		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		
-			comando = conexion.createStatement();
+			ArrayList<Caja> cajasPC = new ArrayList<Caja>();
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
 			while (registro.next() == true) {
@@ -225,11 +218,10 @@ class ManagerJugadorTest {
 
 			}
 
-		// recogemos los pcs
+			// recogemos los pcs
 
-		ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
-		
-			comando = conexion.createStatement();
+			ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
 			while (registro.next() == true) {
@@ -261,9 +253,8 @@ class ManagerJugadorTest {
 				pcs.add(pc);
 			}
 
-		// recogemos los usuarios
-		
-			comando = conexion.createStatement();
+			// recogemos los usuarios
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
 			while (registro.next()) {
@@ -333,20 +324,17 @@ class ManagerJugadorTest {
 				jugadores.add(user);
 			}
 
-		
+			assertEquals(jugadores.get(0).getLogin(), "aaaaa");
 
-		assertEquals(jugadores.get(0).getLogin(), "aaaaa");
-		
-		
-		if (conexion != null)
-			conexion.close();
+			if (conexion != null)
+				conexion.close();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
 
 	@Test
-	void testUpdate(){
+	void testUpdate() {
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
@@ -354,7 +342,6 @@ class ManagerJugadorTest {
 
 		equipo.add(pokemon);
 
-		
 		// recogemos los tipos
 		try {
 			ArrayList<Jugador> jugadores = mj.selectAll();
@@ -372,7 +359,7 @@ class ManagerJugadorTest {
 			ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
 			ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-			
+
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
@@ -385,12 +372,9 @@ class ManagerJugadorTest {
 				tipos.add(t);
 			}
 
-		
-		// recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+			// recogemos los movimientos
+			ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
@@ -406,10 +390,8 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pokemons
-		
-			comando = conexion.createStatement();
+			// recogemos los pokemons
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
 			while (registro.next() == true) {
@@ -455,13 +437,10 @@ class ManagerJugadorTest {
 				pokemons.add(p);
 			}
 
-		
+			// recogemos las cajas
 
-		// recogemos las cajas
+			ArrayList<Caja> cajasPC = new ArrayList<Caja>();
 
-		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
 			while (registro.next() == true) {
@@ -488,12 +467,10 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pcs
+			// recogemos los pcs
 
-		ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
+			ArrayList<MiPc> pcs = new ArrayList<MiPc>();// mpc.selectAll();
 
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
 			while (registro.next() == true) {
@@ -525,8 +502,7 @@ class ManagerJugadorTest {
 				pcs.add(pc);
 			}
 
-		// recogemos los usuarios
-			comando = conexion.createStatement();
+			// recogemos los usuarios
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
 			while (registro.next()) {
@@ -596,23 +572,20 @@ class ManagerJugadorTest {
 				jugadores.add(user);
 			}
 
-		assertEquals(jugadores.get(0).getLogin(), "aaaaaa");
-
-
-			comando = conexion.createStatement();
+			assertEquals(jugadores.get(0).getLogin(), "aaaaaa");
 
 			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j2.getLogin() + "';");
 
 			if (conexion != null)
 				conexion.close();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 	}
 
 	@Test
-	void testDelete(){
+	void testDelete() {
 		moveset.add(move1);
 		moveset.add(move1);
 		moveset.add(move1);
@@ -629,16 +602,13 @@ class ManagerJugadorTest {
 
 			comando.executeUpdate("call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
 
-		
+			ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 
-		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+			ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
-		ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+			ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+			// recogemos los tipos
 
-		ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-		// recogemos los tipos
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
 			while (registro.next() == true) {
@@ -649,11 +619,9 @@ class ManagerJugadorTest {
 				tipos.add(t);
 			}
 
-		
-		// recogemos los movimientos
-		ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
+			// recogemos los movimientos
+			ArrayList<Movimiento> movimientos = new ArrayList<Movimiento>();
 
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
@@ -669,10 +637,8 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pokemons
-		
-			comando = conexion.createStatement();
+			// recogemos los pokemons
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
 			while (registro.next() == true) {
@@ -718,13 +684,10 @@ class ManagerJugadorTest {
 				pokemons.add(p);
 			}
 
-		
+			// recogemos las cajas
 
-		// recogemos las cajas
+			ArrayList<Caja> cajasPC = new ArrayList<Caja>();
 
-		ArrayList<Caja> cajasPC = new ArrayList<Caja>();
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
 			while (registro.next() == true) {
@@ -751,13 +714,10 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pcs
+			// recogemos los pcs
 
-		ArrayList<MiPc> pcs = new ArrayList<MiPc>();
+			ArrayList<MiPc> pcs = new ArrayList<MiPc>();
 
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
 			while (registro.next() == true) {
@@ -789,11 +749,8 @@ class ManagerJugadorTest {
 				pcs.add(pc);
 			}
 
-		
+			// recogemos los usuarios
 
-		// recogemos los usuarios
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
 			while (registro.next()) {
@@ -863,18 +820,15 @@ class ManagerJugadorTest {
 				jugadores.add(user);
 			}
 
-		
+			mj.delete(j);
 
-		mj.delete(j);
+			ArrayList<Jugador> jugadores2 = new ArrayList<Jugador>();
 
-		ArrayList<Jugador> jugadores2 = new ArrayList<Jugador>();
+			ArrayList<Pokemon> pokemons2 = new ArrayList<Pokemon>();
 
-		ArrayList<Pokemon> pokemons2 = new ArrayList<Pokemon>();
+			ArrayList<Tipo> tipos2 = new ArrayList<Tipo>();
+			// recogemos los tipos
 
-		ArrayList<Tipo> tipos2 = new ArrayList<Tipo>();
-		// recogemos los tipos
-	
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_TIPOS + ";");
 
 			while (registro.next() == true) {
@@ -885,12 +839,9 @@ class ManagerJugadorTest {
 				tipos2.add(t);
 			}
 
-		
-		// recogemos los movimientos
-		ArrayList<Movimiento> movimientos2 = new ArrayList<Movimiento>();
+			// recogemos los movimientos
+			ArrayList<Movimiento> movimientos2 = new ArrayList<Movimiento>();
 
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MOVS + ";");
 
 			while (registro.next() == true) {
@@ -906,10 +857,8 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pokemons
-		
-			comando = conexion.createStatement();
+			// recogemos los pokemons
+
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_POKEMON + ";");
 
 			while (registro.next() == true) {
@@ -955,13 +904,10 @@ class ManagerJugadorTest {
 				pokemons2.add(p);
 			}
 
-		
+			// recogemos las cajas
 
-		// recogemos las cajas
+			ArrayList<Caja> cajasPC2 = new ArrayList<Caja>();
 
-		ArrayList<Caja> cajasPC2 = new ArrayList<Caja>();
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
 			while (registro.next() == true) {
@@ -988,13 +934,10 @@ class ManagerJugadorTest {
 
 			}
 
-		
-		// recogemos los pcs
+			// recogemos los pcs
 
-		ArrayList<MiPc> pcs2 = new ArrayList<MiPc>();
+			ArrayList<MiPc> pcs2 = new ArrayList<MiPc>();
 
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + ";");
 
 			while (registro.next() == true) {
@@ -1026,10 +969,8 @@ class ManagerJugadorTest {
 				pcs2.add(pc);
 			}
 
+			// recogemos los usuarios
 
-		// recogemos los usuarios
-		
-			comando = conexion.createStatement();
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
 
 			while (registro.next()) {
@@ -1099,12 +1040,12 @@ class ManagerJugadorTest {
 				jugadores2.add(user);
 			}
 			assertEquals(jugadores.size(), jugadores2.size() + 1);
-			
+
 			if (conexion != null)
 				conexion.close();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 	}
 

@@ -6,11 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
-import manager.ManagerPokemon;
+import excepciones.NotFoundException;
 import modelo.Jugador;
 import modelo.Pokemon;
 import utils.RutasImg;
@@ -21,6 +22,8 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaCajasPC extends JFrame {
 
@@ -32,10 +35,12 @@ public class VistaCajasPC extends JFrame {
 	private RutasImg rutas = new RutasImg();
 	private JPanel panel;
 	private Pokemon pokemonEquipo;
-	private Pokemon pokemonFocus;
-	private ManagerPokemon mp = new ManagerPokemon();
+	//private ManagerPokemon mp = new ManagerPokemon();
 	private Jugador jugador;
 	private JLabel[] jlabelspkmn;
+	private JLabel imgGrandePkmn;
+	private Pokemon pokemonSeleccionado;
+
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +63,7 @@ public class VistaCajasPC extends JFrame {
 	 * @param jugadorActual
 	 */
 	public VistaCajasPC(Jugador jugadorActual) {
-		jugador=jugadorActual;
+		jugador = jugadorActual;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1007, 600);
 		contentPane = new JPanel();
@@ -72,10 +77,20 @@ public class VistaCajasPC extends JFrame {
 		contentPane.add(lblcaja1espacio);
 
 		JButton btnVerDatos = new JButton("Ver Datos");
+		btnVerDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					verDatosEnVentana();
+				} catch (NotFoundException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
+		});
 		btnVerDatos.setBounds(14, 515, 183, 38);
 		contentPane.add(btnVerDatos);
 
-		JLabel imgGrandePkmn = new JLabel("pokeimg");
+		imgGrandePkmn = new JLabel("");
 		imgGrandePkmn.setHorizontalAlignment(SwingConstants.CENTER);
 		imgGrandePkmn.setBounds(54, 72, 100, 100);
 		contentPane.add(imgGrandePkmn);
@@ -84,7 +99,7 @@ public class VistaCajasPC extends JFrame {
 		panel.setLocation(22, 301);
 		panel.setSize(170, 200);
 		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 2, 5, 5));
+		panel.setLayout(new GridLayout(0, 2, 10, 10));
 
 		JLabel nombreUser = new JLabel(jugador.getNombre());
 		nombreUser.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -103,9 +118,9 @@ public class VistaCajasPC extends JFrame {
 		ImageIcon pkmnImg1 = new ImageIcon("img/pc_background.png");
 		backgroundPC.setBounds(0, 0, 889, 561);
 		backgroundPC.setIcon(pkmnImg1);
-
+		 refrescarPkmn();
 	}
-	
+
 	public void refrescarPkmn() {
 		jlabelspkmn = new JLabel[6];
 		int i = 0;
@@ -115,32 +130,79 @@ public class VistaCajasPC extends JFrame {
 			JLabel pkmnIMG1 = new JLabel();
 			pkmnIMG1.setBorder(null);
 			pkmnIMG1.setToolTipText(i + "e");
+			pkmnIMG1.setSize(50, 50);
+			pkmnIMG1.setHorizontalAlignment(SwingConstants.CENTER);
+			panel.add(pkmnIMG1);
+			pkmnIMG1.setIcon(pkmnImg1);
+			pkmnIMG1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int pos=Integer.valueOf(pkmnIMG1.getToolTipText().split("e")[0]);
+					pokemonEquipo = jugador.getEquipo().get(pos);
+					pokemonFocus(jugador.getEquipo().get(pos).getId());
+					if (pkmnIMG1.getBorder() == null) {
+						for (JLabel pklabel : jlabelspkmn)
+							pklabel.setBorder(null);
+						pkmnIMG1.setBorder(
+								new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), null, null, null));
+						pokemonSeleccionado=pokemonEquipo;
+					} else {
+						pkmnIMG1.setBorder(null);
+						imgGrandePkmn.setIcon(null);
+						pokemonEquipo = null;
+						pokemonSeleccionado=null;
+					}
+				}
+			});
+			jlabelspkmn[i] = pkmnIMG1;
+		}
+
+		for (i = jugador.getEquipo().size(); i < 6; i++) {
+			ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGpequenyo(0));
+			JLabel pkmnIMG1 = new JLabel();
+			pkmnIMG1.setBorder(null);
+			pkmnIMG1.setSize(50, 50);
+			pkmnIMG1.setHorizontalAlignment(SwingConstants.CENTER);
+			pkmnIMG1.setToolTipText(i + "e");
 			panel.add(pkmnIMG1);
 			pkmnIMG1.setIcon(pkmnImg1);
 			pkmnIMG1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 
-					pokemonEquipo = jugador.getEquipo().get(Integer.valueOf(pkmnIMG1.getToolTipText().split("e")[0]));
-
+					pokemonEquipo = null;
+					pokemonSeleccionado=null;
+					pokemonFocus(0);
 					if (pkmnIMG1.getBorder() == null) {
 						for (JLabel pklabel : jlabelspkmn)
 							pklabel.setBorder(null);
 						pkmnIMG1.setBorder(
 								new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), null, null, null));
-						
 					} else {
 						pkmnIMG1.setBorder(null);
-						pokemonEquipo = null;
+						imgGrandePkmn.setIcon(null);
 					}
 				}
 			});
 			jlabelspkmn[i] = pkmnIMG1;
 		}
-		
-		for(i=jugador.getEquipo().size();i<7;i++) {
-			
-		}
+	}
+
+	public void pokemonFocus(int id) {
+
+		ImageIcon pkmnImg1 = new ImageIcon(rutas.PNGfrontalPKMN(id));
+		imgGrandePkmn.setIcon(pkmnImg1);
+
 	}
 	
+	public void verDatosEnVentana() throws NotFoundException {
+
+		if (pokemonSeleccionado != null) {
+			VistaDatos vd = new VistaDatos(pokemonSeleccionado);
+			vd.setVisible(true);
+		} else
+			throw new NotFoundException("No has seleccionadon ningun pokemon.");
+
+	}
+
 }
