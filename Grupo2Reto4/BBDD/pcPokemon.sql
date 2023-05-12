@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2023 a las 10:58:45
+-- Tiempo de generación: 12-05-2023 a las 13:04:09
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -1774,7 +1774,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
+  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1065;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento`
@@ -1786,7 +1786,7 @@ ALTER TABLE `movimiento`
 -- AUTO_INCREMENT de la tabla `pc`
 --
 ALTER TABLE `pc`
-  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
 
 --
 -- Restricciones para tablas volcadas
@@ -1845,68 +1845,6 @@ ALTER TABLE `pokemon`
 --
 ALTER TABLE `profesor`
   ADD CONSTRAINT `fk_pro_region` FOREIGN KEY (`prof_gen`) REFERENCES `region` (`reg_id`);
-
-
---
--- Metadatos
---
-USE `phpmyadmin`;
-
---
--- Metadatos para la tabla caja
---
-
---
--- Metadatos para la tabla cajapokemon
---
-
---
--- Metadatos para la tabla equipo
---
-
---
--- Metadatos para la tabla movimiento
---
-
---
--- Metadatos para la tabla mov_potencia_media
---
-
---
--- Metadatos para la tabla pc
---
-
---
--- Metadatos para la tabla pokegen
---
-
---
--- Metadatos para la tabla pokemon
---
-
---
--- Metadatos para la tabla profesor
---
-
---
--- Metadatos para la tabla region
---
-
---
--- Metadatos para la tabla statstotales
---
-
---
--- Metadatos para la tabla tipo
---
-
---
--- Metadatos para la tabla usuario
---
-
---
--- Metadatos para la base de datos pcpokemon
---
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
