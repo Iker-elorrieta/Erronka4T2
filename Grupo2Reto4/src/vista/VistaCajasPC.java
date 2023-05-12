@@ -71,8 +71,13 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		for (int y=72;y<100;y++) {
+		for (int y=72;y<500;y=y+95) {
 			for(int x=220;x<800;x=x+110) {
+				
+				JLabel lblcaja1espacio = new JLabel("New label");
+				lblcaja1espacio.setHorizontalAlignment(SwingConstants.CENTER);
+				lblcaja1espacio.setBounds(x, y, 100, 82);
+				contentPane.add(lblcaja1espacio);
 				
 			}
 		}
@@ -136,7 +141,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 		backgroundPC.setIcon(pkmnImg1);
 		
 		atras = new JButton("Atras");
-		atras.setBounds(899, 0, 92, 38);
+		atras.setBounds(891, 0, 100, 38);
 		atras.addActionListener(this);
 		contentPane.add(atras);
 		

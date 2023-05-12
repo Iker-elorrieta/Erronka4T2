@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import controlador.Metodos;
 import excepciones.NotFoundException;
 import modelo.Caja;
-import modelo.Jugador;
 import modelo.MiPc;
 import modelo.Pokemon;
 import utils.DBConexion;
@@ -30,7 +29,7 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 		ArrayList<MiPc> pcs = new ArrayList<MiPc>();
 		ManagerCajas mc = new ManagerCajas();
 		ArrayList<Caja> cajasPC = mc.selectAll();
-
+		
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
@@ -76,25 +75,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 	@Override
 	public void insert(MiPc pc) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		ArrayList<Jugador> jugadores = mj.selectAll();
-		Jugador j = null;
-		for (int i = 0; i < jugadores.size(); i++) {
-			if (jugadores.get(i).getPc() == pc) {
-				j = jugadores.get(i);
-			}
-		}
-
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-
-			comando.executeUpdate("Insert into " + DBConexion.T_MIPC + "(user_login) values ('" + j.getLogin() + "');");
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
-
 	}
 
 	@Override
@@ -133,17 +113,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 	@Override
 	public void delete(MiPc pc) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-
-			comando.executeUpdate("delete from " + DBConexion.T_MIPC + " where pc_id ='" + pc.getId_pc() + "';");
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 	}
 
 }
