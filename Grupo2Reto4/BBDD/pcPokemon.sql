@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2023 a las 13:18:55
+-- Tiempo de generación: 12-05-2023 a las 10:58:45
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -108,7 +108,15 @@ INSERT INTO `caja` (`pc_box_id`, `pc_id`, `box_pokemon`) VALUES
 (5, 2, 0),
 (6, 2, 0),
 (7, 2, 0),
-(8, 2, 0);
+(8, 2, 0),
+(425, 157, 0),
+(426, 157, 0),
+(427, 157, 0),
+(428, 157, 0),
+(429, 157, 0),
+(430, 157, 0),
+(431, 157, 0),
+(432, 157, 0);
 
 -- --------------------------------------------------------
 
@@ -121,6 +129,15 @@ CREATE TABLE `cajapokemon` (
   `pc_box_id` int(11) NOT NULL,
   `poke_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cajapokemon`
+--
+
+INSERT INTO `cajapokemon` (`pc_id`, `pc_box_id`, `poke_id`) VALUES
+(2, 1, 493),
+(2, 2, 493),
+(2, 1, 493);
 
 -- --------------------------------------------------------
 
@@ -143,7 +160,8 @@ CREATE TABLE `equipo` (
 --
 
 INSERT INTO `equipo` (`user_login`, `poke_id1`, `poke_id2`, `poke_id3`, `poke_id4`, `poke_id5`, `poke_id6`) VALUES
-('clemen', 477, 25, 26, NULL, 200, 450);
+('clemen', 477, 25, 26, 200, 450, 450),
+('anuel', 609, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Disparadores `equipo`
@@ -797,13 +815,13 @@ INSERT INTO `movimiento` (`mov_id`, `move_name`, `mov_type`, `potency`, `pp`, `a
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `mov_potencia_media`
--- (Véase abajo para la vista actual)
+-- Estructura de tabla para la tabla `mov_potencia_media`
 --
+
 CREATE TABLE `mov_potencia_media` (
-`Tipo` enum('Fuego','Agua','Planta','Tierra','Roca','Acero','Lucha','Hielo','Dragon','Electrico','Volador','Hada','Siniestro','Veneno','Fantasma','Psiquico','Bicho','Normal','Prueba')
-,`Potencia media` decimal(10,0)
-);
+  `Tipo` enum('Fuego','Agua','Planta','Tierra','Roca','Acero','Lucha','Hielo','Dragon','Electrico','Volador','Hada','Siniestro','Veneno','Fantasma','Psiquico','Bicho','Normal','Prueba') DEFAULT NULL,
+  `Potencia media` decimal(10,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -821,6 +839,7 @@ CREATE TABLE `pc` (
 --
 
 INSERT INTO `pc` (`pc_id`, `user_login`) VALUES
+(157, 'anuel'),
 (2, 'clemen');
 
 --
@@ -841,13 +860,13 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `pokegen`
--- (Véase abajo para la vista actual)
+-- Estructura de tabla para la tabla `pokegen`
 --
+
 CREATE TABLE `pokegen` (
-`poke_gen` int(11)
-,`Cantidad` bigint(21)
-);
+  `poke_gen` int(11) DEFAULT NULL,
+  `Cantidad` bigint(21) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -1579,13 +1598,13 @@ INSERT INTO `region` (`reg_id`, `reg_name`, `reg_desc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `statstotales`
--- (Véase abajo para la vista actual)
+-- Estructura de tabla para la tabla `statstotales`
 --
+
 CREATE TABLE `statstotales` (
-`Nombre` varchar(30)
-,`Stats` decimal(37,0)
-);
+  `Nombre` varchar(30) DEFAULT NULL,
+  `Stats` decimal(37,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -1641,7 +1660,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`user_login`, `user_name`, `user_pass`, `user_team`, `baneado`) VALUES
-('clemen', 'Clemen', '123', 5, 1);
+('anuel', 'Anuel AA', '123', 1, 0),
+('clemen', 'Clemen', '123', 6, 0);
 
 --
 -- Disparadores `usuario`
@@ -1659,8 +1679,6 @@ CREATE TRIGGER `borrar_pc` BEFORE DELETE ON `usuario` FOR EACH ROW delete from P
 $$
 DELIMITER ;
 
--- --------------------------------------------------------
-
 --
 -- Índices para tablas volcadas
 --
@@ -1676,9 +1694,8 @@ ALTER TABLE `caja`
 -- Indices de la tabla `cajapokemon`
 --
 ALTER TABLE `cajapokemon`
-  ADD PRIMARY KEY (`pc_id`,`pc_box_id`),
-  ADD KEY `fk_caja` (`pc_box_id`),
-  ADD KEY `fk_pokemon` (`poke_id`);
+  ADD KEY `fk_pokemon` (`poke_id`),
+  ADD KEY `fk_caja` (`pc_box_id`,`pc_id`) USING BTREE;
 
 --
 -- Indices de la tabla `equipo`
@@ -1757,7 +1774,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
+  MODIFY `pc_box_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
 
 --
 -- AUTO_INCREMENT de la tabla `movimiento`
@@ -1769,7 +1786,7 @@ ALTER TABLE `movimiento`
 -- AUTO_INCREMENT de la tabla `pc`
 --
 ALTER TABLE `pc`
-  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `pc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- Restricciones para tablas volcadas
@@ -1785,9 +1802,7 @@ ALTER TABLE `caja`
 -- Filtros para la tabla `cajapokemon`
 --
 ALTER TABLE `cajapokemon`
-  ADD CONSTRAINT `fk_caja` FOREIGN KEY (`pc_box_id`) REFERENCES `caja` (`pc_box_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pc` FOREIGN KEY (`pc_id`) REFERENCES `pc` (`pc_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pokemon` FOREIGN KEY (`poke_id`) REFERENCES `pokemon` (`poke_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_caja` FOREIGN KEY (`pc_box_id`) REFERENCES `caja` (`pc_box_id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `equipo`
@@ -1830,6 +1845,68 @@ ALTER TABLE `pokemon`
 --
 ALTER TABLE `profesor`
   ADD CONSTRAINT `fk_pro_region` FOREIGN KEY (`prof_gen`) REFERENCES `region` (`reg_id`);
+
+
+--
+-- Metadatos
+--
+USE `phpmyadmin`;
+
+--
+-- Metadatos para la tabla caja
+--
+
+--
+-- Metadatos para la tabla cajapokemon
+--
+
+--
+-- Metadatos para la tabla equipo
+--
+
+--
+-- Metadatos para la tabla movimiento
+--
+
+--
+-- Metadatos para la tabla mov_potencia_media
+--
+
+--
+-- Metadatos para la tabla pc
+--
+
+--
+-- Metadatos para la tabla pokegen
+--
+
+--
+-- Metadatos para la tabla pokemon
+--
+
+--
+-- Metadatos para la tabla profesor
+--
+
+--
+-- Metadatos para la tabla region
+--
+
+--
+-- Metadatos para la tabla statstotales
+--
+
+--
+-- Metadatos para la tabla tipo
+--
+
+--
+-- Metadatos para la tabla usuario
+--
+
+--
+-- Metadatos para la base de datos pcpokemon
+--
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

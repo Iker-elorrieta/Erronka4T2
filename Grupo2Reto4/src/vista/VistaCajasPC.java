@@ -136,7 +136,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 		backgroundPC.setIcon(pkmnImg1);
 		
 		atras = new JButton("Atras");
-		atras.setBounds(886, 0, 105, 38);
+		atras.setBounds(899, 0, 92, 38);
 		atras.addActionListener(this);
 		contentPane.add(atras);
 		
