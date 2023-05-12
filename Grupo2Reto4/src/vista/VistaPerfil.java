@@ -94,7 +94,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		passwordField.setBounds(378, 295, 185, 20);
 		contentPane.add(passwordField);
 
-		passwordField_1 = new JPasswordField();
+		passwordField_1 = new JPasswordField(jugadorActual.getPass());
 		passwordField_1.setEditable(false);
 		passwordField_1.setBounds(378, 249, 185, 20);
 		contentPane.add(passwordField_1);
