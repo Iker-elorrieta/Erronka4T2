@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import java.awt.Cursor;
+import javax.swing.border.SoftBevelBorder;
+import java.awt.Font;
 
 public class VistaPerfil extends JFrame implements ActionListener {
 
@@ -34,8 +36,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
-	private JTextField nombreTF;
 	private JTextField loginTF;
+	private JTextField nombreTF;
 	private JButton atras;
 	private JPanel panel;
 	private JButton botonEditar;
@@ -87,7 +89,7 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		jlabelpassw2.setBounds(215, 298, 153, 14);
 		contentPane.add(jlabelpassw2);
 
-		passwordField = new JPasswordField();
+		passwordField = new JPasswordField(jugadorActual.getPass());
 		passwordField.setEditable(false);
 		passwordField.setBounds(378, 295, 185, 20);
 		contentPane.add(passwordField);
@@ -97,17 +99,17 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		passwordField_1.setBounds(378, 249, 185, 20);
 		contentPane.add(passwordField_1);
 
-		nombreTF = new JTextField();
-		nombreTF.setEditable(false);
-		nombreTF.setColumns(10);
-		nombreTF.setBounds(378, 182, 185, 20);
-		contentPane.add(nombreTF);
-
-		loginTF = new JTextField();
+		loginTF = new JTextField(jugadorActual.getLogin());
 		loginTF.setEditable(false);
 		loginTF.setColumns(10);
-		loginTF.setBounds(378, 126, 185, 20);
+		loginTF.setBounds(378, 182, 185, 20);
 		contentPane.add(loginTF);
+
+		nombreTF = new JTextField(jugadorActual.getNombre());
+		nombreTF.setEditable(false);
+		nombreTF.setColumns(10);
+		nombreTF.setBounds(378, 126, 185, 20);
+		contentPane.add(nombreTF);
 
 		atras = new JButton("Atras");
 		atras.addActionListener(this);
@@ -115,7 +117,8 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		contentPane.add(atras);
 
 		panel = new JPanel();
-		panel.setBounds(217, 380, 330, 220);
+		panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBounds(233, 429, 330, 220);
 		panel.setLayout(new GridLayout(0, 3, 10, 10));
 		contentPane.add(panel);
 
@@ -169,6 +172,12 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		irAVistaCajas.addActionListener(this);
 		irAVistaCajas.setBounds(34, 470, 131, 35);
 		contentPane.add(irAVistaCajas);
+		
+		JLabel lblNewLabel = new JLabel("Equipo:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setBounds(301, 404, 194, 14);
+		contentPane.add(lblNewLabel);
 	}
 
 	private void verEquipo() {
@@ -217,20 +226,20 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		}	else if (e.getSource() == botonAceptarCambios) {
 				int ok = 0;
 
-				if (metodos.esVacio(nombreTF.getText()))
+				if (metodos.esVacio(loginTF.getText()))
 					errNombreV.setVisible(true);
 				else {
 					errNombreV.setVisible(false);
 					ok++;
 				}
 
-				if (metodos.esVacio(loginTF.getText())) {
+				if (metodos.esVacio(nombreTF.getText())) {
 					err2Nick.setVisible(true);
 					err2Nick.setText("El nick no puede ser vacio.");
 				} else {
 					boolean existe = false;
 					try {
-						existe = metodos.existeUsuario(loginTF.getText());
+						existe = metodos.existeUsuario(nombreTF.getText());
 					} catch (NotFoundException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
@@ -297,15 +306,15 @@ public class VistaPerfil extends JFrame implements ActionListener {
 		if (editable == 0) {
 			passwordField.setEditable(true);
 			passwordField_1.setEditable(true);
-			nombreTF.setEditable(true);
 			loginTF.setEditable(true);
+			nombreTF.setEditable(true);
 			botonAceptarCambios.setEnabled(true);
 			editable = 1;
 		} else {
 			passwordField.setEditable(false);
 			passwordField_1.setEditable(false);
-			nombreTF.setEditable(false);
 			loginTF.setEditable(false);
+			nombreTF.setEditable(false);
 			botonAceptarCambios.setEnabled(false);
 			editable = 0;
 		}
