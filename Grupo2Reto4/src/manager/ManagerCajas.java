@@ -77,13 +77,17 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 		try {
 			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 			comando = conexion.createStatement();
-
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + " where pc_box_id="+c_old.getId_caja()+";");
+			
+			comando.executeUpdate("delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_id=" + registro.getInt(2) + ";");
+			
 			for (int i = 0; i < c_new.getPokemon().size(); i++) {
 				Integer poke_id = null;
-				if (c_new.getPokemon().get(i) != null)
+				if (c_new.getPokemon().get(i) != null) {
 					poke_id = c_new.getPokemon().get(i).getId();
-				comando.executeUpdate("update " + DBConexion.T_CAJAS_POKEMON + " set poke_id=" + poke_id
-						+ " where pc_box_id=" + c_old.getId_caja() + ";");
+				comando.executeUpdate("insert into " + DBConexion.T_CAJAS_POKEMON + " values(" + c_new.getId_caja()
+						+ ", " + registro.getInt(2) + ", "+ poke_id +");");
+				}
 			}
 		} finally {
 			if (conexion != null)
