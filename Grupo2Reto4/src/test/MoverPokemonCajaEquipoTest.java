@@ -47,10 +47,12 @@ class MoverPokemonCajaEquipoTest {
 			if (jugador.getLogin().equals("prueba3"))
 				j = jugador;
 		}
-		Caja c = j.getPc().getCajas().get(0);
-		c.getPokemon().add(p2);
 
-		mc.update(c, c);
+		Caja c = j.getPc().getCajas().get(0);
+		Caja c_old = j.getPc().getCajas().get(0);
+		c.getPokemon().add(p2);
+		
+		mc.update(c_old, c);
 		jugadores = mj.selectAll();
 		for (Jugador jugador : jugadores) {
 			if (jugador.getLogin().equals("prueba3"))

@@ -11,7 +11,6 @@ import controlador.Metodos;
 import excepciones.NotFoundException;
 import modelo.Caja;
 import modelo.MiPc;
-import modelo.Pokemon;
 import utils.DBConexion;
 
 public class ManagerPC implements ManagerInterface<MiPc> {
@@ -80,34 +79,6 @@ public class ManagerPC implements ManagerInterface<MiPc> {
 	@Override
 	public void update(MiPc t_old, MiPc t_new) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-		try {
-			conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
-			comando = conexion.createStatement();
-
-			ArrayList<Caja> cajasO = t_old.getCajas();
-			ArrayList<Caja> cajasN = t_new.getCajas();
-
-			for (int i = 0; i < cajasO.size(); i++) {
-
-				ArrayList<Pokemon> pN = cajasN.get(i).getPokemon();
-
-				for (int j = 0; j < pN.size(); j++) {
-
-					if (pN.get(j) != null) {
-
-						comando.executeUpdate("update " + DBConexion.T_CAJAS_POKEMON + " set poke_id" + j + " ="
-								+ pN.get(j).getId() + " where pc_id=" + t_old.getId_pc() + " and pc_box_id="
-								+ cajasO.get(i).getId_caja() + ";");
-
-					}
-
-				}
-			}
-
-		} finally {
-			if (conexion != null)
-				conexion.close();
-		}
 	}
 
 	@Override

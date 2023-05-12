@@ -17,6 +17,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 	Connection conexion;
 	Statement comando;
+	Statement comando2;
 	ResultSet registro;
 	ResultSet registro2;
 	Metodos m = new Metodos();
@@ -39,7 +40,7 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 				int id = registro.getInt(1);
 
 				ArrayList<Pokemon> pokemonCAJA = new ArrayList<Pokemon>();
-				Statement comando2 = conexion.createStatement();
+				comando2 = conexion.createStatement();
 				registro2 = comando2.executeQuery(
 						"SELECT poke_id FROM " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id = " + id + ";");
 
@@ -80,6 +81,9 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 
 			registro = comando.executeQuery(
 					"SELECT * FROM " + DBConexion.T_CAJAS + " where pc_box_id=" + c_old.getId_caja() + ";");
+			int pcid=0;
+			if(registro.next() == true)
+				pcid = registro.getInt(2);
 
 			comando.executeUpdate(
 					"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id=" + c_old.getId_caja() + ";");
@@ -88,8 +92,8 @@ public class ManagerCajas implements ManagerInterface<Caja> {
 				Integer poke_id = null;
 				if (c_new.getPokemon().get(i) != null) {
 					poke_id = c_new.getPokemon().get(i).getId();
-					comando.executeUpdate("insert into " + DBConexion.T_CAJAS_POKEMON + " values(" + c_new.getId_caja()
-							+ ", " + registro.getInt(2) + ", " + poke_id + ");");
+					comando.executeUpdate("insert into " + DBConexion.T_CAJAS_POKEMON + " values(" + pcid
+							+ ", " + c_new.getId_caja() + ", " + poke_id + ");");
 				}
 			}
 		} finally {
