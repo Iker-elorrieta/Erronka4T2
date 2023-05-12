@@ -70,7 +70,23 @@ public class VistaCajasPC extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		for (int y=72;y<100;y++) {
+			for(int x=220;x<800;x=x+110) {
+				
+			}
+		}
+		
+		JLabel lblcaja1espacio_2 = new JLabel("New label");
+		lblcaja1espacio_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblcaja1espacio_2.setBounds(220, 167, 100, 82);
+		contentPane.add(lblcaja1espacio_2);
+		
+		JLabel lblcaja1espacio_1 = new JLabel("New label");
+		lblcaja1espacio_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblcaja1espacio_1.setBounds(330, 72, 100, 82);
+		contentPane.add(lblcaja1espacio_1);
+		
 		JLabel lblcaja1espacio = new JLabel("New label");
 		lblcaja1espacio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblcaja1espacio.setBounds(220, 72, 100, 82);
