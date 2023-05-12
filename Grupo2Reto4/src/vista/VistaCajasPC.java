@@ -25,7 +25,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VistaCajasPC extends JFrame {
+public class VistaCajasPC extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class VistaCajasPC extends JFrame {
 	private JLabel[] jlabelspkmn;
 	private JLabel imgGrandePkmn;
 	private Pokemon pokemonSeleccionado;
-
+	private JButton atras;
 	/**
 	 * Launch the application.
 	 */
@@ -134,6 +134,12 @@ public class VistaCajasPC extends JFrame {
 		ImageIcon pkmnImg1 = new ImageIcon("img/pc_background.png");
 		backgroundPC.setBounds(0, 0, 889, 561);
 		backgroundPC.setIcon(pkmnImg1);
+		
+		atras = new JButton("Atras");
+		atras.setBounds(886, 0, 105, 38);
+		atras.addActionListener(this);
+		contentPane.add(atras);
+		
 		 refrescarPkmn();
 	}
 
@@ -219,6 +225,14 @@ public class VistaCajasPC extends JFrame {
 		} else
 			throw new NotFoundException("No has seleccionadon ningun pokemon.");
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == atras) {
+			this.dispose();
+		}
 	}
 
 }

@@ -282,7 +282,7 @@ class ManagerJugadorTest {
 
 				while (registro2.next() == true) {
 
-					int idpokemon = registro.getInt(3);
+					int idpokemon = registro.getInt(1);
 
 					Pokemon p = pokemons.get(idpokemon - 1);
 
@@ -520,6 +520,8 @@ class ManagerJugadorTest {
 
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
+
 			while (registro.next() == true) {
 
 				int id = registro.getInt(1);
@@ -531,7 +533,7 @@ class ManagerJugadorTest {
 
 				while (registro2.next() == true) {
 
-					int idpokemon = registro.getInt(3);
+					int idpokemon = registro2.getInt(1);
 
 					Pokemon p = pokemons.get(idpokemon - 1);
 
@@ -778,7 +780,7 @@ class ManagerJugadorTest {
 
 				while (registro2.next() == true) {
 
-					int idpokemon = registro.getInt(3);
+					int idpokemon = registro2.getInt(1);
 
 					Pokemon p = pokemons.get(idpokemon - 1);
 
@@ -987,6 +989,8 @@ class ManagerJugadorTest {
 
 			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
 
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_CAJAS + ";");
+
 			while (registro.next() == true) {
 
 				int id = registro.getInt(1);
@@ -998,9 +1002,9 @@ class ManagerJugadorTest {
 
 				while (registro2.next() == true) {
 
-					int idpokemon = registro.getInt(3);
+					int idpokemon = registro2.getInt(1);
 
-					Pokemon p = pokemons2.get(idpokemon - 1);
+					Pokemon p = pokemons.get(idpokemon - 1);
 
 					pokemonCAJA.add(p);
 				}
