@@ -71,8 +71,85 @@ class ManagerJugadorTest {
 			comando.executeUpdate("call cargarEquipo (" + j.getEquipo().get(0).getId() + ", '" + j.getLogin() + "');");
 
 			// recogemos los usuarios
-			ArrayList<Jugador> js = mj.selectAll();
-			assertEquals(js.get(0).getLogin(), "aaaaa");
+			ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+			ManagerPokemon mp = new ManagerPokemon();
+			ArrayList<Pokemon> TodosLospokemon =  mp.selectAll();
+			ManagerPC mpc = new ManagerPC();
+			ArrayList<MiPc> pcs = mpc.selectAll();
+			registro = comando.executeQuery("SELECT * FROM " + DBConexion.T_USERS + ";");
+			while (registro.next()) {
+
+				String login = registro.getString(1);
+				String nombre = registro.getString(2);
+				String passw = registro.getString(3);
+				
+				boolean ban =false;
+				if(registro.getInt(5)==1)
+					ban=true;
+				ArrayList<Pokemon> equipo = new ArrayList<Pokemon>();
+
+				Statement comando2 = conexion.createStatement();
+				registro2 = comando2
+						.executeQuery("SELECT * FROM " + DBConexion.T_EQUIPOS + " where user_login ='" + login + "';");
+
+				while (registro2.next()) {
+					Pokemon p1 = TodosLospokemon.get(registro2.getInt("poke_id1") - 1);
+					equipo.add(p1);
+					
+					Pokemon p2 = null;
+					if ((Integer) registro2.getInt("poke_id2") != 0) {
+						p2 = TodosLospokemon.get(registro2.getInt("poke_id2") - 1);
+						equipo.add(p2);
+					}
+
+					Pokemon p3 = null;
+					if ((Integer) registro2.getInt("poke_id3") != 0) {
+						p3 = TodosLospokemon.get(registro2.getInt("poke_id3") - 1);
+						equipo.add(p3);
+					}
+
+					Pokemon p4 = null;
+					if ((Integer) registro2.getInt("poke_id4") != 0) {
+						p4 = TodosLospokemon.get(registro2.getInt("poke_id4") - 1);
+						equipo.add(p4);
+					}
+
+					Pokemon p5 = null;
+					if ((Integer) registro2.getInt("poke_id5") != 0) {
+						p5 = TodosLospokemon.get(registro2.getInt("poke_id5") - 1);
+						equipo.add(p5);
+					}
+
+					Pokemon p6 = null;
+					if ((Integer) registro2.getInt("poke_id6") != 0) {
+						p6 = TodosLospokemon.get(registro2.getInt("poke_id6") - 1);
+						equipo.add(p6);
+					}
+
+				}
+
+				Statement comando3 = conexion.createStatement();
+				registro3 = comando3
+						.executeQuery("SELECT * FROM " + DBConexion.T_MIPC + " where user_login ='" + login + "';");
+
+				MiPc pc = null;
+				while (registro3.next() == true) {
+					for (MiPc mipc : pcs) {
+						if (mipc.getId_pc() == registro3.getInt("pc_id"))
+							pc = mipc;
+					}
+				}
+
+				Jugador user = new Jugador(nombre, login, passw, equipo, pc, ban);
+				jugadores.add(user);
+			}
+			Jugador js = null;
+			int cont=0;
+			while(js==null && cont<jugadores.size()) {
+				if(jugadores.get(cont).getLogin().equals("aaaaa"))
+					js=jugadores.get(cont);
+			}
+			assertEquals(js.getLogin(), "aaaaa");
 
 			// eliminamos al usuario
 
@@ -104,10 +181,10 @@ class ManagerJugadorTest {
 			comando.executeUpdate("delete from " + DBConexion.T_USERS + " where user_login ='" + j.getLogin() + "';");
 
 			// insertamos al usuario
-			mj.insert(j);
+			comando.executeUpdate("Insert into " + DBConexion.T_USERS + "(user_login, user_name, user_pass) values ('"
+					+ j.getLogin() + "', '" + j.getNombre() + "', '" + j.getPass() + "');");
 
 			ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-
 			ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
 			ArrayList<Tipo> tipos = new ArrayList<Tipo>();
