@@ -294,7 +294,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		slider.setMinimum(1);
 		slider.setMaximum(649);
 		slider.setOrientation(SwingConstants.VERTICAL);
-		slider.setBounds(361, 58, 76, 413);
+		slider.setBounds(361, 0, 76, 504);
 		contentPane.add(slider);
 	}
 

@@ -95,7 +95,7 @@ public class MetodosVista {
 						+ p.getId() + " where user_login = '" + j.getLogin() + "';");
 
 				comando.executeUpdate(
-						"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id =" + c.getId_caja() + ";");
+						"delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_box_id =" + c.getId_caja() + " and poke_id="+p.getId()+";");
 
 			} finally {
 
@@ -140,7 +140,7 @@ public class MetodosVista {
 				conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
 				comando = conexion.createStatement();
 				comando.executeUpdate("delete from " + DBConexion.T_CAJAS_POKEMON + " where pc_id=" + pc.getId_pc()
-						+ " and box_id=" + caja.getId_caja() + " and poke_id=" + opcion + ";");
+						+ " and pc_box_id=" + caja.getId_caja() + " and poke_id=" + opcion + ";");
 			} finally {
 				conexion.close();
 			}
@@ -169,6 +169,35 @@ public class MetodosVista {
 		player.getEquipo().set(pokeEquipo, poke1);
 		
 		return player;
+	}
+	
+	public void moverPokemonEquipoCaja(Jugador j, Pokemon p, Caja c) throws SQLException, ArrayListLlenoException {
+		int tamanyo = c.getPokemon().size();
+		
+		int pos = j.getEquipo().indexOf(p);
+		if (tamanyo < 30) {
+			c.getPokemon().add(p);
+			j.getEquipo().remove(p);
+
+			try {
+				conexion = DriverManager.getConnection(DBConexion.URL, DBConexion.USER, DBConexion.PASSW);
+				comando = conexion.createStatement();
+
+				comando.executeUpdate("Insert into " + DBConexion.T_CAJAS_POKEMON + " (pc_id, pc_box_id, poke_id) values ("
+						+ j.getPc().getId_pc() + ", " + c.getId_caja() + ", " + p.getId() + ");");
+
+				comando.executeUpdate(
+						"update " + DBConexion.T_EQUIPOS +" set poke_id"+(pos+1)+" =  "+ null +" where poke_id"+(pos+1)+" = " + p.getId() + " and user_login='"+j.getLogin()+"';");
+
+			} finally {
+
+				comando.close();
+				conexion.close();
+			}
+
+		} else {
+			throw new ArrayListLlenoException("Caja llena.");
+		}
 	}
 
 }
