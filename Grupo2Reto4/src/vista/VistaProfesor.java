@@ -1,6 +1,5 @@
 package vista;
 
-import java.awt.EventQueue;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -67,18 +66,7 @@ public class VistaProfesor extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaProfesor frame = new VistaProfesor(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
@@ -296,6 +284,24 @@ public class VistaProfesor extends JFrame implements ActionListener {
 		slider.setOrientation(SwingConstants.VERTICAL);
 		slider.setBounds(361, 0, 76, 504);
 		contentPane.add(slider);
+		
+		JLabel labelprof = new JLabel("Profesor: ");
+		labelprof.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelprof.setBounds(131, 15, 76, 14);
+		contentPane.add(labelprof);
+		
+		JLabel labelreg = new JLabel("Region:");
+		labelreg.setHorizontalAlignment(SwingConstants.TRAILING);
+		labelreg.setBounds(131, 40, 76, 14);
+		contentPane.add(labelreg);
+		
+		JLabel lblprof = new JLabel(user.getLogin());
+		lblprof.setBounds(231, 15, 86, 14);
+		contentPane.add(lblprof);
+		
+		JLabel lblreg = new JLabel(user.getReg().getNombre());
+		lblreg.setBounds(231, 40, 86, 14);
+		contentPane.add(lblreg);
 	}
 
 	@Override
