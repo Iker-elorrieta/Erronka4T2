@@ -59,6 +59,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 	private JLabel backgroundPC = new JLabel();
 	private JComboBox<String> comboBox;
 	private MetodosVista mv = new MetodosVista();
+	private int abierto=0;
 
 	/**
 	 * Launch the application.
@@ -185,7 +186,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 		JButton registrarPKMN = new JButton("<html>Registrar<br> pokemon</html>");
 		registrarPKMN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				boolean huecoSeleccionado = false;
 
 				for (JLabel pklabel : jlabelspkmnCaja) {
@@ -193,9 +194,17 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 						huecoSeleccionado = true;
 				}
 
-				if (huecoSeleccionado) {
+				if (huecoSeleccionado && pokemonCaja == null) {
+					if(abierto==0) {
+						setBounds(100, 100, 1400, 600);
+						abierto=1;
+					}
+					else {
+						setBounds(100, 100, 1028, 600);
+						abierto=0;
+					}
 					comboBox.setSelectedIndex(0);
-					setBounds(100, 100, 1400, 600);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecciona un hueco del PC.");
 				}
@@ -212,7 +221,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Solo puedes liberar un pokemon desde el PC.");
 				else {
 					try {
-						mv.liberarPokemon(pokemonCaja.getId(), jugador.getPc(), jugador.getPc().getCajas().get(0));
+						mv.liberarPokemon(pokemonCaja.getId(), jugador.getPc(), jugador.getPc().getCajas().get(nCaja));
 						recargar();
 						imgGrandePkmn.setIcon(null);
 						pokemonSeleccionado = null;
