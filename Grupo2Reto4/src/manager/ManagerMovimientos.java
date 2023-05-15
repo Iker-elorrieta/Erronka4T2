@@ -13,11 +13,27 @@ import modelo.Movimiento;
 import modelo.Tipo;
 import utils.DBConexion;
 
+/**
+ * @author UNAI-PC
+ *
+ */
 public class ManagerMovimientos implements ManagerInterface<Movimiento> {
 
+	/**
+	 * Constante para crear la conexion
+	 */
 	Connection conexion;
+	/**
+	 *  Constante para lanzar comandos
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
+	/**
+	 * llamada a los metodos
+	 */
 	Metodos m = new Metodos();
 
 	@Override

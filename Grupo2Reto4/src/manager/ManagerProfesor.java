@@ -13,11 +13,27 @@ import modelo.Profesor;
 import modelo.Region;
 import utils.DBConexion;
 
+/**
+ * @author UNAI-PC
+ *
+ */
 public class ManagerProfesor implements ManagerInterface<Profesor> {
 
+	/**
+	 * Constante para iniciar conexion contra el servidor o localhost
+	 */
 	Connection conexion;
+	/**
+	 *  Constante para lanzar comandos
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
+	/**
+	 * Llamada a los metodos
+	 */
 	Metodos m = new Metodos();
 
 	@Override

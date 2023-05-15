@@ -15,11 +15,27 @@ import modelo.Region;
 import modelo.Tipo;
 import utils.DBConexion;
 
+/**
+ * @author UNAI-PC
+ *
+ */
 public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
+	/**
+	 * Constante para iniciar conexion contra el servidor o localhost
+	 */
 	Connection conexion;
+	/**
+	 *  Constante para lanzar comandos
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
+	/**
+	 * Llamada a los metodos
+	 */
 	Metodos m = new Metodos();
 
 	@Override
@@ -156,6 +172,13 @@ public class ManagerPokemon implements ManagerInterface<Pokemon> {
 
 	}
 	
+	/**
+	 * @param id un entero por el cual buscaremos un pokemon de la base de datos
+	 * @return devuelve un objeto de tipo pokemon
+	 * @throws NotFoundException error para verificar si algo no se encuentra
+	 * @throws SQLException error para validar los errores de conexion a SQL
+	 * @throws Exception conjunto de errores varios
+	 */
 	public Pokemon selectPokemon(int id) throws SQLException, NotFoundException, Exception  {
 		Pokemon pokemon = null;
 		ManagerMovimientos mm = new ManagerMovimientos();

@@ -13,13 +13,35 @@ import modelo.Caja;
 import modelo.MiPc;
 import utils.DBConexion;
 
+/**
+ * @author in1dm3
+ *
+ */
 public class ManagerPC implements ManagerInterface<MiPc> {
 
+	/**
+	 * Constante para iniciar conexion contra el servidor o localhost
+	 */
 	Connection conexion;
+	/**
+	 *  Constante para lanzar comandos
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
+	/**
+	 * Constante de mismo uso que registro, segunda instancia para otros resultados
+	 */
 	ResultSet registro2;
+	/**
+	 * Llamada a los metodos
+	 */
 	Metodos m = new Metodos();
+	/**
+	 * Llamada a un manager de Jugador
+	 */
 	ManagerJugador mj = new ManagerJugador();
 
 	@Override

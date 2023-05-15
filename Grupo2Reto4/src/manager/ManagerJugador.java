@@ -15,14 +15,39 @@ import modelo.MiPc;
 import modelo.Pokemon;
 import utils.DBConexion;
 
+/**
+ * @author in1dm3
+ *
+ */
 public class ManagerJugador implements ManagerInterface<Jugador> {
 
+	/**
+	 * Constante para iniciar conexion contra el servidor o localhost
+	 */
 	Connection conexion;
+	/**
+	 *  Constante para lanzar comandos
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
+	/**
+	 * Constante de mismo uso que registro pero para otros usos en la misma sentencia
+	 */
 	ResultSet registro2;
+	/**
+	 * Constante de mismo uso que registro pero para otros usos en la misma sentencia
+	 */
 	ResultSet registro3;
+	/**
+	 * Llamada a los metodos
+	 */
 	Metodos m = new Metodos();
+	/**
+	 * Llamada al manager de cajas
+	 */
 	ManagerCajas mc = new ManagerCajas();
 	@Override
 	public ArrayList<Jugador> selectAll() throws SQLException, NotFoundException, Exception {

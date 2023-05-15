@@ -10,10 +10,23 @@ import excepciones.NotFoundException;
 import modelo.Tipo;
 import utils.DBConexion;
 
+/**
+ * @author UNAI-PC
+ *
+ */
 public class ManagerTipos implements ManagerInterface<Tipo> {
 
+	/**
+	 * Constante para iniciar conexion contra el servidor o localhost
+	 */
 	Connection conexion;
+	/**
+	 * Constante
+	 */
 	Statement comando;
+	/**
+	 * Constante para recoger los datos del comando previo
+	 */
 	ResultSet registro;
 
 	@Override

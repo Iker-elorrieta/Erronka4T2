@@ -13,13 +13,35 @@ import modelo.Caja;
 import modelo.Pokemon;
 import utils.DBConexion;
 
+/**
+ * @author in1dm3
+ *
+ */
 public class ManagerCajas implements ManagerInterface<Caja> {
 
+	/**
+	 * 
+	 */
 	Connection conexion;
+	/**
+	 * 
+	 */
 	Statement comando;
+	/**
+	 * 
+	 */
 	Statement comando2;
+	/**
+	 * 
+	 */
 	ResultSet registro;
+	/**
+	 * 
+	 */
 	ResultSet registro2;
+	/**
+	 * 
+	 */
 	Metodos m = new Metodos();
 
 	@Override
