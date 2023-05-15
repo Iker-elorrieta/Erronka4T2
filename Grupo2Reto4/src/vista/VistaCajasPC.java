@@ -212,7 +212,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Solo puedes liberar un pokemon desde el PC.");
 				else {
 					try {
-						mv.liberarPokemon(pokemonCaja.getId(), jugador.getPc(), jugador.getPc().getCajas().get(0));
+						mv.liberarPokemon(pokemonCaja.getId(), jugador.getPc(), jugador.getPc().getCajas().get(nCaja));
 						recargar();
 						imgGrandePkmn.setIcon(null);
 						pokemonSeleccionado = null;
