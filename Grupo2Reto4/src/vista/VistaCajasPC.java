@@ -59,6 +59,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 	private JLabel backgroundPC = new JLabel();
 	private JComboBox<String> comboBox;
 	private MetodosVista mv = new MetodosVista();
+	private int abierto=0;
 
 	/**
 	 * Launch the application.
@@ -194,8 +195,16 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 				}
 
 				if (huecoSeleccionado && pokemonCaja == null) {
+					if(abierto==0) {
+						setBounds(100, 100, 1400, 600);
+						abierto=1;
+					}
+					else {
+						setBounds(100, 100, 1028, 600);
+						abierto=0;
+					}
 					comboBox.setSelectedIndex(0);
-					setBounds(100, 100, 1400, 600);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecciona un hueco del PC.");
 				}
