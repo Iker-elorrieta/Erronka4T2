@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import modelo.Caja;
-import modelo.Generacion;
 import modelo.Movimiento;
 import modelo.Pokemon;
+import modelo.Region;
 import modelo.Tipo;
 
 class CajaTest {
@@ -29,6 +29,7 @@ class CajaTest {
 	Caja caja = new Caja(1, pokemon);
 	Caja caja2 = new Caja(2, pokemon);
 	Caja caja3 = new Caja(2, pokemon);
+	Region reg = new Region(1,"Kanto");
 	
 	@Test
 	void testCajaConstructor() {
@@ -39,14 +40,14 @@ class CajaTest {
 		moveset.add(move2);
 		moveset.add(move3);
 		moveset.add(move4);
-		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, Generacion.Kanto);
+		Pokemon pokemon1 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset, reg);
 		
 
 		moveset2.add(move1);
 		moveset2.add(move2);
 		moveset2.add(move3);
 		moveset2.add(move4);
-		Pokemon pokemon2 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, Generacion.Kanto);
+		Pokemon pokemon2 = new Pokemon(1, "bulbasaur", tipos, 20, 5, 11, 11, 9, 6, moveset2, reg);
 		
 		pokemon.add(pokemon1);
 		pokemon.add(pokemon2);
