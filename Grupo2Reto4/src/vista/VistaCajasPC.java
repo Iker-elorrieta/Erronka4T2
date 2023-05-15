@@ -185,7 +185,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 		JButton registrarPKMN = new JButton("<html>Registrar<br> pokemon</html>");
 		registrarPKMN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
 				boolean huecoSeleccionado = false;
 
 				for (JLabel pklabel : jlabelspkmnCaja) {
@@ -193,7 +193,7 @@ public class VistaCajasPC extends JFrame implements ActionListener {
 						huecoSeleccionado = true;
 				}
 
-				if (huecoSeleccionado) {
+				if (huecoSeleccionado && pokemonCaja == null) {
 					comboBox.setSelectedIndex(0);
 					setBounds(100, 100, 1400, 600);
 				} else {
