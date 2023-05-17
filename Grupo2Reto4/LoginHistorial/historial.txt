@@ -58,3 +58,5 @@ El usuario Clemen con login clemen ha iniciado sesion el 15/05/2023 a la(s) 10:2
 El usuario Clemen con login clemen ha iniciado sesion el 15/05/2023 a la(s) 10:27
 El usuario Clemen con login clemen ha iniciado sesion el 15/05/2023 a la(s) 10:31
 El usuario Clemen con login clemen ha iniciado sesion el 15/05/2023 a la(s) 10:34
+El usuario Jose Carlos con login EntreGuay33 ha iniciado sesion el 15/05/2023 a la(s) 11:59
+El usuario Profesor Oak con login oak ha iniciado sesion el 15/05/2023 a la(s) 12:02

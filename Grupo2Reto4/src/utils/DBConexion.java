@@ -2,7 +2,7 @@ package utils;
 
 public class DBConexion {
 	
-	public static final String URL="jdbc:mysql://10.5.14.97:3306/pcPokemon?useSSL=false";
+	public static final String URL="jdbc:mysql://10.5.14.97:3306/pcPokemon?allowPublicKeyRetrieval=true&useSSL=false";
 	public static final String USER="root";
 	public static final String PASSW="my-secret-pw";
 	
